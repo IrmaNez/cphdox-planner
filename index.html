@@ -527,9 +527,21 @@ async function startFetch() {
   // Build day tabs (empty for now)
   buildDayTabs(dates);
 
-  // Fetch each day sequentially
-  for (const date of dates) {
-    await fetchDayProgram(date);
+  // Fetch each day sequentially with 10s delay to avoid rate limits
+  for (let i = 0; i < dates.length; i++) {
+    if (i > 0) {
+      document.getElementById('loading-fetch').style.display = 'block';
+      await new Promise(resolve => {
+        let secs = 12;
+        const iv = setInterval(() => {
+          secs--;
+          document.getElementById('loading-fetch-text').textContent =
+            `Venter ${secs} sekunder før næste dag hentes (rate limit)...`;
+          if (secs <= 0) { clearInterval(iv); resolve(); }
+        }, 1000);
+      });
+    }
+    await fetchDayProgram(dates[i]);
   }
 }
 
@@ -724,27 +736,57 @@ async function generatePlan() {
   let mi = 0;
   const lt = setInterval(() => { document.getElementById('loading-plan-text').textContent = msgs[++mi % msgs.length]; }, 2500);
 
-  const filmsSummary = allSelected.map(f => {
-    const times = (f.screenings || []).map(s => `${s.time} på ${s.venue}`).join(', ');
-    return `- ${f.title} (${formatDateLabel(f.date)}, ${times})`;
-  }).join('\n');
+  // Group films by title to see all available screenings across all days
+  const allDates = getDates();
+  const filmsByTitle = {};
+  allSelected.forEach(f => {
+    if (!filmsByTitle[f.title]) {
+      filmsByTitle[f.title] = {
+        title: f.title,
+        description: f.description,
+        trailerUrl: f.trailerUrl,
+        availableScreenings: []
+      };
+    }
+    (f.screenings || []).forEach(s => {
+      filmsByTitle[f.title].availableScreenings.push({
+        date: f.date,
+        dateLabel: formatDateLabel(f.date),
+        time: s.time,
+        venue: s.venue,
+        duration: s.duration
+      });
+    });
+  });
 
-  const prompt = `Du er en festivalplanlægger for CPH:DOX.
+  const filmsSummary = Object.values(filmsByTitle).map(f => {
+    const screenings = f.availableScreenings.map(s =>
+      `  • ${s.dateLabel} kl. ${s.time} på ${s.venue}${s.duration ? ' (' + s.duration + ')' : ''}`
+    ).join('\n');
+    return `${f.title}:\n${screenings}`;
+  }).join('\n\n');
 
-Brugeren har valgt disse film:
+  const prompt = `Du er en ekspert festivalplanlægger for CPH:DOX (Copenhagen International Documentary Film Festival).
+
+Brugerens festivaldage: ${allDates.map(d => formatDateLabel(d) + ' (' + d + ')').join(', ')}
+
+Brugeren vil se disse film. Hver film er listet med ALLE tilgængelige visninger på tværs af alle festivalens dage:
+
 ${filmsSummary}
 
-${prefStart ? `Foretrukket tidligste start: ${prefStart}` : ''}
-${prefEnd ? `Foretrukket seneste slut: ${prefEnd}` : ''}
-${prefNotes ? `Øvrige præferencer: ${prefNotes}` : ''}
+${prefStart ? 'Tidligste ønskede starttidspunkt: ' + prefStart : ''}
+${prefEnd ? 'Seneste ønskede sluttidspunkt: ' + prefEnd : ''}
+${prefNotes ? 'Øvrige præferencer: ' + prefNotes : ''}
 
-Lav en optimal festivalplan:
-1. Vælg det bedste tidspunkt for hver film hvis der er flere visninger
-2. Undgå tidsmæssigt overlap
-3. Beregn gangtid i minutter og afstand i km mellem biografer på samme dag
-4. Sørg for nok buffer til transport
+Lav DEN OPTIMALE plan ved at:
+1. FORDELE filmene klogt over dagene — en film der vises på flere dage skal placeres på den dag der giver bedst balance og mindst overlap
+2. VÆLGE det bedste visningstidspunkt for hver film ift. de andre film samme dag
+3. UNDGÅ tidsmæssigt overlap — der skal være tid nok til transport mellem film
+4. BALANCERE dagene — undgå at stable for mange film på én dag hvis det kan undgås
+5. BEREGNE gangtid i minutter og afstand i km mellem biografer på samme dag
+6. SIKRE mindst 30 minutters buffer til transport og pauser
 
-Svar KUN med gyldigt JSON:
+Svar KUN med gyldigt JSON (ingen markdown, ingen tekst udenfor JSON):
 {
   "days": [
     {
@@ -765,16 +807,15 @@ Svar KUN med gyldigt JSON:
       ]
     }
   ],
-  "notes": "Kort note om planen"
+  "notes": "Forklar kort hvorfor du fordelte filmene som du gjorde på tværs af dagene"
 }
 
-Brug de faktiske biografnavne og adresser fra de valgte film.
-distance_to_next og walk_minutes_to_next kun hvis næste screening er i anden biograf.
-trailerUrl og description fra de valgte films data som du har fået.`;
+Inkludér kun dage med mindst én screening.
+distance_to_next og walk_minutes_to_next kun hvis næste screening er på en anden biograf.
+Brug description og trailerUrl fra filmdata nedenfor.`;
 
-  // Inject film data into prompt
-  const filmData = JSON.stringify(allSelected, null, 2);
-  const fullPrompt = prompt + '\n\nFilmdata:\n' + filmData;
+  const filmData = JSON.stringify(Object.values(filmsByTitle), null, 2);
+  const fullPrompt = prompt + '\n\nKomplet filmdata med alle tilgængelige visninger:\n' + filmData;
 
   try {
     const raw = await callClaude(fullPrompt, false);
