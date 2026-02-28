@@ -113,6 +113,12 @@
   .film-card.selected{border-color:rgba(72,240,168,0.5);background:rgba(72,240,168,0.04);}
   .film-card.selected::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);}
   .fc-check{position:absolute;top:9px;right:9px;font-size:0.75rem;color:var(--muted);transition:color 0.18s;}
+  .film-card.must-see{border-color:rgba(232,240,72,0.6);background:rgba(232,240,72,0.05);}
+  .film-card.must-see::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);}
+  .film-card.must-see .fc-check{color:var(--accent);}
+  .fc-priority-hint{font-size:0.58rem;color:var(--muted);margin-top:3px;opacity:0.6;}
+  .film-card.selected .fc-priority-hint{color:var(--green);opacity:1;}
+  .film-card.must-see .fc-priority-hint{color:var(--accent);opacity:1;}
   .film-card.selected .fc-check{color:var(--green);}
   .fc-time{font-size:0.68rem;color:var(--accent);margin-bottom:2px;font-family:'DM Serif Display',serif;font-style:italic;}
   .fc-title{font-size:0.78rem;font-weight:500;line-height:1.3;margin-bottom:3px;padding-right:18px;}
@@ -635,7 +641,8 @@ const FILM_DATA = {
 // ── STATE ──
 let dates=[];
 let allFilms=[];        // flat list: {title, time, venue, duration, description, date, ticketUrl}
-let selectedTitles=new Set(); // unique titles selected
+let selectedTitles=new Set();
+let mustSeeTitles=new Set(); // subset of selectedTitles // unique titles selected
 let currentPlanData=null;
 // pdfBase64 removed — using hardcoded data
 let prefs={pauses:'',count:'',start:''};
@@ -721,7 +728,7 @@ function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
   dates=['2026-03-20','2026-03-21','2026-03-22'];
 
-  allFilms=[]; selectedTitles=new Set();
+  allFilms=[]; selectedTitles=new Set(); mustSeeTitles=new Set();
   document.getElementById('screen-setup').style.display='none';
   document.getElementById('screen-select').style.display='block';
   document.getElementById('loading-fetch').style.display='none';
@@ -880,7 +887,10 @@ function renderDaySlots(d){
         ${multiText?`<div class="fc-multi">↔ Også: ${multiText}</div>`:''}`;
 
       // Restore selection state
-      if(selectedTitles.has(item.title)){
+      if(mustSeeTitles.has(item.title)){
+        card.classList.add('selected','must-see');
+        card.querySelector('.fc-check').textContent='★';
+      } else if(selectedTitles.has(item.title)){
         card.classList.add('selected');
         card.querySelector('.fc-check').textContent='✓';
       }
@@ -945,9 +955,15 @@ function toggleFilm(title,row){
 }
 
 function toggleFilmCard(title,card,slotId){
-  if(selectedTitles.has(title)){
+  if(mustSeeTitles.has(title)){
+    // must-see → deselect
+    mustSeeTitles.delete(title);
     selectedTitles.delete(title);
+  } else if(selectedTitles.has(title)){
+    // selected → must-see
+    mustSeeTitles.add(title);
   } else {
+    // unselected → selected
     selectedTitles.add(title);
   }
   renderDaySlots(activeDay);
@@ -962,6 +978,7 @@ function selectAll(){
 }
 function selectNone(){
   selectedTitles.clear();
+  mustSeeTitles.clear();
   renderDaySlots(activeDay);
   updateSelBar();
 }
@@ -1007,9 +1024,10 @@ async function generatePlan(){
   const lt=setInterval(()=>{document.getElementById('loading-plan-text').textContent=msgs[++mi%msgs.length];},2500);
 
   // Compact scheduling data only — no descriptions to save tokens
-  const filmList=Object.values(byTitle).map(f=>
-    `${f.title}|${f.showings.map(s=>`${s.date} ${s.time} ${s.venue} ${s.duration||''}`).join(' / ')}`
-  ).join('\n');
+  const filmList=Object.values(byTitle).map(f=>{
+    const tag=mustSeeTitles.has(f.title)?'[MUST-SEE]':'';
+    return `${tag}${f.title}|${f.showings.map(s=>`${s.date} ${s.time} ${s.venue} ${s.duration||''}`).join(' / ')}`;
+  }).join('\n');
 
   // Keep descriptions in a lookup so we can re-attach them after plan is returned
   const descLookup={};
@@ -1023,7 +1041,9 @@ async function generatePlan(){
 REGLER:
 - Hver film KUN én gang i hele planen — selv hvis den vises på flere dage
 - Hvis en film vises på flere dage, vælg automatisk det tidspunkt der passer bedst logistisk
-- Vælg bedste visningstidspunkt baseret på præferencer og logistik
+- Film markeret [MUST-SEE] har højeste prioritet — de skal altid med i planen
+- [MUST-SEE]-film må aldrig erstattes af øvrige film ved konflikter
+- Almindelige film kan udelades hvis de kolliderer med [MUST-SEE]-film
 - Film der ikke passer ind uanset dag → "missed_films"
 - Gangtider i København: 10-20 min mellem biografer
 
@@ -1093,7 +1113,7 @@ function renderPlan(data, planContainer, missedContainer, summaryContainer){
         <div class="sc-btns">
           <a href="${tickUrl}" target="_blank" class="btn-ticket">🎟 Køb billet</a>
           <button class="btn-cafe" onclick="openCafeModal('${venueEsc}')">☕ Cafeer</button>
-          <button class="btn-replace" onclick="openSwapModal(${JSON.stringify(s)}, '${day.date}', ${i})">⇄ Erstat</button>
+          <button class="btn-replace" data-swap-idx="${i}" data-swap-date="${day.date}">⇄ Erstat</button>
         </div>`;
       card.appendChild(sc);
 
@@ -1178,6 +1198,19 @@ function renderPlan(data, planContainer, missedContainer, summaryContainer){
 
 // ── SWAP MODAL ──
 let _swapTarget=null; // {screening, date, idx}
+let _swapCandidates=[]; // stored so doSwap can reference without inline JSON
+
+// Event delegation for dynamically-rendered swap buttons
+document.addEventListener('click', e=>{
+  const btn=e.target.closest('[data-swap-idx]');
+  if(!btn) return;
+  const idx=parseInt(btn.dataset.swapIdx);
+  const date=btn.dataset.swapDate;
+  const day=currentPlanData?.days?.find(d=>d.date===date);
+  if(!day) return;
+  const screening=day.screenings[idx];
+  if(screening) openSwapModal(screening, date, idx);
+});
 
 function timeToMin(t){if(!t)return 0;const[h,m]=(t||'').split(':');return parseInt(h||0)*60+parseInt(m||0);}
 
@@ -1186,6 +1219,7 @@ function openSwapModal(screening, date, idx){
   document.getElementById('swap-modal-sub').textContent=`Erstatter: ${screening.title} (${screening.time} @ ${screening.venue||'?'})`;
   const missed=currentPlanData?.missed_films||[];
   const body=document.getElementById('swap-body');
+  body.innerHTML='';
 
   // Find the day object to know what other screenings are already there
   const dayObj=currentPlanData.days.find(d=>d.date===date);
@@ -1242,29 +1276,37 @@ function openSwapModal(screening, date, idx){
   if(!candidates.length){
     // Fallback: show all missed films but grayed, with their showings
     const fallback=missed.map((f,fi)=>({film:f,filmIdx:fi,showing:(f.all_showings||[])[0]||{},timeDiff:999,conflicts:true}));
-    body.innerHTML='<p style="color:var(--muted);font-size:0.73rem;margin-bottom:14px;">Ingen film på ventelisten vises på denne dag. Viser alle muligheder:</p>'+
-      renderSwapCandidates(fallback);
+    body.innerHTML='<p style="color:var(--muted);font-size:0.73rem;margin-bottom:14px;">Ingen film på ventelisten vises på denne dag. Viser alle muligheder:</p>';
+    renderSwapCandidates(fallback);
   }else{
     const hasConflicts=candidates.some(c=>c.conflicts);
-    body.innerHTML=(hasConflicts?'<p style="color:var(--muted);font-size:0.73rem;margin-bottom:12px;">⚠ Film markeret med rød kan overlappe med andre film i planen.</p>':'')+
-      renderSwapCandidates(candidates);
+    body.innerHTML=hasConflicts?'<p style="color:var(--muted);font-size:0.73rem;margin-bottom:12px;">⚠ Film markeret med rød kan overlappe med andre film i planen.</p>':'';
+    renderSwapCandidates(candidates);
   }
   document.getElementById('swap-modal').classList.add('open');
 }
 
 function renderSwapCandidates(candidates){
-  return candidates.map((c,ci)=>{
-    const conflictStyle=c.conflicts?'border-color:rgba(240,72,72,0.3);':'';
-    const conflictBadge=c.conflicts?'<span style="font-size:0.6rem;color:var(--red);margin-left:6px;">⚠ muligt overlap</span>':'';
-    return `<div class="swap-film-item" style="${conflictStyle}" onclick="doSwap(${c.filmIdx},${ci})">
+  _swapCandidates=candidates; // store for doSwap
+  const el=document.getElementById('swap-body');
+  // clear existing candidate items (keep any warning paragraph)
+  el.querySelectorAll('.swap-film-item').forEach(n=>n.remove());
+
+  candidates.forEach((cand,ci)=>{
+    const item=document.createElement('div');
+    item.className='swap-film-item';
+    if(cand.conflicts) item.style.borderColor='rgba(240,72,72,0.3)';
+    const conflictBadge=cand.conflicts?'<span style="font-size:0.6rem;color:var(--red);margin-left:6px;">⚠ muligt overlap</span>':'';
+    item.innerHTML=`
       <div class="swap-film-meta">
-        <div class="swap-film-title">${c.film.title}${conflictBadge}</div>
-        <div class="swap-film-times">${c.showing.time||'?'} · ${c.showing.venue||''}</div>
-        ${c.film.description?`<div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">${c.film.description}</div>`:''}
+        <div class="swap-film-title">${cand.film.title}${conflictBadge}</div>
+        <div class="swap-film-times">${cand.showing.time||'?'} · ${cand.showing.venue||''}</div>
+        ${cand.film.description?`<div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">${cand.film.description}</div>`:''}
       </div>
-      <div class="swap-arrow">→</div>
-    </div>`;
-  }).join('');
+      <div class="swap-arrow">→</div>`;
+    item.addEventListener('click',()=>doSwap(cand.filmIdx, ci));
+    el.appendChild(item);
+  });
 }
 
 function closeSwapModal(){document.getElementById('swap-modal').classList.remove('open');_swapTarget=null;}
