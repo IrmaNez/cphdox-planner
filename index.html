@@ -496,6 +496,18 @@
   <div id="form-section">
 
     <div class="section">
+      <div class="section-label">00 — Anthropic API-nøgle</div>
+      <label>Din API-nøgle</label>
+      <div style="position:relative;">
+        <input type="password" id="api-key" placeholder="sk-ant-..." style="padding-right:90px;" />
+        <button onclick="toggleKey()" id="toggle-btn" style="position:absolute;right:0;top:0;bottom:0;background:var(--surface2);border:none;border-left:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;padding:0 14px;cursor:pointer;">VIS</button>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);margin-top:8px;line-height:1.6;">
+        Nøglen gemmes kun i din browser-session og sendes aldrig videre. Hent den på <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);text-decoration:none;">console.anthropic.com</a>
+      </div>
+    </div>
+
+    <div class="section">
       <div class="section-label">01 — Dine festivaldage</div>
       <div class="dates-row">
         <div class="date-input-wrap">
@@ -695,11 +707,29 @@
     }
   }
 
+  // ── Toggle API key visibility ─────────────────────────────────
+  function toggleKey() {
+    const input = document.getElementById('api-key');
+    const btn = document.getElementById('toggle-btn');
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = 'SKJUL';
+    } else {
+      input.type = 'password';
+      btn.textContent = 'VIS';
+    }
+  }
+
   // ── Main: call Claude API ─────────────────────────────────────
   async function generatePlan() {
     const dates = getDates();
     const films = getFilms();
+    const apiKey = document.getElementById('api-key').value.trim();
 
+    if (!apiKey) {
+      alert('Indtast din Anthropic API-nøgle øverst på siden.');
+      return;
+    }
     if (!dates.length) {
       alert('Vælg mindst én festivaldato.');
       return;
@@ -778,7 +808,12 @@ distance_to_next og walk_minutes_to_next skal kun inkluderes hvis næste screeni
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 1000,
