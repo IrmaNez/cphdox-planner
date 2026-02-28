@@ -124,6 +124,9 @@
   .dp-time{font-size:0.82rem;font-weight:500;}
   .dp-venue{font-size:0.68rem;color:var(--muted);margin-top:2px;}
   .fc-chosen-day{font-size:0.6rem;color:var(--green);margin-top:3px;letter-spacing:0.05em;}
+  .film-card.also-shown{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);opacity:0.55;}
+  .film-card.also-shown .fc-check{color:var(--muted);}
+  .film-card.also-shown:hover{opacity:0.85;border-color:rgba(232,240,72,0.2);}
   .film-card.dimmed{opacity:0.28;filter:saturate(0.2);}
   .film-card.dimmed:hover{opacity:0.7;filter:saturate(0.5);}
   .time-divider{grid-column:1/-1;height:1px;background:var(--border);margin:6px 0 2px;opacity:0.5;}
@@ -952,7 +955,8 @@ function refreshSlotDimming(){
   // Dim non-selected cards in those slots
   document.querySelectorAll('.film-card').forEach(card=>{
     const sid=card.dataset.slotId;
-    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected')){
+    const isAlsoShown=card.classList.contains('also-shown');
+    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected') && !isAlsoShown){
       card.classList.add('dimmed');
     } else {
       card.classList.remove('dimmed');
@@ -992,7 +996,7 @@ function toggleFilmCard(title,card,slotId){
     delete selectedShowings[title];
     document.querySelectorAll('.film-card').forEach(c=>{
       if(c.dataset.title===title){
-        c.classList.remove('selected');
+        c.classList.remove('selected','also-shown');
         c.querySelector('.fc-check').textContent='○';
         const cd=c.querySelector('.fc-chosen-day');
         if(cd)cd.remove();
@@ -1022,15 +1026,33 @@ function selectFilmOnDay(title,date,showing,slotId){
   selectedTitles.add(title);
   selectedShowings[title]={date,time:showing.time,venue:showing.venue,duration:showing.duration,slotId};
 
-  // Update all cards for this title
+  // Only mark the card on the chosen day as selected
+  // Cards on other days get a subtle "also-shown" style instead
   document.querySelectorAll('.film-card').forEach(c=>{
-    if(c.dataset.title===title){
+    if(c.dataset.title!==title) return;
+    const cardDate=c.dataset.date;
+    // Remove any previous state
+    c.classList.remove('selected','also-shown');
+    c.querySelector('.fc-check').textContent='○';
+    const cd=c.querySelector('.fc-chosen-day'); if(cd)cd.remove();
+
+    if(cardDate===date){
+      // This is the chosen showing
       c.classList.add('selected');
       c.querySelector('.fc-check').textContent='✓';
-      // Show chosen day label
-      let cd=c.querySelector('.fc-chosen-day');
-      if(!cd){cd=document.createElement('div');cd.className='fc-chosen-day';c.appendChild(cd);}
-      cd.textContent='✓ '+fmtShort(date)+' '+showing.time;
+      let label=document.createElement('div');
+      label.className='fc-chosen-day';
+      label.textContent='✓ valgt denne dag';
+      c.appendChild(label);
+    } else {
+      // Film also shown here but chosen on another day
+      c.classList.add('also-shown');
+      c.querySelector('.fc-check').textContent='↔';
+      let label=document.createElement('div');
+      label.className='fc-chosen-day';
+      label.style.color='var(--muted)';
+      label.textContent='valgt '+fmtShort(date)+' '+showing.time;
+      c.appendChild(label);
     }
   });
   refreshSlotDimming();
