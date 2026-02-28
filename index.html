@@ -584,10 +584,19 @@ async function callAI(prompt,search=true){
 }
 
 function parseJSON(t){
-  const c=t.replace(/```json|```/g,'').trim();
-  const m=c.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-  if(!m)throw new Error('Ingen JSON i svaret');
-  return JSON.parse(m[0]);
+  // Try to extract JSON array or object from response
+  let c=t.replace(/```json|```/g,'').trim();
+  // Try direct parse first
+  try{ return JSON.parse(c); }catch{}
+  // Try to find array
+  const arrMatch=c.match(/\[[\s\S]*\]/);
+  if(arrMatch){try{return JSON.parse(arrMatch[0]);}catch{}}
+  // Try to find object
+  const objMatch=c.match(/\{[\s\S]*\}/);
+  if(objMatch){try{return JSON.parse(objMatch[0]);}catch{}}
+  // Show raw for debugging
+  const preview=t.length>200?t.substring(0,200)+'...':t;
+  throw new Error('Ingen JSON i svaret. Svar begyndte med: '+preview);
 }
 
 // ══ STEPPER ══
@@ -646,9 +655,14 @@ async function loadDay(){
   document.getElementById('loading-text').textContent=`Henter program for ${fmtDate(date)}...`;
 
   try{
-    const raw=await callAI(`Find CPH:DOX film ${date}. Søg cphdox.dk/program.
-JSON array kun (ingen markdown):
-[{"title":"...","screenings":[{"time":"14:00","venue":"...","duration":"85 min"}],"description":"2 sætninger dansk","trailerUrl":"youtube-url eller null"}]`);
+    const raw=await callAI(`Du er en JSON-generator. Søg efter CPH:DOX film den ${date} på cphdox.dk/program/${date}.
+
+RETURNER KUN ET JSON ARRAY. INGEN FORKLARINGER. INGEN MARKDOWN. INGEN TEKST FØR ELLER EFTER.
+
+Format:
+[{"title":"Filmtitel","screenings":[{"time":"14:00","venue":"Biografnavn","duration":"85 min"}],"description":"To sætninger om filmen på dansk.","trailerUrl":"https://youtube.com/... eller null}]
+
+Start dit svar med [ og slut med ]`);
     const films=parseJSON(raw);
     if(!Array.isArray(films))throw new Error('Uventet format');
     fetchedDays[date]=films;
