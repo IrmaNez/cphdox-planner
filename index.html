@@ -368,11 +368,13 @@
       </div>
     </div>
 
-    <div class="note-box">
-      <strong>Sådan virker det:</strong> Du swiper dig gennem filmene — ✓ for dem du vil se, ✕ for dem du springer over. Piletaster virker også. Derefter laver Claude den optimale plan på tværs af dine dage med gangtider, trailere og billetlinks.
+    <div class="note-box" style="margin-bottom:16px;">
+      <strong>Sådan virker det:</strong> Gå ind på <a href="https://cphdox.dk/program" target="_blank" style="color:var(--accent);">cphdox.dk/program</a>, vælg en dag, tryk <strong>Cmd+A</strong> → <strong>Cmd+C</strong> og sæt teksten ind herunder. Claude finder selv filmene i teksten.
     </div>
 
-    <button class="btn-primary" onclick="startPlanner()">▶ Start — swipe dag 1</button>
+    <div id="paste-days-container"></div>
+
+    <button class="btn-primary" onclick="startPlanner()">▶ Start — analyser program</button>
   </div>
 
   <!-- SWIPE SCREEN -->
@@ -486,6 +488,7 @@
 // ══ STATE ══
 let dates=[], dayIdx=0, filmIdx=0;
 let fetchedDays={}, selectedFilms={};
+let pastedPrograms={};
 let currentPlanData=null;
 let prefs={pauses:'',count:'',start:''};
 
@@ -532,24 +535,7 @@ function getDates(){return['date1','date2','date3'].map(id=>document.getElementB
 function fmtDate(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});}
 function fmtShort(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'});}
 
-function onDateChange(idx){
-  const ids=['date1','date2','date3'];
-  const v=document.getElementById(ids[idx]).value;
-  const card=document.getElementById('dcard-'+idx);
-  if(v){
-    const d=new Date(v);
-    document.getElementById('dcard-date-'+idx).textContent=d.toLocaleDateString('da-DK',{day:'numeric',month:'long'});
-    const wd=d.toLocaleDateString('da-DK',{weekday:'long'});
-    document.getElementById('dcard-weekday-'+idx).textContent=wd.charAt(0).toUpperCase()+wd.slice(1);
-    document.getElementById('dcard-status-'+idx).textContent='✓ Valgt';
-    card.classList.add('has-date');
-  } else {
-    document.getElementById('dcard-date-'+idx).textContent='Vælg dato';
-    document.getElementById('dcard-weekday-'+idx).textContent='';
-    document.getElementById('dcard-status-'+idx).textContent='○ Ikke valgt';
-    card.classList.remove('has-date');
-  }
-}
+// onDateChange defined above in buildPasteUI block
 
 function pickChip(gid,el){
   document.querySelectorAll('#'+gid+' .pref-chip').forEach(c=>c.classList.remove('selected'));
@@ -617,10 +603,50 @@ function buildStepper(){
 }
 
 // ══ START ══
+function buildPasteUI(){
+  const dates=getDates();
+  const container=document.getElementById('paste-days-container');
+  if(!dates.length){container.innerHTML='';return;}
+  container.innerHTML=dates.map((d,i)=>{
+    const label=fmtDate(d);
+    return `<div style="margin-bottom:16px;">
+      <label style="color:var(--accent);margin-bottom:8px;display:block;">Dag ${i+1} — ${label}</label>
+      <div style="font-size:0.68rem;color:var(--muted);margin-bottom:6px;line-height:1.6;">
+        Gå til <a href="https://cphdox.dk/program/${d}" target="_blank" style="color:var(--accent2);text-decoration:none;">cphdox.dk/program/${d}</a> → Cmd+A → Cmd+C → sæt ind herunder
+      </div>
+      <textarea id="paste-${d}" placeholder="Sæt programtekst ind her..." style="min-height:100px;font-size:0.72rem;" oninput="pastedPrograms['${d}']=this.value"></textarea>
+    </div>`;
+  }).join('');
+}
+
+// Call buildPasteUI when dates change
+function onDateChange(idx){
+  const ids=['date1','date2','date3'];
+  const v=document.getElementById(ids[idx]).value;
+  const card=document.getElementById('dcard-'+idx);
+  if(v){
+    const d=new Date(v);
+    document.getElementById('dcard-date-'+idx).textContent=d.toLocaleDateString('da-DK',{day:'numeric',month:'long'});
+    const wd=d.toLocaleDateString('da-DK',{weekday:'long'});
+    document.getElementById('dcard-weekday-'+idx).textContent=wd.charAt(0).toUpperCase()+wd.slice(1);
+    document.getElementById('dcard-status-'+idx).textContent='✓ Valgt';
+    card.classList.add('has-date');
+  } else {
+    document.getElementById('dcard-date-'+idx).textContent='Vælg dato';
+    document.getElementById('dcard-weekday-'+idx).textContent='';
+    document.getElementById('dcard-status-'+idx).textContent='○ Ikke valgt';
+    card.classList.remove('has-date');
+  }
+  buildPasteUI();
+}
+
 function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
   dates=getDates();
   if(!dates.length){alert('Vælg mindst én festivaldato.');return;}
+  // Check at alle dage har tekst
+  const missing=dates.filter(d=>!pastedPrograms[d]||pastedPrograms[d].trim().length<50);
+  if(missing.length){alert('Sæt programtekst ind for alle valgte dage.');return;}
   dayIdx=0; filmIdx=0; fetchedDays={}; selectedFilms={};
   dates.forEach(d=>{selectedFilms[d]=[];});
   document.getElementById('screen-setup').style.display='none';
@@ -642,7 +668,7 @@ function restartPlanner(){
   currentPlanData=null;
 }
 
-// ══ LOAD DAY ══
+// ══ LOAD DAY (parse from pasted text) ══
 async function loadDay(){
   const date=dates[dayIdx];
   filmIdx=0;
@@ -652,17 +678,19 @@ async function loadDay(){
   document.getElementById('loading-fetch').style.display='block';
   document.getElementById('swipe-content').style.display='none';
   document.getElementById('error-fetch').style.display='none';
-  document.getElementById('loading-text').textContent=`Henter program for ${fmtDate(date)}...`;
+  document.getElementById('loading-text').textContent=`Analyserer program for ${fmtDate(date)}...`;
+
+  const pastedText=pastedPrograms[date]||'';
+
+  const prompt=`Udtræk CPH:DOX film fra denne tekst. Returner KUN et JSON array, ingen markdown, ingen forklaring.
+
+Format: [{"title":"...","screenings":[{"time":"14:00","venue":"...","duration":"85 min"}],"description":"1-2 sætninger dansk","trailerUrl":null}]
+
+Tekst:
+${pastedText.substring(0,6000)}`;
 
   try{
-    const raw=await callAI(`Du er en JSON-generator. Søg efter CPH:DOX film den ${date} på cphdox.dk/program/${date}.
-
-RETURNER KUN ET JSON ARRAY. INGEN FORKLARINGER. INGEN MARKDOWN. INGEN TEKST FØR ELLER EFTER.
-
-Format:
-[{"title":"Filmtitel","screenings":[{"time":"14:00","venue":"Biografnavn","duration":"85 min"}],"description":"To sætninger om filmen på dansk.","trailerUrl":"https://youtube.com/... eller null}]
-
-Start dit svar med [ og slut med ]`);
+    const raw=await callAI(prompt, false);
     const films=parseJSON(raw);
     if(!Array.isArray(films))throw new Error('Uventet format');
     fetchedDays[date]=films;
