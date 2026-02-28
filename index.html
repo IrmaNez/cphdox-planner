@@ -7,327 +7,279 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface2: #1a1a26;
-    --border: rgba(255,255,255,0.08);
-    --accent: #e8f048;
-    --accent2: #48c8f0;
-    --text: #f0ede8;
-    --muted: #7a7a8a;
-    --red: #f04848;
-    --green: #48f0a8;
+    --bg:#0a0a0f; --surface:#12121a; --surface2:#1a1a26;
+    --border:rgba(255,255,255,0.08); --accent:#e8f048; --accent2:#48c8f0;
+    --text:#f0ede8; --muted:#7a7a8a; --red:#f04848; --green:#48f0a8;
   }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(232,240,72,0.07) 0%,transparent 60%),
+               radial-gradient(ellipse 60% 40% at 80% 100%,rgba(72,200,240,0.05) 0%,transparent 60%);}
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.94);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;height:56px;}
+  .nav-brand{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);margin-right:32px;}
+  .nav-brand span{color:var(--accent);}
+  .nav-tabs{display:flex;gap:4px;flex:1;}
+  .nav-tab{padding:8px 18px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;
+    text-transform:uppercase;cursor:pointer;border:1px solid transparent;background:none;color:var(--muted);transition:all 0.18s;}
+  .nav-tab:hover{color:var(--text);}
+  .nav-tab.active{color:var(--accent);border-color:rgba(232,240,72,0.25);background:rgba(232,240,72,0.06);}
+  .storage-status{font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:6px;margin-left:auto;}
+  .sdot{width:6px;height:6px;border-radius:50%;background:var(--muted);}
+  .sdot.ok{background:var(--accent);}
 
-  body {
-    background:var(--bg); color:var(--text);
-    font-family:'DM Mono',monospace; min-height:100vh;
-  }
+  /* PAGES */
+  .page{display:none;} .page.active{display:block;}
+  .container{max-width:900px;margin:0 auto;padding:40px 20px 100px;position:relative;z-index:1;}
+  .page-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px;line-height:1.1;}
+  .page-sub{font-size:0.75rem;color:var(--muted);letter-spacing:0.05em;margin-bottom:40px;}
+  .section-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .section{margin-bottom:32px;}
 
-  body::before {
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:
-      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(232,240,72,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(72,200,240,0.05) 0%, transparent 60%);
-  }
+  /* INPUTS */
+  input[type="text"],input[type="password"],textarea{width:100%;background:var(--surface);
+    border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:0.85rem;
+    padding:11px 14px;outline:none;transition:border-color 0.2s,background 0.2s;}
+  input:focus,textarea:focus{border-color:rgba(232,240,72,0.35);background:var(--surface2);}
+  label{display:block;font-size:0.68rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:7px;}
 
-  /* ── NAV ── */
-  nav {
-    position:sticky; top:0; z-index:100;
-    background:rgba(10,10,15,0.94); backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--border);
-    display:flex; align-items:center; padding:0 24px; height:56px;
-  }
-  .nav-brand { font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--text); margin-right:32px; }
-  .nav-brand span { color:var(--accent); }
-  .nav-tabs { display:flex; gap:4px; flex:1; }
-  .nav-tab {
-    padding:8px 18px; font-family:'DM Mono',monospace; font-size:0.72rem;
-    letter-spacing:0.12em; text-transform:uppercase; cursor:pointer;
-    border:1px solid transparent; background:none; color:var(--muted); transition:all 0.18s;
-  }
-  .nav-tab:hover { color:var(--text); }
-  .nav-tab.active { color:var(--accent); border-color:rgba(232,240,72,0.25); background:rgba(232,240,72,0.06); }
-  .storage-status { font-size:0.65rem; color:var(--muted); display:flex; align-items:center; gap:6px; margin-left:auto; }
-  .sdot { width:6px; height:6px; border-radius:50%; background:var(--muted); }
-  .sdot.ok { background:var(--accent); }
+  /* DAY CARDS */
+  .day-cards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  @media(max-width:560px){.day-cards-grid{grid-template-columns:1fr;}}
+  .day-select-card{background:var(--surface);border:1px solid var(--border);padding:24px 20px;
+    transition:all 0.22s;position:relative;overflow:hidden;min-height:150px;
+    display:flex;flex-direction:column;justify-content:space-between;}
+  .day-select-card:hover{border-color:rgba(232,240,72,0.3);background:var(--surface2);}
+  .day-select-card.has-date{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.04);}
+  .day-select-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity 0.22s;}
+  .day-select-card.has-date::before{opacity:1;}
+  .dcard-num{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .day-select-card.has-date .dcard-num{color:var(--accent);}
+  .dcard-date{font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1;color:var(--muted);margin-bottom:4px;}
+  .day-select-card.has-date .dcard-date{color:var(--text);}
+  .dcard-weekday{font-size:0.72rem;color:var(--muted);margin-bottom:10px;min-height:1.1em;}
+  .day-select-card.has-date .dcard-weekday{color:var(--accent);}
+  .dcard-status{font-size:0.65rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+  .day-select-card.has-date .dcard-status{color:var(--green);}
+  .dcard-input{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);
+    font-family:'DM Mono',monospace;font-size:0.72rem;padding:7px 10px;outline:none;margin-top:8px;
+    cursor:pointer;transition:border-color 0.2s;color-scheme:dark;}
+  .dcard-input:focus{border-color:rgba(232,240,72,0.4);}
 
-  /* ── PAGES ── */
-  .page { display:none; }
-  .page.active { display:block; }
-  .container { max-width:900px; margin:0 auto; padding:40px 20px 100px; position:relative; z-index:1; }
+  /* PREF CHIPS */
+  .pref-group{margin-bottom:22px;}
+  .pref-question{font-size:0.78rem;color:var(--text);margin-bottom:12px;line-height:1.5;}
+  .pref-chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .pref-chip{padding:9px 18px;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;
+    transition:all 0.18s;user-select:none;}
+  .pref-chip:hover{border-color:rgba(232,240,72,0.3);color:var(--text);}
+  .pref-chip.selected{background:rgba(232,240,72,0.08);border-color:rgba(232,240,72,0.5);color:var(--accent);}
 
-  .page-title { font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); margin-bottom:6px; line-height:1.1; }
-  .page-sub { font-size:0.75rem; color:var(--muted); letter-spacing:0.05em; margin-bottom:40px; }
+  /* STEPPER */
+  .stepper{display:flex;margin-bottom:32px;border:1px solid var(--border);overflow:hidden;}
+  .step-item{flex:1;padding:12px 10px;text-align:center;font-size:0.6rem;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--muted);background:var(--surface);border-right:1px solid var(--border);transition:all 0.3s;}
+  .step-item:last-child{border-right:none;}
+  .step-item.active{color:var(--accent);background:rgba(232,240,72,0.06);}
+  .step-item.done{color:var(--green);background:rgba(72,240,168,0.04);}
+  .step-num{font-size:1rem;display:block;margin-bottom:3px;font-family:'DM Serif Display',serif;}
 
-  .section-label {
-    font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent);
-    margin-bottom:14px; display:flex; align-items:center; gap:12px;
-  }
-  .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
-  .section { margin-bottom:32px; }
+  /* BUTTONS */
+  .btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;
+    background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.84rem;font-weight:600;
+    letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.18s;margin-top:24px;}
+  .btn-primary:hover{background:#f0fa60;transform:translateY(-1px);}
+  .btn-primary:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed;transform:none;}
+  .btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:none;
+    border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;
+    letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;}
+  .btn-secondary:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
+  .btn-accent{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;
+    background:rgba(232,240,72,0.08);border:1px solid rgba(232,240,72,0.3);color:var(--accent);
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;}
+  .btn-accent:hover{background:rgba(232,240,72,0.16);}
+  .btn-cyan{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;
+    background:rgba(72,200,240,0.08);border:1px solid rgba(72,200,240,0.3);color:var(--accent2);
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;text-decoration:none;}
+  .btn-cyan:hover{background:rgba(72,200,240,0.16);}
 
-  /* ── FORM ── */
-  label { display:block; font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; margin-bottom:7px; margin-top:16px; }
-  label:first-child { margin-top:0; }
-  input[type="text"], input[type="date"], input[type="password"], textarea {
-    width:100%; background:var(--surface); border:1px solid var(--border);
-    color:var(--text); font-family:'DM Mono',monospace; font-size:0.85rem;
-    padding:11px 14px; outline:none; transition:border-color 0.2s, background 0.2s;
-  }
-  input:focus, textarea:focus { border-color:rgba(232,240,72,0.35); background:var(--surface2); }
-  textarea { resize:vertical; min-height:70px; line-height:1.6; }
-  .pref-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  @media(max-width:560px) { .pref-row { grid-template-columns:1fr; } }
-
-  /* ── DAY SELECT CARDS ── */
-  .day-cards-grid {
-    display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;
-  }
-  @media(max-width:560px) { .day-cards-grid { grid-template-columns:1fr; } }
-
-  .day-select-card {
-    background:var(--surface); border:1px solid var(--border);
-    padding:24px 20px; cursor:pointer; transition:all 0.22s;
-    position:relative; overflow:hidden; min-height:140px;
-    display:flex; flex-direction:column; justify-content:space-between;
-  }
-  .day-select-card:hover { border-color:rgba(232,240,72,0.3); background:var(--surface2); }
-  .day-select-card.has-date { border-color:rgba(232,240,72,0.4); background:rgba(232,240,72,0.04); }
-  .day-select-card.has-date:hover { border-color:rgba(232,240,72,0.6); background:rgba(232,240,72,0.08); }
-
-  .day-select-card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:2px;
-    background:linear-gradient(90deg, var(--accent), transparent);
-    opacity:0; transition:opacity 0.22s;
-  }
-  .day-select-card.has-date::before { opacity:1; }
-
-  .dcard-num {
-    font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase;
-    color:var(--muted); margin-bottom:12px;
-  }
-  .day-select-card.has-date .dcard-num { color:var(--accent); }
-
-  .dcard-date {
-    font-family:'DM Serif Display',serif; font-size:1.6rem; line-height:1;
-    color:var(--muted); margin-bottom:4px; transition:color 0.22s;
-  }
-  .day-select-card.has-date .dcard-date { color:var(--text); }
-
-  .dcard-weekday {
-    font-size:0.72rem; color:var(--muted); letter-spacing:0.05em;
-    margin-bottom:16px; min-height:1em;
-  }
-  .day-select-card.has-date .dcard-weekday { color:var(--accent); }
-
-  .dcard-status {
-    font-size:0.65rem; color:var(--muted); letter-spacing:0.08em;
-    text-transform:uppercase;
-  }
-  .day-select-card.has-date .dcard-status { color:var(--green); }
-
-  .dcard-hidden-input {
-    position:absolute; opacity:0; pointer-events:none;
-    width:1px; height:1px; top:0; left:0;
-  }
-
-  /* ── PROGRESS STEPPER ── */
-  .stepper {
-    display:flex; margin-bottom:36px; overflow:hidden;
-    border:1px solid var(--border);
-  }
-  .step-item {
-    flex:1; padding:12px 10px; text-align:center;
-    font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--muted); background:var(--surface); border-right:1px solid var(--border);
-    transition:all 0.3s; position:relative;
-  }
-  .step-item:last-child { border-right:none; }
-  .step-item.active { color:var(--accent); background:rgba(232,240,72,0.06); }
-  .step-item.done { color:var(--green); background:rgba(72,240,168,0.04); }
-  .step-num { font-size:1rem; display:block; margin-bottom:3px; font-family:'DM Serif Display',serif; }
-
-  /* ── BUTTONS ── */
-  .btn-primary {
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    width:100%; padding:14px; background:var(--accent); color:#0a0a0f;
-    font-family:'DM Mono',monospace; font-size:0.84rem; font-weight:600;
-    letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; border:none;
-    transition:all 0.18s; margin-top:24px;
-  }
-  .btn-primary:hover { background:#f0fa60; transform:translateY(-1px); }
-  .btn-primary:disabled { background:var(--surface2); color:var(--muted); cursor:not-allowed; transform:none; }
-
-  .btn-secondary {
-    display:inline-flex; align-items:center; gap:8px;
-    padding:10px 20px; background:none; border:1px solid var(--border); color:var(--muted);
-    font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em;
-    text-transform:uppercase; cursor:pointer; transition:all 0.18s;
-  }
-  .btn-secondary:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
-
-  .btn-accent {
-    display:inline-flex; align-items:center; gap:8px;
-    padding:10px 20px; background:rgba(232,240,72,0.08); border:1px solid rgba(232,240,72,0.3);
-    color:var(--accent); font-family:'DM Mono',monospace; font-size:0.72rem;
-    letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.18s;
-  }
-  .btn-accent:hover { background:rgba(232,240,72,0.16); }
-
-  /* ── DAY HEADER IN PICKER ── */
-  .day-header-bar {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 20px; background:var(--surface2); border:1px solid var(--border);
-    margin-bottom:16px;
-  }
-  .day-header-bar h2 { font-family:'DM Serif Display',serif; font-size:1.4rem; }
-  .day-progress { font-size:0.68rem; color:var(--accent); letter-spacing:0.1em; }
-
-  /* ── FILM CARDS ── */
-  .film-grid { display:grid; gap:10px; }
-
-  .film-card {
-    background:var(--surface); border:1px solid var(--border);
-    display:grid; grid-template-columns:auto 1fr; gap:14px;
-    padding:16px 18px; cursor:pointer; transition:all 0.18s; align-items:start;
-  }
-  .film-card:hover { border-color:rgba(232,240,72,0.2); background:var(--surface2); }
-  .film-card.selected { border-color:rgba(232,240,72,0.5); background:rgba(232,240,72,0.05); }
-
-  .film-check {
-    width:18px; height:18px; border:1px solid var(--border);
-    background:var(--surface2); display:flex; align-items:center; justify-content:center;
-    flex-shrink:0; margin-top:2px; transition:all 0.18s;
-  }
-  .film-card.selected .film-check { background:var(--accent); border-color:var(--accent); }
-  .check-inner { width:10px; height:10px; background:var(--bg); display:none; }
-  .film-card.selected .check-inner { display:block; }
-
-  .film-title { font-size:0.92rem; margin-bottom:3px; }
-  .film-times { font-size:0.68rem; color:var(--accent); letter-spacing:0.06em; margin-bottom:6px; }
-  .film-desc { font-size:0.72rem; color:var(--muted); line-height:1.65; margin-bottom:8px; }
-
-  .btn-trailer {
-    display:inline-flex; align-items:center; gap:5px;
-    padding:5px 11px; background:rgba(72,200,240,0.08); border:1px solid rgba(72,200,240,0.22);
-    color:var(--accent2); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;
-    text-decoration:none; font-family:'DM Mono',monospace; transition:all 0.18s;
-  }
-  .btn-trailer:hover { background:rgba(72,200,240,0.16); }
-
-  /* ── SELECTION FOOTER ── */
-  .selection-bar {
-    position:sticky; bottom:0; z-index:50;
-    background:rgba(10,10,15,0.96); backdrop-filter:blur(12px);
-    border-top:1px solid var(--border); padding:14px 20px;
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    margin:0 -20px;
-  }
-  .sel-count { font-size:0.75rem; color:var(--muted); }
-  .sel-count strong { color:var(--accent); }
-  .sel-btns { display:flex; gap:10px; }
-
-  /* ── LOADING ── */
-  .loading-box {
-    display:none; text-align:center; padding:48px 20px;
-    border:1px solid var(--border); background:var(--surface);
-  }
-  .film-strip { display:flex; gap:4px; justify-content:center; margin-bottom:16px; }
-  .film-frame { width:13px; height:19px; background:var(--surface2); border:1px solid var(--border); animation:filmroll 1.2s ease-in-out infinite; }
-  .film-frame:nth-child(2){animation-delay:.1s} .film-frame:nth-child(3){animation-delay:.2s}
-  .film-frame:nth-child(4){animation-delay:.3s} .film-frame:nth-child(5){animation-delay:.4s}
+  /* LOADING */
+  .loading-box{display:none;text-align:center;padding:48px 20px;border:1px solid var(--border);background:var(--surface);}
+  .film-strip{display:flex;gap:4px;justify-content:center;margin-bottom:16px;}
+  .film-frame{width:13px;height:19px;background:var(--surface2);border:1px solid var(--border);animation:filmroll 1.2s ease-in-out infinite;}
+  .film-frame:nth-child(2){animation-delay:.1s}.film-frame:nth-child(3){animation-delay:.2s}
+  .film-frame:nth-child(4){animation-delay:.3s}.film-frame:nth-child(5){animation-delay:.4s}
   @keyframes filmroll{0%,100%{background:var(--surface2);border-color:var(--border)}50%{background:var(--accent);border-color:var(--accent)}}
-  .loading-text { font-size:0.73rem; color:var(--muted); letter-spacing:0.1em; }
-  .loading-sub { font-size:0.65rem; color:var(--muted); margin-top:8px; opacity:0.6; }
+  .loading-text{font-size:0.73rem;color:var(--muted);letter-spacing:0.1em;}
+  .loading-sub{font-size:0.65rem;color:var(--muted);margin-top:8px;opacity:0.6;}
 
-  /* ── ERROR / NOTE ── */
-  .error-box { border:1px solid rgba(240,72,72,0.3); background:rgba(240,72,72,0.07); padding:16px; color:var(--red); font-size:0.78rem; line-height:1.6; display:none; margin-bottom:16px; }
-  .note-box { background:rgba(232,240,72,0.04); border:1px solid rgba(232,240,72,0.14); padding:14px 18px; font-size:0.73rem; color:var(--muted); line-height:1.7; }
-  .note-box strong { color:var(--accent); }
-  .note-box a { color:var(--accent); text-decoration:none; }
+  /* ERROR / NOTE */
+  .error-box{border:1px solid rgba(240,72,72,0.3);background:rgba(240,72,72,0.07);padding:16px;
+    color:var(--red);font-size:0.78rem;line-height:1.6;display:none;margin-bottom:16px;}
+  .note-box{background:rgba(232,240,72,0.04);border:1px solid rgba(232,240,72,0.14);
+    padding:14px 18px;font-size:0.73rem;color:var(--muted);line-height:1.7;}
+  .note-box strong{color:var(--accent);}
 
-  /* ── OUTPUT / PLAN ── */
-  #output { display:none; animation:fadeIn 0.4s ease; }
+  /* SWIPE SCREEN */
+  .swipe-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+  .swipe-day-label{font-family:'DM Serif Display',serif;font-size:1.3rem;}
+  .swipe-progress-text{font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;}
+  .swipe-bar{height:3px;background:var(--surface2);margin-bottom:28px;}
+  .swipe-bar-fill{height:100%;background:var(--accent);transition:width 0.3s ease;}
+
+  .swipe-arena{display:flex;flex-direction:column;align-items:center;min-height:420px;position:relative;}
+
+  .film-swipe-card{width:100%;max-width:580px;background:var(--surface);border:1px solid var(--border);
+    padding:28px 32px;position:relative;animation:cardIn 0.3s ease;}
+  @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .film-swipe-card.go-left{animation:goLeft 0.32s ease forwards;}
+  .film-swipe-card.go-right{animation:goRight 0.32s ease forwards;}
+  @keyframes goLeft{to{transform:translateX(-130%) rotate(-8deg);opacity:0;}}
+  @keyframes goRight{to{transform:translateX(130%) rotate(8deg);opacity:0;}}
+
+  .swipe-lbl-yes{position:absolute;top:18px;left:18px;padding:5px 13px;border:3px solid var(--green);
+    color:var(--green);font-size:0.9rem;letter-spacing:0.2em;font-weight:700;opacity:0;transform:rotate(-12deg);}
+  .swipe-lbl-no{position:absolute;top:18px;right:18px;padding:5px 13px;border:3px solid var(--red);
+    color:var(--red);font-size:0.9rem;letter-spacing:0.2em;font-weight:700;opacity:0;transform:rotate(12deg);}
+
+  .sc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+  .sc-time-big{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.6rem;color:var(--accent);}
+  .sc-venue-right{font-size:0.7rem;color:var(--muted);text-align:right;line-height:1.6;}
+  .sc-title-big{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:6px;line-height:1.2;}
+  .sc-dur-sm{font-size:0.68rem;color:var(--muted);margin-bottom:14px;}
+  .sc-desc-sm{font-size:0.77rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
+  .sc-footer{display:flex;justify-content:space-between;align-items:center;
+    padding-top:14px;border-top:1px solid var(--border);}
+  .sc-times-all{font-size:0.65rem;color:var(--muted);line-height:1.7;}
+  .sc-times-all span{color:var(--text);}
+
+  .btn-trailer-link{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;
+    background:rgba(72,200,240,0.08);border:1px solid rgba(72,200,240,0.22);color:var(--accent2);
+    font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
+    font-family:'DM Mono',monospace;transition:all 0.18s;}
+  .btn-trailer-link:hover{background:rgba(72,200,240,0.16);}
+
+  /* SWIPE ACTION BUTTONS */
+  .swipe-btns{display:flex;gap:20px;justify-content:center;margin-top:28px;}
+  .btn-nope{width:66px;height:66px;border-radius:50%;border:2px solid rgba(240,72,72,0.4);
+    background:rgba(240,72,72,0.08);color:var(--red);font-size:1.7rem;cursor:pointer;
+    transition:all 0.18s;display:flex;align-items:center;justify-content:center;}
+  .btn-nope:hover{background:rgba(240,72,72,0.2);border-color:var(--red);transform:scale(1.1);}
+  .btn-like{width:66px;height:66px;border-radius:50%;border:2px solid rgba(72,240,168,0.4);
+    background:rgba(72,240,168,0.08);color:var(--green);font-size:1.7rem;cursor:pointer;
+    transition:all 0.18s;display:flex;align-items:center;justify-content:center;}
+  .btn-like:hover{background:rgba(72,240,168,0.2);border-color:var(--green);transform:scale(1.1);}
+  .swipe-hint{font-size:0.63rem;color:var(--muted);text-align:center;margin-top:10px;letter-spacing:0.08em;}
+
+  /* DAY DONE */
+  .day-done{text-align:center;padding:48px 20px;border:1px solid var(--border);background:var(--surface);}
+  .day-done-emoji{font-size:3rem;margin-bottom:16px;}
+  .day-done h2{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:6px;}
+  .day-done-count{font-size:2.5rem;font-family:'DM Serif Display',serif;color:var(--accent);line-height:1;}
+  .day-done p{font-size:0.78rem;color:var(--muted);margin-top:4px;margin-bottom:24px;line-height:1.7;}
+
+  /* STICKY BAR */
+  .sel-bar{position:sticky;bottom:0;z-index:50;background:rgba(10,10,15,0.96);backdrop-filter:blur(12px);
+    border-top:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;
+    justify-content:space-between;gap:12px;margin:0 -20px;flex-wrap:wrap;}
+  .sel-count{font-size:0.75rem;color:var(--muted);}
+  .sel-count strong{color:var(--accent);}
+
+  /* OUTPUT */
+  #output{display:none;animation:fadeIn 0.4s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .output-actions { display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
+  .output-actions{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
 
-  .day-card { background:var(--surface); border:1px solid var(--border); margin-bottom:20px; overflow:hidden; }
-  .day-card-header { padding:14px 22px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
-  .day-card-title { font-family:'DM Serif Display',serif; font-size:1.2rem; }
-  .day-card-date { font-size:0.68rem; color:var(--accent); letter-spacing:0.1em; }
+  /* PLAN CARDS */
+  .day-card{background:var(--surface);border:1px solid var(--border);margin-bottom:20px;overflow:hidden;}
+  .day-card-header{padding:14px 22px;background:var(--surface2);border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;}
+  .day-card-title{font-family:'DM Serif Display',serif;font-size:1.2rem;}
+  .day-card-date{font-size:0.68rem;color:var(--accent);letter-spacing:0.1em;}
+  .screening{padding:18px 22px;border-bottom:1px solid var(--border);}
+  .screening:last-child{border-bottom:none;}
+  .sc-time{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.25rem;color:var(--accent);margin-bottom:3px;}
+  .sc-title{font-size:0.92rem;margin-bottom:3px;font-weight:500;}
+  .sc-venue{font-size:0.72rem;color:var(--muted);}
+  .sc-dur{font-size:0.67rem;color:var(--muted);margin-top:2px;}
+  .sc-desc{font-size:0.73rem;color:var(--muted);line-height:1.65;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+  .sc-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;}
+  .btn-ticket{display:inline-flex;align-items:center;gap:5px;background:rgba(232,240,72,0.07);
+    border:1px solid rgba(232,240,72,0.22);color:var(--accent);padding:6px 13px;font-size:0.67rem;
+    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:all 0.18s;}
+  .btn-ticket:hover{background:rgba(232,240,72,0.14);}
+  .btn-trailer-sm{display:inline-flex;align-items:center;gap:5px;background:rgba(72,200,240,0.08);
+    border:1px solid rgba(72,200,240,0.22);color:var(--accent2);padding:6px 13px;font-size:0.67rem;
+    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:all 0.18s;}
+  .btn-trailer-sm:hover{background:rgba(72,200,240,0.16);}
+  .btn-cafe{display:inline-flex;align-items:center;gap:5px;background:transparent;
+    border:1px solid var(--border);color:var(--muted);padding:6px 13px;font-size:0.67rem;
+    letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;cursor:pointer;transition:all 0.18s;}
+  .btn-cafe:hover{border-color:rgba(232,240,72,0.3);color:var(--accent);}
 
-  .screening { padding:18px 22px; border-bottom:1px solid var(--border); }
-  .screening:last-child { border-bottom:none; }
-  .sc-time { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.25rem; color:var(--accent); margin-bottom:3px; }
-  .sc-title { font-size:0.92rem; margin-bottom:3px; font-weight:500; }
-  .sc-venue { font-size:0.72rem; color:var(--muted); }
-  .sc-dur { font-size:0.67rem; color:var(--muted); margin-top:2px; }
-  .sc-desc { font-size:0.73rem; color:var(--muted); line-height:1.65; margin-top:8px; padding-top:8px; border-top:1px solid var(--border); }
-  .sc-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .travel-badge{display:flex;align-items:center;gap:12px;padding:11px 22px;background:rgba(72,200,240,0.04);
+    border-top:1px dashed rgba(72,200,240,0.18);border-bottom:1px dashed rgba(72,200,240,0.18);}
+  .travel-info{font-size:0.72rem;color:var(--accent2);}
+  .btn-maps{margin-left:auto;display:inline-flex;align-items:center;gap:5px;background:rgba(72,200,240,0.1);
+    border:1px solid rgba(72,200,240,0.28);color:var(--accent2);padding:6px 13px;font-size:0.67rem;
+    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;
+    transition:all 0.18s;flex-shrink:0;}
+  .btn-maps:hover{background:rgba(72,200,240,0.18);}
 
-  .btn-ticket {
-    display:inline-flex; align-items:center; gap:5px;
-    background:rgba(232,240,72,0.07); border:1px solid rgba(232,240,72,0.22);
-    color:var(--accent); padding:6px 13px; font-size:0.67rem; letter-spacing:0.1em;
-    text-transform:uppercase; text-decoration:none; font-family:'DM Mono',monospace; transition:all 0.18s;
-  }
-  .btn-ticket:hover { background:rgba(232,240,72,0.14); }
-  .btn-trailer-sm {
-    display:inline-flex; align-items:center; gap:5px;
-    background:rgba(72,200,240,0.08); border:1px solid rgba(72,200,240,0.22);
-    color:var(--accent2); padding:6px 13px; font-size:0.67rem; letter-spacing:0.1em;
-    text-transform:uppercase; text-decoration:none; font-family:'DM Mono',monospace; transition:all 0.18s;
-  }
-  .btn-trailer-sm:hover { background:rgba(72,200,240,0.16); }
-
-  .travel-badge {
-    display:flex; align-items:center; gap:12px; padding:11px 22px;
-    background:rgba(72,200,240,0.04);
-    border-top:1px dashed rgba(72,200,240,0.18); border-bottom:1px dashed rgba(72,200,240,0.18);
-  }
-  .travel-info { font-size:0.72rem; color:var(--accent2); }
-  .btn-maps {
-    margin-left:auto; display:inline-flex; align-items:center; gap:5px;
-    background:rgba(72,200,240,0.1); border:1px solid rgba(72,200,240,0.28);
-    color:var(--accent2); padding:6px 13px; font-size:0.67rem; letter-spacing:0.1em;
-    text-transform:uppercase; text-decoration:none; font-family:'DM Mono',monospace;
-    transition:all 0.18s; flex-shrink:0;
-  }
-  .btn-maps:hover { background:rgba(72,200,240,0.18); }
-
-  /* ── MODAL ── */
-  .modal-overlay { display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.78); align-items:center; justify-content:center; }
-  .modal-overlay.open { display:flex; }
-  .modal { background:var(--surface); border:1px solid rgba(232,240,72,0.2); padding:32px; max-width:420px; width:90%; animation:fadeUp 0.25s ease; }
+  /* MODALS */
+  .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.78);
+    align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  .modal h2 { font-family:'DM Serif Display',serif; font-size:1.4rem; margin-bottom:8px; }
-  .modal p { font-size:0.75rem; color:var(--muted); margin-bottom:20px; }
-  .modal-btns { display:flex; gap:10px; margin-top:20px; }
-  .btn-modal-save { flex:1; background:var(--accent); color:#0a0a0f; font-family:'DM Mono',monospace; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; padding:11px; cursor:pointer; border:none; font-weight:600; transition:background 0.18s; }
-  .btn-modal-save:hover { background:#f0fa60; }
-  .btn-modal-cancel { padding:11px 18px; background:none; border:1px solid var(--border); color:var(--muted); font-family:'DM Mono',monospace; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.18s; }
-  .btn-modal-cancel:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
 
-  /* ── ARCHIVE ── */
-  .archive-empty { text-align:center; padding:60px 20px; border:1px solid var(--border); background:var(--surface); }
-  .archive-empty p { font-size:0.8rem; color:var(--muted); line-height:1.7; }
-  .archive-card { background:var(--surface); border:1px solid var(--border); padding:20px 22px; cursor:pointer; transition:all 0.18s; position:relative; margin-bottom:12px; }
-  .archive-card:hover { border-color:rgba(232,240,72,0.25); background:var(--surface2); }
-  .arc-name { font-family:'DM Serif Display',serif; font-size:1.15rem; margin-bottom:5px; }
-  .arc-meta { font-size:0.7rem; color:var(--muted); line-height:1.6; }
-  .arc-days { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
-  .day-pill { font-size:0.65rem; padding:3px 9px; background:rgba(232,240,72,0.07); border:1px solid rgba(232,240,72,0.18); color:var(--accent); }
-  .arc-actions { position:absolute; top:14px; right:14px; }
-  .btn-del { background:none; border:1px solid var(--border); color:var(--muted); padding:5px 10px; font-size:0.7rem; cursor:pointer; font-family:'DM Mono',monospace; transition:all 0.18s; }
-  .btn-del:hover { border-color:rgba(240,72,72,0.4); color:var(--red); }
-  #archive-view { display:none; }
-  .back-btn { display:inline-flex; align-items:center; gap:8px; background:none; border:1px solid var(--border); color:var(--muted); padding:8px 16px; font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.18s; margin-bottom:28px; }
-  .back-btn:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
+  .modal-box{background:var(--surface);border:1px solid rgba(232,240,72,0.2);
+    max-width:480px;width:100%;max-height:85vh;overflow-y:auto;animation:fadeUp 0.25s ease;}
+  .modal-head{padding:22px 26px 16px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:flex-start;}
+  .modal-head h2{font-family:'DM Serif Display',serif;font-size:1.25rem;}
+  .modal-head-sub{font-size:0.68rem;color:var(--muted);margin-top:3px;}
+  .modal-close{background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;padding:0 4px;line-height:1;}
+  .modal-close:hover{color:var(--text);}
+  .modal-body{padding:20px 26px 26px;}
 
-  ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--border)}
+  .cafe-card{background:var(--surface2);border:1px solid var(--border);padding:13px 16px;margin-bottom:10px;}
+  .cafe-name{font-size:0.88rem;margin-bottom:3px;}
+  .cafe-type{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-left:6px;}
+  .cafe-meta{font-size:0.68rem;color:var(--muted);line-height:1.65;margin-top:3px;}
+  .cafe-dist{color:var(--accent);}
+
+  .save-box{background:var(--surface);border:1px solid rgba(232,240,72,0.2);padding:32px;max-width:420px;width:100%;animation:fadeUp 0.25s ease;}
+  .save-box h2{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px;}
+  .save-box p{font-size:0.75rem;color:var(--muted);margin-bottom:20px;}
+  .modal-btns{display:flex;gap:10px;margin-top:20px;}
+  .btn-msave{flex:1;background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;padding:11px;cursor:pointer;border:none;font-weight:600;transition:background 0.18s;}
+  .btn-msave:hover{background:#f0fa60;}
+  .btn-mcancel{padding:11px 18px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;}
+  .btn-mcancel:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
+
+  /* ARCHIVE */
+  .archive-empty{text-align:center;padding:60px 20px;border:1px solid var(--border);background:var(--surface);}
+  .archive-empty p{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+  .archive-card{background:var(--surface);border:1px solid var(--border);padding:20px 22px;cursor:pointer;transition:all 0.18s;position:relative;margin-bottom:12px;}
+  .archive-card:hover{border-color:rgba(232,240,72,0.25);background:var(--surface2);}
+  .arc-name{font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:5px;}
+  .arc-meta{font-size:0.7rem;color:var(--muted);line-height:1.6;}
+  .arc-days{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .day-pill{font-size:0.65rem;padding:3px 9px;background:rgba(232,240,72,0.07);border:1px solid rgba(232,240,72,0.18);color:var(--accent);}
+  .arc-del{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--border);color:var(--muted);padding:5px 10px;font-size:0.7rem;cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.18s;}
+  .arc-del:hover{border-color:rgba(240,72,72,0.4);color:var(--red);}
+  #archive-view{display:none;}
+  .back-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 16px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;margin-bottom:28px;}
+  .back-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
+
+  ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border)}
 </style>
 </head>
 <body>
@@ -344,14 +296,14 @@
   </div>
 </nav>
 
-<!-- ══ PLANNER PAGE ══ -->
+<!-- PLANNER PAGE -->
 <div class="page active" id="page-planner">
 <div class="container">
 
-  <!-- SETUP SCREEN -->
+  <!-- SETUP -->
   <div id="screen-setup">
     <h1 class="page-title">Lav en festivalplan</h1>
-    <p class="page-sub">// Vælg dine tre dage — programmet hentes én dag ad gangen</p>
+    <p class="page-sub">// CPH:DOX 2026 · 11–22. marts · Swipe dig til din plan</p>
 
     <div class="section">
       <div class="section-label">01 — API-nøgle</div>
@@ -359,86 +311,102 @@
         <input type="password" id="api-key" placeholder="sk-ant-..." style="padding-right:80px;" />
         <button onclick="toggleKey()" id="toggle-btn" style="position:absolute;right:0;top:0;bottom:0;background:var(--surface2);border:none;border-left:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;padding:0 13px;cursor:pointer;text-transform:uppercase;">Vis</button>
       </div>
-      <div style="font-size:0.68rem;color:var(--muted);margin-top:7px;line-height:1.6;">Hent den på <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);text-decoration:none;">console.anthropic.com</a></div>
+      <div style="font-size:0.68rem;color:var(--muted);margin-top:7px;">Hent på <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);text-decoration:none;">console.anthropic.com</a></div>
     </div>
 
     <div class="section">
-      <div class="section-label">02 — Festivaldage (vælg op til 3)</div>
+      <div class="section-label">02 — Festivaldage (11–22. marts 2026)</div>
       <div class="day-cards-grid">
-        <div class="day-select-card" id="dcard-0" onclick="openDatePicker(0)">
+        <div class="day-select-card" id="dcard-0">
           <div class="dcard-num">Dag 1</div>
-          <div class="dcard-date" id="dcard-date-0">Klik for at vælge</div>
+          <div class="dcard-date" id="dcard-date-0">Vælg dato</div>
           <div class="dcard-weekday" id="dcard-weekday-0"></div>
           <div class="dcard-status" id="dcard-status-0">○ Ikke valgt</div>
-          <input type="date" id="date1" class="dcard-hidden-input" onchange="onDateChange(0)" />
+          <input type="date" id="date1" class="dcard-input" min="2026-03-11" max="2026-03-22" onchange="onDateChange(0)" />
         </div>
-        <div class="day-select-card" id="dcard-1" onclick="openDatePicker(1)">
+        <div class="day-select-card" id="dcard-1">
           <div class="dcard-num">Dag 2</div>
-          <div class="dcard-date" id="dcard-date-1">Klik for at vælge</div>
+          <div class="dcard-date" id="dcard-date-1">Vælg dato</div>
           <div class="dcard-weekday" id="dcard-weekday-1"></div>
           <div class="dcard-status" id="dcard-status-1">○ Ikke valgt</div>
-          <input type="date" id="date2" class="dcard-hidden-input" onchange="onDateChange(1)" />
+          <input type="date" id="date2" class="dcard-input" min="2026-03-11" max="2026-03-22" onchange="onDateChange(1)" />
         </div>
-        <div class="day-select-card" id="dcard-2" onclick="openDatePicker(2)">
+        <div class="day-select-card" id="dcard-2">
           <div class="dcard-num">Dag 3</div>
-          <div class="dcard-date" id="dcard-date-2">Klik for at vælge</div>
+          <div class="dcard-date" id="dcard-date-2">Vælg dato</div>
           <div class="dcard-weekday" id="dcard-weekday-2"></div>
           <div class="dcard-status" id="dcard-status-2">○ Ikke valgt</div>
-          <input type="date" id="date3" class="dcard-hidden-input" onchange="onDateChange(2)" />
+          <input type="date" id="date3" class="dcard-input" min="2026-03-11" max="2026-03-22" onchange="onDateChange(2)" />
         </div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-label">03 — Præferencer (valgfrit)</div>
-      <div class="pref-row">
-        <div><label>Tidligste start</label><input type="text" id="pref-start" placeholder="fx ikke før 11:00" /></div>
-        <div><label>Seneste slut</label><input type="text" id="pref-end" placeholder="fx ikke efter 22:00" /></div>
+      <div class="section-label">03 — Dine præferencer</div>
+      <div class="pref-group">
+        <div class="pref-question">Pauser mellem film?</div>
+        <div class="pref-chips" id="pg-pauses">
+          <div class="pref-chip" data-val="relaxed" onclick="pickChip('pg-pauses',this)">☕ Tid til mad og kaffe</div>
+          <div class="pref-chip" data-val="packed" onclick="pickChip('pg-pauses',this)">🎬 Pak så meget ind som muligt</div>
+        </div>
       </div>
-      <label>Øvrige ønsker</label>
-      <textarea id="pref-notes" placeholder="fx max 2 film om dagen, undgå Palads..."></textarea>
+      <div class="pref-group">
+        <div class="pref-question">Hvor mange film om dagen?</div>
+        <div class="pref-chips" id="pg-count">
+          <div class="pref-chip" data-val="1-2" onclick="pickChip('pg-count',this)">1–2 film</div>
+          <div class="pref-chip" data-val="3-4" onclick="pickChip('pg-count',this)">3–4 film</div>
+          <div class="pref-chip" data-val="max" onclick="pickChip('pg-count',this)">Så mange som muligt</div>
+        </div>
+      </div>
+      <div class="pref-group">
+        <div class="pref-question">Hvornår starter du helst?</div>
+        <div class="pref-chips" id="pg-start">
+          <div class="pref-chip" data-val="morning" onclick="pickChip('pg-start',this)">🌅 Fra kl. 10</div>
+          <div class="pref-chip" data-val="midday" onclick="pickChip('pg-start',this)">☀️ Fra kl. 12</div>
+          <div class="pref-chip" data-val="afternoon" onclick="pickChip('pg-start',this)">🌇 Fra kl. 15</div>
+        </div>
+      </div>
     </div>
 
     <div class="note-box">
-      <strong>Sådan virker det:</strong> Programmet hentes én dag ad gangen mens du vælger film. Til sidst laver Claude den optimale plan på tværs af alle dine dage — inkl. trailere, beskrivelser og gangtider.
+      <strong>Sådan virker det:</strong> Du swiper dig gennem filmene — ✓ for dem du vil se, ✕ for dem du springer over. Piletaster virker også. Derefter laver Claude den optimale plan på tværs af dine dage med gangtider, trailere og billetlinks.
     </div>
 
-    <button class="btn-primary" onclick="startPlanner()">▶ Hent program og vælg film</button>
+    <button class="btn-primary" onclick="startPlanner()">▶ Start — swipe dag 1</button>
   </div>
 
-  <!-- PICKER SCREEN (one day at a time) -->
-  <div id="screen-picker" style="display:none;">
-
+  <!-- SWIPE SCREEN -->
+  <div id="screen-swipe" style="display:none;">
     <div class="stepper" id="stepper"></div>
-
     <div class="error-box" id="error-fetch"></div>
-
     <div class="loading-box" id="loading-fetch">
       <div class="film-strip">
         <div class="film-frame"></div><div class="film-frame"></div>
         <div class="film-frame"></div><div class="film-frame"></div>
         <div class="film-frame"></div>
       </div>
-      <div class="loading-text" id="loading-fetch-text">Henter filmprogram...</div>
-      <div class="loading-sub" id="loading-fetch-sub"></div>
+      <div class="loading-text" id="loading-text">Henter filmprogram...</div>
+      <div class="loading-sub">Søger i CPH:DOX programmet</div>
     </div>
 
-    <div id="picker-content" style="display:none;">
-      <div class="day-header-bar">
-        <h2 id="picker-day-title"></h2>
-        <span class="day-progress" id="picker-day-progress"></span>
+    <div id="swipe-content" style="display:none;">
+      <div class="swipe-header">
+        <div class="swipe-day-label" id="swipe-day-label"></div>
+        <div class="swipe-progress-text" id="swipe-prog-text"></div>
       </div>
-      <div class="film-grid" id="film-grid"></div>
-    </div>
-
-    <div class="selection-bar">
-      <div class="sel-count" id="sel-count">Ingen film valgt</div>
-      <div class="sel-btns">
-        <button class="btn-secondary" onclick="goBackSetup()">← Tilbage</button>
-        <button class="btn-primary" style="margin-top:0;width:auto;padding:10px 24px;" id="next-btn" onclick="nextDay()">Næste dag →</button>
+      <div class="swipe-bar"><div class="swipe-bar-fill" id="swipe-bar-fill"></div></div>
+      <div class="swipe-arena" id="swipe-arena"></div>
+      <div class="swipe-btns">
+        <button class="btn-nope" onclick="swipe(false)" title="Spring over (← pil)">✕</button>
+        <button class="btn-like" onclick="swipe(true)" title="Vil se (→ pil)">✓</button>
       </div>
+      <div class="swipe-hint">← Spring over &nbsp;·&nbsp; Vil se → &nbsp;·&nbsp; Piletaster virker</div>
     </div>
 
+    <div class="sel-bar">
+      <div class="sel-count" id="sel-count">Ingen film valgt endnu</div>
+      <button class="btn-secondary" onclick="goBackSetup()">← Tilbage</button>
+    </div>
   </div>
 
   <!-- LOADING PLAN -->
@@ -451,14 +419,14 @@
     <div class="loading-text" id="loading-plan-text">Sammensætter din festivalplan...</div>
     <div class="loading-sub">Analyserer alle valgte film på tværs af dagene</div>
   </div>
-
   <div class="error-box" id="error-plan" style="margin-top:20px;"></div>
 
   <!-- OUTPUT -->
   <div id="output">
     <div class="output-actions">
-      <button class="btn-secondary" onclick="restartPlanner()">← Lav ny plan</button>
+      <button class="btn-secondary" onclick="restartPlanner()">← Ny plan</button>
       <button class="btn-accent" id="save-btn" onclick="openSaveModal()">💾 Gem plan</button>
+      <button class="btn-cyan" onclick="downloadICS()">📅 Tilføj til kalender</button>
     </div>
     <div id="plan-cards"></div>
   </div>
@@ -466,229 +434,196 @@
 </div>
 </div>
 
-<!-- ══ ARCHIVE PAGE ══ -->
+<!-- ARCHIVE PAGE -->
 <div class="page" id="page-archive">
 <div class="container">
   <div id="archive-list">
     <h1 class="page-title">Mine planer</h1>
-    <p class="page-sub">// Alle gemte festivalplaner — klik for at åbne</p>
+    <p class="page-sub">// Alle gemte festivalplaner</p>
     <div id="archive-cards"></div>
   </div>
   <div id="archive-view">
     <button class="back-btn" onclick="closeArchiveView()">← Alle planer</button>
     <h1 class="page-title" id="av-title"></h1>
     <p class="page-sub" id="av-sub"></p>
+    <div class="output-actions" style="margin-top:16px;">
+      <button class="btn-cyan" onclick="downloadICS()">📅 Tilføj til kalender</button>
+    </div>
     <div id="av-cards"></div>
   </div>
 </div>
 </div>
 
+<!-- CAFE MODAL -->
+<div class="modal-overlay" id="cafe-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <h2>Cafeer i nærheden</h2>
+        <div class="modal-head-sub" id="cafe-modal-sub"></div>
+      </div>
+      <button class="modal-close" onclick="closeCafeModal()">×</button>
+    </div>
+    <div class="modal-body" id="cafe-body"></div>
+  </div>
+</div>
+
 <!-- SAVE MODAL -->
 <div class="modal-overlay" id="save-modal">
-  <div class="modal">
+  <div class="save-box">
     <h2>Gem plan</h2>
     <p>Giv din plan et navn så du nemt kan finde den igen.</p>
     <label>Plannavn</label>
-    <input type="text" id="plan-name-input" placeholder="fx DOX 2025..." maxlength="60" />
+    <input type="text" id="plan-name-input" placeholder="fx DOX 2026..." maxlength="60" />
     <div class="modal-btns">
-      <button class="btn-modal-cancel" onclick="closeSaveModal()">Annuller</button>
-      <button class="btn-modal-save" onclick="confirmSave()">Gem →</button>
+      <button class="btn-mcancel" onclick="closeSaveModal()">Annuller</button>
+      <button class="btn-msave" onclick="confirmSave()">Gem →</button>
     </div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════
-let dates = [];           // selected dates ["2025-03-10", ...]
-let currentDayIdx = 0;    // which day we're currently on
-let fetchedDays = {};     // { date: [filmObj, ...] }
-let selectedFilms = {};   // { date: [filmObj, ...] }
-let currentPlanData = null;
+// ══ STATE ══
+let dates=[], dayIdx=0, filmIdx=0;
+let fetchedDays={}, selectedFilms={};
+let currentPlanData=null;
+let prefs={pauses:'',count:'',start:''};
 
-// ══════════════════════════════════════════════
-//  STORAGE
-// ══════════════════════════════════════════════
-async function storageSet(k,v) {
-  if(window.storage){try{await window.storage.set(k,JSON.stringify(v));return;}catch{}}
-  localStorage.setItem(k,JSON.stringify(v));
-}
-async function storageGet(k) {
-  if(window.storage){try{const r=await window.storage.get(k);return r?JSON.parse(r.value):null;}catch{return null;}}
-  try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}
-}
-async function storageDelete(k) {
-  if(window.storage){try{await window.storage.delete(k);}catch{}}
-  else localStorage.removeItem(k);
-}
-async function storageList(prefix) {
-  if(window.storage){try{const r=await window.storage.list(prefix);return r?r.keys:[];}catch{return[];}}
-  const keys=[];
-  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))keys.push(k);}
-  return keys;
-}
+// ══ STORAGE ══
+async function sSet(k,v){if(window.storage){try{await window.storage.set(k,JSON.stringify(v));return;}catch{}}localStorage.setItem(k,JSON.stringify(v));}
+async function sGet(k){if(window.storage){try{const r=await window.storage.get(k);return r?JSON.parse(r.value):null;}catch{return null;}}try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
+async function sDel(k){if(window.storage){try{await window.storage.delete(k);}catch{}}else localStorage.removeItem(k);}
+async function sList(p){if(window.storage){try{const r=await window.storage.list(p);return r?r.keys:[];}catch{return[];}}const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(p))ks.push(k);}return ks;}
 
-// ══════════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════════
+// ══ INIT ══
 window.addEventListener('DOMContentLoaded',()=>{
   const ok=!!window.storage;
   document.getElementById('sdot').className='sdot'+(ok?' ok':'');
   document.getElementById('slabel').textContent=ok?'Cloud-lagring':'Lokal lagring';
 });
 
-// ══════════════════════════════════════════════
-//  NAV
-// ══════════════════════════════════════════════
-function showPage(name){
+// Keyboard swipe
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('screen-swipe').style.display==='none')return;
+  if(document.getElementById('swipe-content').style.display==='none')return;
+  if(e.key==='ArrowRight')swipe(true);
+  if(e.key==='ArrowLeft')swipe(false);
+});
+
+// Modal keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeSaveModal();closeCafeModal();}
+  if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();
+});
+
+// ══ NAV ══
+function showPage(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.nav-tab')[name==='planner'?0:1].classList.add('active');
-  if(name==='archive')renderArchive();
+  document.getElementById('page-'+n).classList.add('active');
+  document.querySelectorAll('.nav-tab')[n==='planner'?0:1].classList.add('active');
+  if(n==='archive')renderArchive();
 }
 
-// ══════════════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════════════
-function toggleKey(){
-  const i=document.getElementById('api-key');
-  const b=document.getElementById('toggle-btn');
-  i.type=i.type==='password'?'text':'password';
-  b.textContent=i.type==='password'?'Vis':'Skjul';
-}
+// ══ HELPERS ══
+function toggleKey(){const i=document.getElementById('api-key'),b=document.getElementById('toggle-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Vis':'Skjul';}
 function getKey(){return document.getElementById('api-key').value.trim();}
 function getDates(){return['date1','date2','date3'].map(id=>document.getElementById(id).value).filter(Boolean);}
-
-// ── DAY CARDS ──
-function openDatePicker(idx){
-  const input=document.getElementById(['date1','date2','date3'][idx]);
-  input.showPicker?.();
-  input.click();
-}
+function fmtDate(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});}
+function fmtShort(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'});}
 
 function onDateChange(idx){
   const ids=['date1','date2','date3'];
-  const val=document.getElementById(ids[idx]).value;
+  const v=document.getElementById(ids[idx]).value;
   const card=document.getElementById('dcard-'+idx);
-  const dateEl=document.getElementById('dcard-date-'+idx);
-  const weekdayEl=document.getElementById('dcard-weekday-'+idx);
-  const statusEl=document.getElementById('dcard-status-'+idx);
-
-  if(val){
-    const d=new Date(val);
-    const day=d.toLocaleDateString('da-DK',{day:'numeric'});
-    const month=d.toLocaleDateString('da-DK',{month:'long'});
-    const weekday=d.toLocaleDateString('da-DK',{weekday:'long'});
-    dateEl.textContent=day+'. '+month;
-    weekdayEl.textContent=weekday.charAt(0).toUpperCase()+weekday.slice(1);
-    statusEl.textContent='✓ Valgt';
+  if(v){
+    const d=new Date(v);
+    document.getElementById('dcard-date-'+idx).textContent=d.toLocaleDateString('da-DK',{day:'numeric',month:'long'});
+    const wd=d.toLocaleDateString('da-DK',{weekday:'long'});
+    document.getElementById('dcard-weekday-'+idx).textContent=wd.charAt(0).toUpperCase()+wd.slice(1);
+    document.getElementById('dcard-status-'+idx).textContent='✓ Valgt';
     card.classList.add('has-date');
   } else {
-    dateEl.textContent='Klik for at vælge';
-    weekdayEl.textContent='';
-    statusEl.textContent='○ Ikke valgt';
+    document.getElementById('dcard-date-'+idx).textContent='Vælg dato';
+    document.getElementById('dcard-weekday-'+idx).textContent='';
+    document.getElementById('dcard-status-'+idx).textContent='○ Ikke valgt';
     card.classList.remove('has-date');
   }
 }
-function fmtDate(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});}
-function fmtDateShort(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'});}
 
-async function callClaude(prompt){
-  const key=getKey();
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key':key,
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-direct-browser-access':'true'
-    },
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:2000,
-      tools:[{type:'web_search_20250305',name:'web_search'}],
-      messages:[{role:'user',content:prompt}]
-    })
-  });
-  const data=await res.json();
-  if(data.error)throw new Error(data.error.message);
-  return(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+function pickChip(gid,el){
+  document.querySelectorAll('#'+gid+' .pref-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  if(gid==='pg-pauses')prefs.pauses=el.dataset.val;
+  if(gid==='pg-count')prefs.count=el.dataset.val;
+  if(gid==='pg-start')prefs.start=el.dataset.val;
 }
 
-async function callClaudeNoSearch(prompt){
-  const key=getKey();
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key':key,
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-direct-browser-access':'true'
-    },
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:3000,
-      messages:[{role:'user',content:prompt}]
-    })
-  });
-  const data=await res.json();
-  if(data.error)throw new Error(data.error.message);
-  return(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+function prefsText(){
+  const p=[];
+  if(prefs.pauses==='relaxed')p.push('Vil have god tid til mad og kaffe — mindst 60 min pause mellem film');
+  if(prefs.pauses==='packed')p.push('Vil se så mange film som muligt — minimal pause (30 min buffer)');
+  if(prefs.count==='1-2')p.push('Max 1-2 film om dagen');
+  if(prefs.count==='3-4')p.push('Gerne 3-4 film om dagen');
+  if(prefs.count==='max')p.push('Så mange film som muligt om dagen');
+  if(prefs.start==='morning')p.push('Starter gerne fra kl. 10');
+  if(prefs.start==='midday')p.push('Foretrækker at starte fra kl. 12');
+  if(prefs.start==='afternoon')p.push('Foretrækker at starte fra kl. 15');
+  return p.join('. ')||'Ingen særlige præferencer';
 }
 
-function parseJSON(text){
-  const clean=text.replace(/```json|```/g,'').trim();
-  const match=clean.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-  if(!match)throw new Error('Ingen JSON i svaret');
-  return JSON.parse(match[0]);
+async function callAI(prompt,search=true){
+  const body={model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]};
+  if(search)body.tools=[{type:'web_search_20250305',name:'web_search'}];
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify(body)});
+  const d=await res.json();
+  if(d.error)throw new Error(d.error.message);
+  return(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
 }
 
-// ══════════════════════════════════════════════
-//  STEPPER
-// ══════════════════════════════════════════════
+function parseJSON(t){
+  const c=t.replace(/```json|```/g,'').trim();
+  const m=c.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+  if(!m)throw new Error('Ingen JSON i svaret');
+  return JSON.parse(m[0]);
+}
+
+// ══ STEPPER ══
 function buildStepper(){
   const el=document.getElementById('stepper');
   el.innerHTML='';
   dates.forEach((d,i)=>{
     const div=document.createElement('div');
-    div.className='step-item'+(i<currentDayIdx?' done':i===currentDayIdx?' active':'');
-    const selCount=(selectedFilms[d]||[]).length;
-    const subtext=i<currentDayIdx?(selCount>0?selCount+' film valgt':'Ingen valgt'):fmtDateShort(d);
-    div.innerHTML=`<span class="step-num">${i<currentDayIdx?'✓':i+1}</span>${subtext}`;
+    div.className='step-item'+(i<dayIdx?' done':i===dayIdx?' active':'');
+    const sel=(selectedFilms[d]||[]).length;
+    div.innerHTML=`<span class="step-num">${i<dayIdx?'✓':i+1}</span>${i<dayIdx?(sel+' valgt'):fmtShort(d)}`;
     el.appendChild(div);
   });
-  const planStep=document.createElement('div');
-  planStep.className='step-item'+(currentDayIdx>=dates.length?' active':'');
-  planStep.innerHTML=`<span class="step-num">${currentDayIdx>=dates.length?'→':dates.length+1}</span>Lav plan`;
-  el.appendChild(planStep);
+  const plan=document.createElement('div');
+  plan.className='step-item'+(dayIdx>=dates.length?' active':'');
+  plan.innerHTML=`<span class="step-num">${dayIdx>=dates.length?'→':dates.length+1}</span>Plan`;
+  el.appendChild(plan);
 }
 
-// ══════════════════════════════════════════════
-//  START
-// ══════════════════════════════════════════════
+// ══ START ══
 function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
   dates=getDates();
   if(!dates.length){alert('Vælg mindst én festivaldato.');return;}
-
-  currentDayIdx=0;
-  fetchedDays={};
-  selectedFilms={};
+  dayIdx=0; filmIdx=0; fetchedDays={}; selectedFilms={};
   dates.forEach(d=>{selectedFilms[d]=[];});
-
   document.getElementById('screen-setup').style.display='none';
-  document.getElementById('screen-picker').style.display='block';
+  document.getElementById('screen-swipe').style.display='block';
   document.getElementById('output').style.display='none';
   document.getElementById('error-plan').style.display='none';
-
   buildStepper();
-  loadCurrentDay();
+  loadDay();
 }
 
 function goBackSetup(){
-  document.getElementById('screen-picker').style.display='none';
+  document.getElementById('screen-swipe').style.display='none';
   document.getElementById('screen-setup').style.display='block';
 }
 
@@ -698,42 +633,28 @@ function restartPlanner(){
   currentPlanData=null;
 }
 
-// ══════════════════════════════════════════════
-//  LOAD ONE DAY
-// ══════════════════════════════════════════════
-async function loadCurrentDay(){
-  const date=dates[currentDayIdx];
+// ══ LOAD DAY ══
+async function loadDay(){
+  const date=dates[dayIdx];
+  filmIdx=0;
   buildStepper();
-  updateNextBtn();
+  if(fetchedDays[date]){showSwipe(date);return;}
 
-  // Already fetched?
-  if(fetchedDays[date]){
-    renderFilmGrid(date);
-    return;
-  }
-
-  // Show loader
   document.getElementById('loading-fetch').style.display='block';
-  document.getElementById('picker-content').style.display='none';
+  document.getElementById('swipe-content').style.display='none';
   document.getElementById('error-fetch').style.display='none';
-  document.getElementById('loading-fetch-text').textContent=`Henter program for ${fmtDate(date)}...`;
-  document.getElementById('loading-fetch-sub').textContent='';
+  document.getElementById('loading-text').textContent=`Henter program for ${fmtDate(date)}...`;
 
-  const prompt=`Find CPH:DOX film ${date}. Søg cphdox.dk/program.
+  try{
+    const raw=await callAI(`Find CPH:DOX film ${date}. Søg cphdox.dk/program.
 JSON array kun (ingen markdown):
-[{"title":"...","screenings":[{"time":"14:00","venue":"...","duration":"85 min"}],"description":"2 sætninger dansk","trailerUrl":"youtube-url eller null"}]`;
-
-  try {
-    const raw=await callClaude(prompt);
-    let films;
-    try{films=parseJSON(raw);}catch(e){throw new Error('Parse fejl: '+e.message);}
+[{"title":"...","screenings":[{"time":"14:00","venue":"...","duration":"85 min"}],"description":"2 sætninger dansk","trailerUrl":"youtube-url eller null"}]`);
+    const films=parseJSON(raw);
     if(!Array.isArray(films))throw new Error('Uventet format');
-
     fetchedDays[date]=films;
     document.getElementById('loading-fetch').style.display='none';
-    renderFilmGrid(date);
-
-  } catch(err) {
+    showSwipe(date);
+  }catch(err){
     document.getElementById('loading-fetch').style.display='none';
     const eb=document.getElementById('error-fetch');
     eb.style.display='block';
@@ -741,114 +662,112 @@ JSON array kun (ingen markdown):
   }
 }
 
-// ══════════════════════════════════════════════
-//  RENDER FILM GRID
-// ══════════════════════════════════════════════
-function renderFilmGrid(date){
-  const films=fetchedDays[date]||[];
-  const selected=selectedFilms[date]||[];
-
-  document.getElementById('picker-day-title').textContent=fmtDate(date);
-  document.getElementById('picker-day-progress').textContent=`Dag ${currentDayIdx+1} / ${dates.length}`;
-
-  const grid=document.getElementById('film-grid');
-  grid.innerHTML='';
-
-  if(!films.length){
-    grid.innerHTML='<p style="color:var(--muted);font-size:0.8rem;padding:20px 0;">Ingen film fundet for denne dag.</p>';
-  } else {
-    films.forEach((film,idx)=>{
-      const isSel=selected.some(f=>f.title===film.title);
-      const card=document.createElement('div');
-      card.className='film-card'+(isSel?' selected':'');
-      const times=(film.screenings||[]).map(s=>`${s.time}${s.venue?' · '+s.venue:''}${s.duration?' ('+s.duration+')':''}`).join('  |  ');
-      const trailer=film.trailerUrl?`<a href="${film.trailerUrl}" target="_blank" class="btn-trailer" onclick="event.stopPropagation()">▶ Trailer</a>`:'';
-      card.innerHTML=`
-        <div class="film-check"><div class="check-inner"></div></div>
-        <div>
-          <div class="film-title">${film.title}</div>
-          <div class="film-times">${times||'Tidspunkt ikke fundet'}</div>
-          <div class="film-desc">${film.description||''}</div>
-          ${trailer}
-        </div>`;
-      card.addEventListener('click',()=>toggleFilm(date,idx,film,card));
-      grid.appendChild(card);
-    });
-  }
-
-  document.getElementById('picker-content').style.display='block';
+// ══ SWIPE ══
+function showSwipe(date){
+  document.getElementById('swipe-content').style.display='block';
+  document.getElementById('swipe-day-label').textContent=fmtDate(date);
+  renderCard();
   updateSelCount();
-  updateNextBtn();
 }
 
-function toggleFilm(date,idx,film,card){
-  if(!selectedFilms[date])selectedFilms[date]=[];
-  const i=selectedFilms[date].findIndex(f=>f.title===film.title);
-  if(i>=0){selectedFilms[date].splice(i,1);card.classList.remove('selected');}
-  else{selectedFilms[date].push({...film,date});card.classList.add('selected');}
+function renderCard(){
+  const date=dates[dayIdx];
+  const films=fetchedDays[date]||[];
+  const arena=document.getElementById('swipe-arena');
+  const total=films.length;
+
+  // progress bar
+  document.getElementById('swipe-prog-text').textContent=`Film ${Math.min(filmIdx+1,total)} af ${total}`;
+  document.getElementById('swipe-bar-fill').style.width=(total>0?Math.round((filmIdx/total)*100):0)+'%';
+
+  if(filmIdx>=films.length){
+    // Day done screen
+    const sel=(selectedFilms[date]||[]).length;
+    const isLast=dayIdx>=dates.length-1;
+    arena.innerHTML=`
+      <div class="day-done">
+        <div class="day-done-emoji">🎬</div>
+        <h2>${fmtDate(date)}</h2>
+        <div class="day-done-count">${sel}</div>
+        <p>${sel===1?'film valgt til din plan.':sel===0?'Du valgte ingen film denne dag.':'film valgt til din plan.'}</p>
+        <button class="btn-primary" style="margin-top:0;max-width:300px;margin:0 auto;" onclick="${isLast?'generatePlan()':'nextDay()'}">${isLast?'▶ Lav min festivalplan':'Næste dag →'}</button>
+      </div>`;
+    return;
+  }
+
+  const f=films[filmIdx];
+  const times=(f.screenings||[]).map(s=>`${s.time} · ${s.venue}${s.duration?' ('+s.duration+')':''}`).join('<br>');
+  const venues=[...new Set((f.screenings||[]).map(s=>s.venue))].join(', ');
+  const trailer=f.trailerUrl?`<a href="${f.trailerUrl}" target="_blank" class="btn-trailer-link" onclick="event.stopPropagation()">▶ Trailer</a>`:'';
+
+  arena.innerHTML=`
+    <div class="film-swipe-card" id="swipe-card">
+      <div class="swipe-lbl-yes" id="lbl-yes">SER DEN ✓</div>
+      <div class="swipe-lbl-no" id="lbl-no">✕ SKIP</div>
+      <div class="sc-header">
+        <div class="sc-time-big">${f.screenings?.[0]?.time||'?'}</div>
+        <div class="sc-venue-right">${venues}</div>
+      </div>
+      <div class="sc-title-big">${f.title}</div>
+      <div class="sc-dur-sm">${(f.screenings||[]).map(s=>s.duration).filter(Boolean)[0]||''}</div>
+      <div class="sc-desc-sm">${f.description||''}</div>
+      <div class="sc-footer">
+        <div class="sc-times-all">Alle tidspunkter:<br><span>${times}</span></div>
+        ${trailer}
+      </div>
+    </div>`;
+}
+
+function swipe(liked){
+  const date=dates[dayIdx];
+  const films=fetchedDays[date]||[];
+  if(filmIdx>=films.length)return;
+
+  const card=document.getElementById('swipe-card');
+  if(!card)return;
+
+  if(liked){
+    document.getElementById('lbl-yes').style.opacity='1';
+    card.classList.add('go-right');
+    selectedFilms[date].push({...films[filmIdx],date});
+  } else {
+    document.getElementById('lbl-no').style.opacity='1';
+    card.classList.add('go-left');
+  }
+
+  filmIdx++;
   updateSelCount();
-  updateNextBtn();
+  setTimeout(()=>renderCard(), 330);
+}
+
+function nextDay(){
+  dayIdx++;
+  loadDay();
+  document.getElementById('screen-swipe').scrollIntoView({behavior:'smooth'});
 }
 
 function updateSelCount(){
   const total=Object.values(selectedFilms).reduce((s,a)=>s+a.length,0);
-  const el=document.getElementById('sel-count');
-  el.innerHTML=total===0?'Ingen film valgt endnu':`<strong>${total}</strong> film valgt i alt`;
+  document.getElementById('sel-count').innerHTML=total===0?'Ingen film valgt endnu':`<strong>${total}</strong> film valgt i alt`;
 }
 
-function updateNextBtn(){
-  const btn=document.getElementById('next-btn');
-  const isLastDay=currentDayIdx>=dates.length-1;
-  const totalSel=Object.values(selectedFilms).reduce((s,a)=>s+a.length,0);
-
-  if(isLastDay){
-    btn.textContent=totalSel>0?'▶ Lav plan':'Vælg mindst én film';
-    btn.disabled=totalSel===0;
-  } else {
-    btn.textContent=`Næste dag →`;
-    btn.disabled=false;
-  }
-}
-
-// ══════════════════════════════════════════════
-//  NEXT DAY / GENERATE
-// ══════════════════════════════════════════════
-async function nextDay(){
-  const isLastDay=currentDayIdx>=dates.length-1;
-
-  if(isLastDay){
-    await generatePlan();
-  } else {
-    currentDayIdx++;
-    loadCurrentDay();
-    // Scroll to top of picker
-    document.getElementById('screen-picker').scrollIntoView({behavior:'smooth'});
-  }
-}
-
-// ══════════════════════════════════════════════
-//  GENERATE PLAN
-// ══════════════════════════════════════════════
+// ══ GENERATE PLAN ══
 async function generatePlan(){
-  const allSelected=Object.values(selectedFilms).flat();
-  if(!allSelected.length){alert('Vælg mindst én film.');return;}
+  const all=Object.values(selectedFilms).flat();
+  if(!all.length){alert('Du valgte ingen film. Gå tilbage og vælg mindst én.');return;}
 
-  const prefStart=document.getElementById('pref-start').value.trim();
-  const prefEnd=document.getElementById('pref-end').value.trim();
-  const prefNotes=document.getElementById('pref-notes').value.trim();
-
-  document.getElementById('screen-picker').style.display='none';
+  document.getElementById('screen-swipe').style.display='none';
   document.getElementById('loading-plan').style.display='block';
   document.getElementById('error-plan').style.display='none';
   document.getElementById('output').style.display='none';
 
-  const msgs=['Analyserer alle valgte film...','Finder den optimale fordeling...','Beregner gangtider og afstande...','Færdiggør din plan...'];
+  const msgs=['Analyserer alle valgte film...','Finder optimal fordeling...','Beregner gangtider...','Færdiggør din plan...'];
   let mi=0;
   const lt=setInterval(()=>{document.getElementById('loading-plan-text').textContent=msgs[++mi%msgs.length];},2500);
 
-  // Build rich film summary grouped by title with all available screenings
+  // Group by title with all screenings
   const byTitle={};
-  allSelected.forEach(f=>{
+  all.forEach(f=>{
     if(!byTitle[f.title])byTitle[f.title]={title:f.title,description:f.description,trailerUrl:f.trailerUrl,screenings:[]};
     (f.screenings||[]).forEach(s=>byTitle[f.title].screenings.push({date:f.date,dateLabel:fmtDate(f.date),time:s.time,venue:s.venue,duration:s.duration}));
   });
@@ -858,132 +777,190 @@ async function generatePlan(){
     return `${f.title}:\n${sc}`;
   }).join('\n\n');
 
-  const prompt=`CPH:DOX festivalplanlægger. Lav OPTIMAL plan på tværs af alle dage.
+  try{
+    const raw=await callAI(`CPH:DOX 2026 festivalplanlægger. Lav OPTIMAL plan på tværs af alle dage.
 
 Festivaldage: ${dates.map(d=>fmtDate(d)+' ('+d+')').join(', ')}
-${prefStart?'Tidligste start: '+prefStart:''}
-${prefEnd?'Seneste slut: '+prefEnd:''}
-${prefNotes?'Præferencer: '+prefNotes:''}
+Præferencer: ${prefsText()}
 
-Valgte film med ALLE mulige visningstidspunkter:
+Film med ALLE mulige visninger:
 ${filmList}
 
 Regler:
-- Fordel film klogt på tværs af dage — samme film kan vises flere dage, vælg den bedste dag
-- Undgå overlap — mindst 30 min buffer inkl. transport mellem film
-- Balancer dagene — ikke alle film på én dag
-- Vælg optimalt tidspunkt per film ift. andre film samme dag
-- Beregn km og minutter til fods mellem biografer på samme dag
+- Fordel film klogt — vælg bedste dag hvis film vises flere dage
+- Respektér præferencerne om pauser og antal film
+- Undgå overlap — buffer ift. præferencer
+- Balancer dagene
+- Beregn km og min til fods mellem biografer (brug kendte Kbh-afstande)
 
-Svar KUN JSON:
-{"days":[{"date":"YYYY-MM-DD","date_label":"Mandag 10. marts","screenings":[{"time":"13:00","title":"...","venue":"...","duration":"90 min","description":"...","trailerUrl":"...eller null","ticketUrl":"https://cphdox.dk/program/?s=TITEL","distance_to_next":1.2,"walk_minutes_to_next":15}]}],"notes":"Forklar fordelingen"}
+JSON kun:
+{"days":[{"date":"YYYY-MM-DD","date_label":"Mandag 11. marts","screenings":[{"time":"13:00","title":"...","venue":"...","duration":"90 min","description":"...","trailerUrl":"...eller null","ticketUrl":"https://cphdox.dk/program/?s=TITEL","distance_to_next":1.2,"walk_minutes_to_next":15}]}],"notes":"Forklar fordelingen"}
 
-Filmdata: ${JSON.stringify(Object.values(byTitle))}`;
+Filmdata: ${JSON.stringify(Object.values(byTitle))}`,false);
 
-  try {
-    const raw=await callClaudeNoSearch(prompt);
-    let plan;
-    try{plan=parseJSON(raw);}catch(e){throw new Error('Parse fejl: '+e.message);}
-
+    const plan=parseJSON(raw);
     clearInterval(lt);
     currentPlanData=plan;
     document.getElementById('loading-plan').style.display='none';
     document.getElementById('output').style.display='block';
-    renderPlanCards(plan,document.getElementById('plan-cards'));
-
-  } catch(err) {
+    renderPlan(plan,document.getElementById('plan-cards'));
+  }catch(err){
     clearInterval(lt);
     document.getElementById('loading-plan').style.display='none';
-    document.getElementById('screen-picker').style.display='block';
+    document.getElementById('screen-swipe').style.display='block';
     const eb=document.getElementById('error-plan');
     eb.style.display='block';
     eb.textContent='⚠ Fejl: '+err.message;
   }
 }
 
-// ══════════════════════════════════════════════
-//  RENDER PLAN CARDS
-// ══════════════════════════════════════════════
-function renderPlanCards(data,container){
+// ══ RENDER PLAN ══
+function renderPlan(data,container){
   container.innerHTML='';
-  if(!data.days||!data.days.length){
-    container.innerHTML='<p style="color:var(--muted);font-size:0.8rem;">Ingen plan genereret.</p>';
-    return;
-  }
+  if(!data.days?.length){container.innerHTML='<p style="color:var(--muted);font-size:0.8rem;">Ingen plan.</p>';return;}
 
   data.days.forEach(day=>{
     const card=document.createElement('div');
     card.className='day-card';
-
     const hdr=document.createElement('div');
     hdr.className='day-card-header';
     hdr.innerHTML=`<span class="day-card-title">${day.date_label||day.date}</span><span class="day-card-date">${day.date}</span>`;
     card.appendChild(hdr);
 
-    (day.screenings||[]).forEach((s,idx)=>{
+    (day.screenings||[]).forEach((s,i)=>{
       const sc=document.createElement('div');
       sc.className='screening';
-      const ticketUrl=s.ticketUrl||`https://cphdox.dk/program/?s=${encodeURIComponent(s.title)}`;
+      const tickUrl=s.ticketUrl||`https://cphdox.dk/program/?s=${encodeURIComponent(s.title)}`;
       const trailer=s.trailerUrl?`<a href="${s.trailerUrl}" target="_blank" class="btn-trailer-sm">▶ Trailer</a>`:'';
+      const venueEsc=s.venue.replace(/'/g,"\\'");
       sc.innerHTML=`
         <div class="sc-time">${s.time}</div>
         <div class="sc-title">${s.title}</div>
         <div class="sc-venue">📍 ${s.venue}</div>
-        ${s.duration?`<div class="sc-dur">Varighed: ${s.duration}</div>`:''}
+        ${s.duration?`<div class="sc-dur">${s.duration}</div>`:''}
         ${s.description?`<div class="sc-desc">${s.description}</div>`:''}
         <div class="sc-btns">
-          <a href="${ticketUrl}" target="_blank" class="btn-ticket">🎟 Køb billet</a>
+          <a href="${tickUrl}" target="_blank" class="btn-ticket">🎟 Køb billet</a>
           ${trailer}
+          <button class="btn-cafe" onclick="openCafeModal('${venueEsc}')">☕ Cafeer i nærheden</button>
         </div>`;
       card.appendChild(sc);
 
-      const next=day.screenings[idx+1];
+      const next=day.screenings[i+1];
       if(next){
-        const travel=document.createElement('div');
-        travel.className='travel-badge';
+        const t=document.createElement('div');
+        t.className='travel-badge';
         if(s.venue!==next.venue){
-          const from=encodeURIComponent(s.venue+', Copenhagen');
+          const fr=encodeURIComponent(s.venue+', Copenhagen');
           const to=encodeURIComponent(next.venue+', Copenhagen');
-          const murl=`https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}&travelmode=walking`;
-          travel.innerHTML=`<div class="travel-info">🚶 ${s.distance_to_next||'?'} km · ca. ${s.walk_minutes_to_next||'?'} min → ${next.venue}</div><a href="${murl}" target="_blank" class="btn-maps">Åbn Maps →</a>`;
+          t.innerHTML=`<div class="travel-info">🚶 ${s.distance_to_next||'?'} km · ca. ${s.walk_minutes_to_next||'?'} min → ${next.venue}</div>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=${fr}&destination=${to}&travelmode=walking" target="_blank" class="btn-maps">Åbn Maps →</a>`;
         } else {
-          travel.innerHTML=`<div class="travel-info">📍 Bliv i ${s.venue}</div>`;
+          t.innerHTML=`<div class="travel-info">📍 Bliv i ${s.venue}</div>`;
         }
-        card.appendChild(travel);
+        card.appendChild(t);
       }
     });
-
     container.appendChild(card);
   });
 
   if(data.notes){
     const nb=document.createElement('div');
-    nb.className='note-box';
-    nb.style.marginTop='20px';
+    nb.className='note-box'; nb.style.marginTop='20px';
     nb.innerHTML=`<strong>Planens logik:</strong> ${data.notes}`;
     container.appendChild(nb);
   }
 }
 
-// ══════════════════════════════════════════════
-//  SAVE MODAL
-// ══════════════════════════════════════════════
-function openSaveModal(){
-  if(!currentPlanData)return;
-  document.getElementById('plan-name-input').value='';
-  document.getElementById('save-modal').classList.add('open');
-  setTimeout(()=>document.getElementById('plan-name-input').focus(),100);
+// ══ CAFE MODAL ══
+function openCafeModal(venue){
+  document.getElementById('cafe-modal-sub').textContent='Tæt på '+venue;
+  document.getElementById('cafe-body').innerHTML='<div style="text-align:center;padding:32px;font-size:0.75rem;color:var(--muted);">⏳ Finder cafeer...</div>';
+  document.getElementById('cafe-modal').classList.add('open');
+  fetchCafes(venue);
 }
+function closeCafeModal(){document.getElementById('cafe-modal').classList.remove('open');}
+
+async function fetchCafes(venue){
+  try{
+    const raw=await callAI(`Find 5 gode cafeer eller restauranter tæt på ${venue} i København til en pause mellem biografbesøg.
+JSON array kun:
+[{"name":"...","type":"Café/Restaurant/Bar","distance":"ca. 3 min gang","description":"1 linje","mapsUrl":"https://maps.google.com/?q=...+Copenhagen"}]`);
+    const cafes=parseJSON(raw);
+    const body=document.getElementById('cafe-body');
+    if(!Array.isArray(cafes)||!cafes.length){body.innerHTML='<p style="color:var(--muted);font-size:0.78rem;padding:12px 0;">Ingen cafeer fundet.</p>';return;}
+    body.innerHTML=cafes.map(c=>`
+      <div class="cafe-card">
+        <div class="cafe-name">${c.name}<span class="cafe-type">${c.type||''}</span></div>
+        <div class="cafe-meta">
+          <span class="cafe-dist">📍 ${c.distance||''}</span> — ${c.description||''}
+          ${c.mapsUrl?`<br><a href="${c.mapsUrl}" target="_blank" style="color:var(--accent2);font-size:0.67rem;text-decoration:none;">Åbn i Google Maps →</a>`:''}
+        </div>
+      </div>`).join('');
+  }catch(err){
+    document.getElementById('cafe-body').innerHTML=`<p style="color:var(--red);font-size:0.78rem;">Fejl: ${err.message}</p>`;
+  }
+}
+
+// ══ ICS EXPORT ══
+function downloadICS(){
+  if(!currentPlanData?.days){alert('Ingen plan at eksportere.');return;}
+  const pad=n=>String(n).padStart(2,'0');
+  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CPH:DOX Planner//DA','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+
+  currentPlanData.days.forEach(day=>{
+    (day.screenings||[]).forEach((s,i)=>{
+      const ds=day.date.replace(/-/g,'');
+      const sh=parseInt(s.time?.split(':')?.[0]||12);
+      const sm=parseInt(s.time?.split(':')?.[1]||0);
+      const dur=parseInt((s.duration||'90 min').match(/\d+/)?.[0]||90);
+      const totalEnd=sh*60+sm+dur;
+      const eh=Math.floor(totalEnd/60), em=totalEnd%60;
+      const dtS=`${ds}T${pad(sh)}${pad(sm)}00`;
+      const dtE=`${ds}T${pad(eh)}${pad(em)}00`;
+      const uid=`cphdox26-${ds}-${i}-${Date.now()}`;
+
+      lines.push('BEGIN:VEVENT',`UID:${uid}`,
+        `DTSTART;TZID=Europe/Copenhagen:${dtS}`,
+        `DTEND;TZID=Europe/Copenhagen:${dtE}`,
+        `SUMMARY:🎬 ${s.title}`,
+        `LOCATION:${s.venue}`,
+        `DESCRIPTION:${(s.description||'').replace(/\n/g,'\\n')}\\n\\nBillet: ${s.ticketUrl||'cphdox.dk'}`,
+        'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY',
+        `DESCRIPTION:Om 30 min: ${s.title} på ${s.venue}`,
+        'END:VALARM','END:VEVENT');
+
+      // Transport event
+      const next=day.screenings[i+1];
+      if(next&&s.venue!==next.venue&&s.walk_minutes_to_next){
+        const tEnd=totalEnd+parseInt(s.walk_minutes_to_next);
+        const tEh=Math.floor(tEnd/60), tEm=tEnd%60;
+        lines.push('BEGIN:VEVENT',`UID:travel-${ds}-${i}-${Date.now()}`,
+          `DTSTART;TZID=Europe/Copenhagen:${dtE}`,
+          `DTEND;TZID=Europe/Copenhagen:${ds}T${pad(tEh)}${pad(tEm)}00`,
+          `SUMMARY:🚶 Gå til ${next.venue}`,
+          `DESCRIPTION:Ca. ${s.walk_minutes_to_next} min fra ${s.venue} til ${next.venue}`,
+          'END:VEVENT');
+      }
+    });
+  });
+
+  lines.push('END:VCALENDAR');
+  const blob=new Blob([lines.join('\r\n')],{type:'text/calendar'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='cphdox-2026.ics';
+  a.click();
+}
+
+// ══ SAVE ══
+function openSaveModal(){if(!currentPlanData)return;document.getElementById('plan-name-input').value='';document.getElementById('save-modal').classList.add('open');setTimeout(()=>document.getElementById('plan-name-input').focus(),100);}
 function closeSaveModal(){document.getElementById('save-modal').classList.remove('open');}
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')closeSaveModal();
-  if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();
-});
 async function confirmSave(){
   const name=document.getElementById('plan-name-input').value.trim();
   if(!name){alert('Giv planen et navn.');return;}
   const id='plan:'+Date.now();
-  await storageSet(id,{id,name,savedAt:new Date().toISOString(),data:currentPlanData});
+  await sSet(id,{id,name,savedAt:new Date().toISOString(),data:currentPlanData});
   closeSaveModal();
   const btn=document.getElementById('save-btn');
   const orig=btn.textContent;
@@ -992,25 +969,17 @@ async function confirmSave(){
   setTimeout(()=>{btn.textContent=orig;btn.style.cssText='';},2200);
 }
 
-// ══════════════════════════════════════════════
-//  ARCHIVE
-// ══════════════════════════════════════════════
+// ══ ARCHIVE ══
 async function renderArchive(){
   document.getElementById('archive-list').style.display='block';
   document.getElementById('archive-view').style.display='none';
-  const keys=await storageList('plan:');
+  const keys=await sList('plan:');
   const container=document.getElementById('archive-cards');
-
-  if(!keys.length){
-    container.innerHTML='<div class="archive-empty"><p>Ingen gemte planer endnu.<br>Lav en plan og tryk <em>Gem plan</em>.</p></div>';
-    return;
-  }
-
+  if(!keys.length){container.innerHTML='<div class="archive-empty"><p>Ingen gemte planer endnu.<br>Lav en plan og tryk <em>Gem plan</em>.</p></div>';return;}
   container.innerHTML='<p style="font-size:0.73rem;color:var(--muted);margin-bottom:16px;">Indlæser...</p>';
-  const plans=(await Promise.all(keys.map(k=>storageGet(k)))).filter(Boolean);
+  const plans=(await Promise.all(keys.map(k=>sGet(k)))).filter(Boolean);
   plans.sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt));
   container.innerHTML='';
-
   plans.forEach(plan=>{
     const card=document.createElement('div');
     card.className='archive-card';
@@ -1019,16 +988,16 @@ async function renderArchive(){
     const saved=new Date(plan.savedAt).toLocaleDateString('da-DK',{day:'numeric',month:'long',year:'numeric'});
     const pills=days.map(d=>`<span class="day-pill">${(d.date_label||d.date).split(' ').slice(0,2).join(' ')}</span>`).join('');
     card.innerHTML=`
-      <div class="arc-actions"><button class="btn-del" onclick="deletePlan(event,'${plan.id}')">Slet</button></div>
+      <button class="arc-del" onclick="delPlan(event,'${plan.id}')">Slet</button>
       <div class="arc-name">${plan.name}</div>
       <div class="arc-meta">Gemt ${saved} · ${films.length} film over ${days.length} dag${days.length!==1?'e':''}</div>
       <div class="arc-days">${pills}</div>`;
-    card.addEventListener('click',e=>{if(e.target.classList.contains('btn-del'))return;openArchiveView(plan);});
+    card.addEventListener('click',e=>{if(e.target.classList.contains('arc-del'))return;openAV(plan);});
     container.appendChild(card);
   });
 }
 
-function openArchiveView(plan){
+function openAV(plan){
   document.getElementById('archive-list').style.display='none';
   document.getElementById('archive-view').style.display='block';
   const days=plan.data.days||[];
@@ -1036,20 +1005,11 @@ function openArchiveView(plan){
   const saved=new Date(plan.savedAt).toLocaleDateString('da-DK',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('av-title').textContent=plan.name;
   document.getElementById('av-sub').textContent=`// Gemt ${saved} · ${films.length} film over ${days.length} dage`;
-  renderPlanCards(plan.data,document.getElementById('av-cards'));
+  currentPlanData=plan.data;
+  renderPlan(plan.data,document.getElementById('av-cards'));
 }
-
-function closeArchiveView(){
-  document.getElementById('archive-list').style.display='block';
-  document.getElementById('archive-view').style.display='none';
-}
-
-async function deletePlan(e,id){
-  e.stopPropagation();
-  if(!confirm('Slet denne plan?'))return;
-  await storageDelete(id);
-  renderArchive();
-}
+function closeArchiveView(){document.getElementById('archive-list').style.display='block';document.getElementById('archive-view').style.display='none';}
+async function delPlan(e,id){e.stopPropagation();if(!confirm('Slet denne plan?'))return;await sDel(id);renderArchive();}
 </script>
 </body>
 </html>
