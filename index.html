@@ -88,18 +88,27 @@
     padding:14px 18px;font-size:0.73rem;color:var(--muted);line-height:1.7;}
   .note-box strong{color:var(--accent);}
 
-  /* GRID LAYOUT */
-  .grid-wrapper{overflow-x:auto;margin:0 -20px;padding:0 20px 80px;}
-  .time-grid{display:grid;min-width:700px;}
-  .grid-header{display:grid;gap:10px;margin-bottom:6px;padding-left:56px;}
-  .grid-col-head{background:var(--surface2);border:1px solid var(--border);padding:10px 14px;
-    font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);text-align:center;}
-  .time-row{display:grid;gap:10px;margin-bottom:4px;align-items:start;}
-  .time-label{width:46px;flex-shrink:0;font-family:'DM Serif Display',serif;font-style:italic;
-    font-size:0.95rem;color:var(--muted);padding-top:11px;text-align:right;padding-right:10px;}
-  .grid-cell{min-height:8px;}
+  /* DAY TABS */
+  .day-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid var(--border);}
+  .day-tab{padding:10px 24px;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+    cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;
+    transition:all 0.18s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;}
+  .day-tab:hover{color:var(--text);}
+  .day-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .day-tab .tab-count{font-size:0.58rem;color:var(--muted);margin-left:6px;}
+  .day-tab.active .tab-count{color:var(--accent);opacity:0.7;}
+
+  /* SLOT ROWS */
+  .slot-block{margin-bottom:4px;}
+  .slot-row{display:flex;gap:10px;align-items:stretch;}
+  .slot-time{width:48px;flex-shrink:0;font-family:'DM Serif Display',serif;font-style:italic;
+    font-size:0.9rem;color:var(--muted);padding-top:11px;text-align:right;padding-right:8px;}
+  .slot-films{flex:1;display:flex;flex-direction:column;gap:6px;padding-bottom:6px;}
+  .slot-divider{height:1px;background:rgba(232,240,72,0.1);margin:8px 0 4px 56px;}
+
+  /* FILM CARDS */
   .film-card{background:var(--surface);border:1px solid var(--border);padding:10px 12px;
-    cursor:pointer;transition:all 0.18s;position:relative;margin-bottom:6px;}
+    cursor:pointer;transition:all 0.18s;position:relative;}
   .film-card:hover{border-color:rgba(232,240,72,0.3);background:var(--surface2);}
   .film-card.selected{border-color:rgba(72,240,168,0.5);background:rgba(72,240,168,0.04);}
   .film-card.selected::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);}
@@ -113,9 +122,18 @@
     border-top:1px solid var(--border);display:none;}
   .film-card:hover .fc-desc,.film-card.selected .fc-desc{display:block;}
   .fc-multi{font-size:0.6rem;color:var(--accent2);margin-top:3px;}
+  .fc-chosen-day{font-size:0.6rem;color:var(--green);margin-top:3px;letter-spacing:0.05em;}
+  .film-card.also-shown{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);opacity:0.55;}
+  .film-card.also-shown .fc-check{color:var(--muted);}
+  .film-card.also-shown:hover{opacity:0.85;border-color:rgba(232,240,72,0.2);}
+  .film-card.dimmed{opacity:0.28;filter:saturate(0.2);}
+  .film-card.dimmed:hover{opacity:0.7;filter:saturate(0.5);}
+
+  /* DAY PICKER */
   .dp-option{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface2);
     border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.18s;}
   .dp-option:hover{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.05);}
+  .dp-option.dp-current{border-color:rgba(232,240,72,0.3);}
   .dp-option.dp-taken{opacity:0.35;cursor:not-allowed;pointer-events:none;}
   .dp-option.dp-taken::after{content:'optaget';font-size:0.6rem;color:var(--red);margin-left:auto;
     letter-spacing:0.1em;text-transform:uppercase;}
@@ -123,13 +141,6 @@
   .dp-meta{flex:1;}
   .dp-time{font-size:0.82rem;font-weight:500;}
   .dp-venue{font-size:0.68rem;color:var(--muted);margin-top:2px;}
-  .fc-chosen-day{font-size:0.6rem;color:var(--green);margin-top:3px;letter-spacing:0.05em;}
-  .film-card.also-shown{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);opacity:0.55;}
-  .film-card.also-shown .fc-check{color:var(--muted);}
-  .film-card.also-shown:hover{opacity:0.85;border-color:rgba(232,240,72,0.2);}
-  .film-card.dimmed{opacity:0.28;filter:saturate(0.2);}
-  .film-card.dimmed:hover{opacity:0.7;filter:saturate(0.5);}
-  .time-divider{grid-column:1/-1;height:1px;background:var(--border);margin:6px 0 2px;opacity:0.5;}
 
   /* FILM SELECTION LIST */
   .film-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
@@ -369,7 +380,7 @@
     </div>
     <div class="error-box" id="error-fetch"></div>
 
-    <div id="film-list-container" style="display:none;"><div class="grid-wrapper">
+    <div id="film-list-container" style="display:none;">
       <div class="film-list-header">
         <div>
           <div class="film-list-title">Vælg film du vil se</div>
@@ -380,10 +391,9 @@
           <button class="btn-secondary" style="font-size:0.65rem;padding:7px 14px;" onclick="selectNone()">Fravælg alle</button>
         </div>
       </div>
+      <div class="day-tabs" id="day-tabs"></div>
       <div id="film-list"></div>
     </div>
-
-    </div></div>
     <div class="sel-bar">
       <div class="sel-count" id="sel-count">Ingen film valgt endnu</div>
       <div style="display:flex;gap:10px;">
@@ -767,182 +777,182 @@ function fetchFilms(){
   renderFilmList();
 }
 
-// ── FILM LIST — OVERLAP-BASED TIME GRID ──
+// ── FILM LIST — SINGLE DAY WITH TABS ──
 function timeToMin(t){if(!t)return 0;const[h,m]=(t||'').split(':');return parseInt(h||0)*60+parseInt(m||0);}
 
+let activeDay=null; // currently shown day tab
+let _slotMap=[]; // [{slotId, startMin, films:[{title,date,showing,filmObj}]}] for active day
+
 function renderFilmList(){
-  // Build lookup: title → {film, dayShowings{date:[showings]}}
   const byTitle={};
   allFilms.forEach(f=>{
     if(!byTitle[f.title])byTitle[f.title]={...f,dayShowings:{}};
     const ds=byTitle[f.title].dayShowings;
     if(!ds[f.date])ds[f.date]=[];
-    // avoid duplicate time entries
     if(!ds[f.date].find(x=>x.time===f.time))
       ds[f.date].push({time:f.time,venue:f.venue,duration:f.duration});
   });
-
-  // ── Build overlap-based slots ──
-  // Collect every (date, time, duration) combo as an event
-  // Two events overlap if their time windows intersect (with 15min buffer)
-  // Group overlapping events into slots; a slot spans max(end times) of all events in it
-  // We do this per-day first, then merge across days by time proximity
-
-  // Step 1: collect all unique start times across all days
-  const allTimes=new Set();
-  Object.values(byTitle).forEach(f=>{
-    Object.values(f.dayShowings).forEach(showings=>{
-      showings.forEach(s=>{ if(s.time)allTimes.add(s.time); });
-    });
-  });
-
-  // Step 2: build overlap groups — sort times, merge if within 45 min of group start
-  const sortedTimes=[...allTimes].sort((a,b)=>timeToMin(a)-timeToMin(b));
-  const slotGroups=[]; // [{startMin, endMin, label, times:Set}]
-
-  sortedTimes.forEach(t=>{
-    const m=timeToMin(t);
-    // Find existing group where this time is within 45 min of group start
-    const grp=slotGroups.find(g=>m-g.startMin<=45 && m>=g.startMin);
-    if(grp){
-      grp.times.add(t);
-      // extend end if needed
-      if(m>grp.endMin)grp.endMin=m;
-    } else {
-      slotGroups.push({startMin:m,endMin:m,label:t,times:new Set([t])});
-    }
-  });
-
-  // Step 3: label each slot by earliest time
-  slotGroups.forEach(g=>{
-    const sorted=[...g.times].sort((a,b)=>timeToMin(a)-timeToMin(b));
-    g.label=sorted[0];
-  });
-
-  // Step 4: for each slot, collect films per day whose showing time is in that slot
-  const grid=slotGroups.map(g=>({
-    label:g.label,
-    startMin:g.startMin,
-    days: Object.fromEntries(dates.map(d=>[d,[]]))
-  }));
-
-  Object.values(byTitle).forEach(f=>{
-    dates.forEach(d=>{
-      (f.dayShowings[d]||[]).forEach(s=>{
-        const m=timeToMin(s.time);
-        const slot=grid.find(g=>m>=g.startMin && m<=g.startMin+45);
-        if(slot && !slot.days[d].find(x=>x.title===f.title)){
-          slot.days[d].push({...f,_showing:s});
-        }
-      });
-    });
-  });
-
-  // Step 5: assign slot IDs so toggling can dim siblings
-  grid.forEach((slot,si)=>{
-    dates.forEach(d=>{
-      slot.days[d].forEach(f=>{f._slotId=si;});
-    });
-  });
+  window._byTitle=byTitle; // cache for tab switching
 
   const totalUnique=Object.keys(byTitle).length;
   document.getElementById('film-list-meta').textContent=
-    `${totalUnique} unikke film · Vælg én pr. tidspunkt — de andre dæmpes automatisk`;
+    `${totalUnique} unikke film · Vælg hvad du vil se — konflikter løses automatisk af Claude`;
 
+  // Build day tabs
+  const tabsEl=document.getElementById('day-tabs');
+  tabsEl.innerHTML='';
+  dates.forEach(d=>{
+    const count=Object.values(byTitle).filter(f=>f.dayShowings[d]).length;
+    const btn=document.createElement('button');
+    btn.className='day-tab';
+    btn.dataset.date=d;
+    btn.innerHTML=`${fmtDate(d)}<span class="tab-count">${count}</span>`;
+    btn.addEventListener('click',()=>switchDay(d));
+    tabsEl.appendChild(btn);
+  });
+
+  // Show first day
+  activeDay=dates[0];
+  switchDay(activeDay);
+  document.getElementById('film-list-container').style.display='block';
+  updateSelBar();
+}
+
+function switchDay(d){
+  activeDay=d;
+  // Update tab styles
+  document.querySelectorAll('.day-tab').forEach(t=>{
+    t.classList.toggle('active',t.dataset.date===d);
+  });
+  renderDaySlots(d);
+}
+
+function renderDaySlots(d){
+  const byTitle=window._byTitle;
   const listEl=document.getElementById('film-list');
   listEl.innerHTML='';
 
-  const cols=dates.length;
-  const gridFr=`52px ${Array(cols).fill('1fr').join(' ')}`;
+  // Collect all films showing on this day
+  const dayFilms=[];
+  Object.values(byTitle).forEach(f=>{
+    (f.dayShowings[d]||[]).forEach(s=>{
+      dayFilms.push({title:f.title,showing:s,filmObj:f,date:d});
+    });
+  });
+  dayFilms.sort((a,b)=>timeToMin(a.showing.time)-timeToMin(b.showing.time));
 
-  // ── Header ──
-  const hdr=document.createElement('div');
-  hdr.style.cssText=`display:grid;grid-template-columns:${gridFr};gap:10px;margin-bottom:8px;position:sticky;top:56px;z-index:10;background:var(--bg);padding:8px 0 4px;`;
-  hdr.innerHTML='<div></div>'+dates.map(d=>`
-    <div style="background:var(--surface2);border:1px solid var(--border);padding:10px 14px;
-      font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);text-align:center;">
-      ${fmtDate(d)}
-    </div>`).join('');
-  listEl.appendChild(hdr);
+  // Group into overlap slots (within 45 min)
+  const slots=[];
+  dayFilms.forEach(item=>{
+    const m=timeToMin(item.showing.time);
+    const grp=slots.find(g=>m-g.startMin<=45 && m>=g.startMin);
+    if(grp){ grp.films.push(item); if(m>grp.endMin)grp.endMin=m; }
+    else slots.push({startMin:m,endMin:m,label:item.showing.time,films:[item]});
+  });
 
-  // ── Time rows ──
-  let lastSlotHour=-1;
-  grid.forEach((slot,si)=>{
-    const hasAny=dates.some(d=>slot.days[d].length>0);
-    if(!hasAny)return;
+  // Assign slot IDs and cache for dimming
+  _slotMap=slots.map((s,i)=>({...s,slotId:i}));
 
-    const slotHour=Math.floor(slot.startMin/60);
+  // Render
+  let lastHour=-1;
+  _slotMap.forEach(slot=>{
+    const hour=Math.floor(slot.startMin/60);
 
     // Hour-break divider
-    if(lastSlotHour>=0 && slotHour-lastSlotHour>=2){
+    if(lastHour>=0 && hour-lastHour>=2){
       const div=document.createElement('div');
-      div.style.cssText=`display:grid;grid-template-columns:${gridFr};gap:10px;margin:6px 0;`;
-      div.innerHTML=`<div></div><div style="grid-column:2/-1;height:1px;background:rgba(232,240,72,0.15);"></div>`;
+      div.className='slot-divider';
       listEl.appendChild(div);
     }
-    lastSlotHour=slotHour;
+    lastHour=hour;
+
+    const block=document.createElement('div');
+    block.className='slot-block';
 
     const row=document.createElement('div');
-    row.className='time-row-el';
-    row.dataset.slotId=si;
-    row.style.cssText=`display:grid;grid-template-columns:${gridFr};gap:10px;margin-bottom:6px;align-items:start;`;
+    row.className='slot-row';
 
-    // Time label
+    // Time label — only show on first film in slot
     const tl=document.createElement('div');
-    tl.style.cssText='padding-top:10px;text-align:right;padding-right:8px;font-family:"DM Serif Display",serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.2;';
+    tl.className='slot-time';
     tl.textContent=slot.label;
     row.appendChild(tl);
 
-    // Day columns
-    dates.forEach(d=>{
-      const cell=document.createElement('div');
-      const films=slot.days[d];
-      if(!films.length){
-        // empty placeholder keeps grid aligned
-        const ph=document.createElement('div');
-        ph.style.cssText='min-height:4px;border-left:1px solid rgba(255,255,255,0.03);';
-        cell.appendChild(ph);
-      } else {
-        films.forEach(f=>{
-          const card=document.createElement('div');
-          card.className='film-card';
-          card.dataset.title=f.title;
-          card.dataset.slotId=si;
-          card.dataset.date=d;
+    // Films column
+    const col=document.createElement('div');
+    col.className='slot-films';
 
-          const otherDays=dates.filter(dd=>dd!==d&&f.dayShowings[dd]);
-          const multiText=otherDays.map(dd=>{
-            const s=f.dayShowings[dd]?.[0];
-            return s?`${fmtShort(dd)} ${s.time}`:'';
-          }).filter(Boolean).join(' · ');
+    slot.films.forEach(item=>{
+      const card=document.createElement('div');
+      card.className='film-card';
+      card.dataset.title=item.title;
+      card.dataset.date=d;
+      card.dataset.slotId=slot.slotId;
 
-          card.innerHTML=`
-            <div class="fc-check">○</div>
-            <div class="fc-time">${f._showing.time}</div>
-            <div class="fc-title">${f.title}</div>
-            <div class="fc-venue">📍 ${f._showing.venue||''}</div>
-            <div class="fc-dur">${f._showing.duration||''}</div>
-            ${f.description?`<div class="fc-desc">${f.description}</div>`:''}
-            ${multiText?`<div class="fc-multi">↔ Også: ${multiText}</div>`:''}`;
+      // Other days this film is shown
+      const otherDays=dates.filter(dd=>dd!==d&&item.filmObj.dayShowings[dd]);
+      const multiText=otherDays.map(dd=>{
+        const s=item.filmObj.dayShowings[dd]?.[0];
+        return s?`${fmtShort(dd)} ${s.time}`:'';
+      }).filter(Boolean).join(' · ');
 
-          if(selectedTitles.has(f.title)){
-            card.classList.add('selected');
-            card.querySelector('.fc-check').textContent='✓';
-          }
+      card.innerHTML=`
+        <div class="fc-check">○</div>
+        <div class="fc-time">${item.showing.time}</div>
+        <div class="fc-title">${item.title}</div>
+        <div class="fc-venue">📍 ${item.showing.venue||''}</div>
+        <div class="fc-dur">${item.showing.duration||''}</div>
+        ${item.filmObj.description?`<div class="fc-desc">${item.filmObj.description}</div>`:''}
+        ${multiText?`<div class="fc-multi">↔ Også: ${multiText}</div>`:''}`;
 
-          card.addEventListener('click',()=>toggleFilmCard(f.title,card,si));
-          cell.appendChild(card);
-        });
+      // Restore selection state
+      if(selectedTitles.has(item.title)){
+        const sel=selectedShowings[item.title];
+        if(sel&&sel.date===d){
+          card.classList.add('selected');
+          card.querySelector('.fc-check').textContent='✓';
+          const lbl=document.createElement('div');
+          lbl.className='fc-chosen-day';
+          lbl.textContent='✓ valgt denne dag';
+          card.appendChild(lbl);
+        } else if(sel){
+          card.classList.add('also-shown');
+          card.querySelector('.fc-check').textContent='↔';
+          const lbl=document.createElement('div');
+          lbl.className='fc-chosen-day';
+          lbl.style.color='var(--muted)';
+          lbl.textContent='valgt '+fmtShort(sel.date)+' '+sel.time;
+          card.appendChild(lbl);
+        }
       }
-      row.appendChild(cell);
+
+      card.addEventListener('click',()=>toggleFilmCard(item.title,card,slot.slotId,d));
+      col.appendChild(card);
     });
 
-    listEl.appendChild(row);
+    row.appendChild(col);
+    block.appendChild(row);
+    listEl.appendChild(block);
   });
 
-  document.getElementById('film-list-container').style.display='block';
   refreshSlotDimming();
-  updateSelBar();
+}
+
+// Dim unselected cards in slots where something is already selected (on the active day)
+function refreshSlotDimming(){
+  const selectedSlots=new Set();
+  document.querySelectorAll('.film-card.selected').forEach(card=>{
+    if(card.dataset.slotId!==undefined) selectedSlots.add(card.dataset.slotId);
+  });
+  document.querySelectorAll('.film-card').forEach(card=>{
+    const sid=card.dataset.slotId;
+    const isAlsoShown=card.classList.contains('also-shown');
+    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected') && !isAlsoShown){
+      card.classList.add('dimmed');
+    } else {
+      card.classList.remove('dimmed');
+    }
+  });
 }
 
 // Dim unselected cards in slots where something is already selected
@@ -989,7 +999,7 @@ function getFilmByTitle(title){
   return showings; // date → [{time,venue,duration}]
 }
 
-function toggleFilmCard(title,card,slotId){
+function toggleFilmCard(title,card,slotId,cardDate){
   if(selectedTitles.has(title)){
     // Deselect
     selectedTitles.delete(title);
@@ -1002,7 +1012,7 @@ function toggleFilmCard(title,card,slotId){
         if(cd)cd.remove();
       }
     });
-    refreshSlotDimming();
+    renderDaySlots(activeDay);
     updateSelBar();
     return;
   }
@@ -1013,12 +1023,12 @@ function toggleFilmCard(title,card,slotId){
 
   if(availableDays.length<=1){
     // Only one day — select directly
-    const d=availableDays[0]||card.dataset.date;
+    const d=availableDays[0]||cardDate;
     const s=(dayShowings[d]||[])[0]||{time:card.querySelector('.fc-time')?.textContent,venue:'',duration:''};
     selectFilmOnDay(title,d,s,slotId);
   } else {
-    // Multiple days — show picker
-    openDayPicker(title,dayShowings,slotId);
+    // Multiple days — show picker, pre-highlight current day
+    openDayPicker(title,dayShowings,slotId,cardDate);
   }
 }
 
@@ -1055,7 +1065,8 @@ function selectFilmOnDay(title,date,showing,slotId){
       c.appendChild(label);
     }
   });
-  refreshSlotDimming();
+  // Re-render active day so slot dimming and card states are fresh
+  renderDaySlots(activeDay);
   updateSelBar();
 }
 
@@ -1063,7 +1074,7 @@ function selectFilmOnDay(title,date,showing,slotId){
 let _dpFilm=null;
 let _dpOptions=[]; // store options by index to avoid inline JSON issues
 
-function openDayPicker(title,dayShowings,slotId){
+function openDayPicker(title,dayShowings,slotId,currentDay){
   _dpFilm={title,slotId};
   _dpOptions=[];
   document.getElementById('dp-title').textContent=title;
@@ -1079,10 +1090,11 @@ function openDayPicker(title,dayShowings,slotId){
         sel.date===d && sel.slotId===slotId
       );
 
+      const isCurrent=d===currentDay;
       const opt=document.createElement('div');
-      opt.className='dp-option'+(slotTaken?' dp-taken':'');
+      opt.className='dp-option'+(slotTaken?' dp-taken':'')+(isCurrent?' dp-current':'');
       opt.innerHTML=`
-        <div class="dp-day">${fmtShort(d)}</div>
+        <div class="dp-day">${fmtShort(d)}${isCurrent?' <span style="font-size:0.55rem;color:var(--muted)">(i dag)</span>':''}</div>
         <div class="dp-meta">
           <div class="dp-time">${s.time}</div>
           <div class="dp-venue">📍 ${s.venue||''} · ${s.duration||''}</div>
@@ -1113,26 +1125,23 @@ function closeDayPicker(){
 }
 
 function selectAll(){
-  document.querySelectorAll('.film-row,.film-card').forEach(el=>{
-    const title=el.dataset.title;
-    if(title){
-      selectedTitles.add(title);
-      el.classList.add('selected');
-      const chk=el.querySelector('.film-check,.fc-check');
-      if(chk)chk.textContent='✓';
-    }
+  // Select first showing of each film on its first available day
+  if(!window._byTitle) return;
+  Object.values(window._byTitle).forEach(f=>{
+    if(selectedTitles.has(f.title)) return;
+    const d=dates.find(dd=>f.dayShowings[dd]);
+    if(!d) return;
+    const s=f.dayShowings[d][0];
+    selectedTitles.add(f.title);
+    selectedShowings[f.title]={date:d,time:s.time,venue:s.venue,duration:s.duration,slotId:null};
   });
-  refreshSlotDimming();
+  renderDaySlots(activeDay);
   updateSelBar();
 }
 function selectNone(){
   selectedTitles.clear();
-  document.querySelectorAll('.film-row,.film-card').forEach(el=>{
-    el.classList.remove('selected');
-    const chk=el.querySelector('.film-check,.fc-check');
-    if(chk)chk.textContent='○';
-  });
-  refreshSlotDimming();
+  selectedShowings={};
+  renderDaySlots(activeDay);
   updateSelBar();
 }
 
