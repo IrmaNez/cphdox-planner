@@ -653,50 +653,35 @@ async function startPlanner(){
   document.getElementById('loading-sub').textContent='Udtrækker alle film for '+dates.length+' dag'+(dates.length>1?'e':'');
   buildStepper();
 
-  // Build date labels for prompt
-  const dateList=dates.map(d=>`${d} (${fmtDate(d)})`).join(', ');
-
   try{
-    const raw=await callAI([{
-      role:'user',
-      content:[
-        {
-          type:'document',
-          source:{type:'base64',media_type:'application/pdf',data:pdfBase64}
-        },
-        {
-          type:'text',
-          text:`Dette er CPH:DOX 2026 festivalprogrammet som PDF.
+    // Fetch one day at a time to avoid token limits
+    for(let i=0; i<dates.length; i++){
+      const d=dates[i];
+      document.getElementById('loading-text').textContent=`Læser program for dag ${i+1} af ${dates.length}...`;
+      document.getElementById('loading-sub').textContent=fmtDate(d);
 
-Udtræk ALLE filmvisninger for disse dage: ${dateList}
+      const raw=await callAI([{
+        role:'user',
+        content:[
+          {type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfBase64}},
+          {type:'text',text:`CPH:DOX 2026 program-PDF.
 
-Returner KUN et JSON objekt — ingen markdown, ingen forklaring:
-{
-  "days": {
-    "2026-03-14": [
-      {"title":"Filmtitel","time":"14:00","venue":"Empire Bio","duration":"85 min","description":"1-2 sætninger dansk beskrivelse","ticketUrl":"https://cphdox.dk/film/filmtitel"}
-    ]
-  }
-}
+Udtræk KUN filmvisninger for datoen ${d} (${fmtDate(d)}).
 
-Vigtigt:
-- Inkluder ALLE film der vises de pågældende dage
-- Hvis en film vises flere gange samme dag, inkluder alle visninger som separate entries
-- ticketUrl: brug https://cphdox.dk/film/ + filmtitel i lowercase med bindestreger
-- Svar starter med { og slutter med }`
-        }
-      ]
-    }], 4000);
+Returner KUN et JSON array — ingen markdown, ingen forklaringer:
+[{"title":"...","time":"14:00","venue":"...","duration":"85 min","description":"1-2 sætninger dansk","ticketUrl":"https://cphdox.dk/film/filmtitel-med-bindestreger"}]
 
-    window._lastRaw = raw;
-    console.log('RAW (first 600):', raw.substring(0,600));
-    const parsed=parseJSON(raw);
-    if(!parsed.days)throw new Error('Ingen dage fundet i PDF');
+- Inkluder ALLE film der vises denne dag
+- Samme film kan have flere visninger — inkluder dem alle som separate objekter
+- Array starter med [ og slutter med ]`}
+        ]
+      }], 8000);
 
-    // Store films per date
-    dates.forEach(d=>{
-      allFilms[d]=(parsed.days[d]||[]).map(f=>({...f,date:d,screenings:[{time:f.time,venue:f.venue,duration:f.duration}]}));
-    });
+      window._lastRaw=raw;
+      const films=parseJSON(raw);
+      if(!Array.isArray(films))throw new Error(`Dag ${i+1}: uventet format`);
+      allFilms[d]=films.map(f=>({...f,date:d,screenings:[{time:f.time,venue:f.venue,duration:f.duration}]}));
+    }
 
     document.getElementById('loading-fetch').style.display='none';
     showSwipeForCurrentDay();
