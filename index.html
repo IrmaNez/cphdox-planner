@@ -122,25 +122,11 @@
     border-top:1px solid var(--border);display:none;}
   .film-card:hover .fc-desc,.film-card.selected .fc-desc{display:block;}
   .fc-multi{font-size:0.6rem;color:var(--accent2);margin-top:3px;}
-  .fc-chosen-day{font-size:0.6rem;color:var(--green);margin-top:3px;letter-spacing:0.05em;}
-  .film-card.also-shown{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);opacity:0.55;}
-  .film-card.also-shown .fc-check{color:var(--muted);}
-  .film-card.also-shown:hover{opacity:0.85;border-color:rgba(232,240,72,0.2);}
+
   .film-card.dimmed{opacity:0.28;filter:saturate(0.2);}
   .film-card.dimmed:hover{opacity:0.7;filter:saturate(0.5);}
 
-  /* DAY PICKER */
-  .dp-option{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface2);
-    border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.18s;}
-  .dp-option:hover{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.05);}
-  .dp-option.dp-current{border-color:rgba(232,240,72,0.3);}
-  .dp-option.dp-taken{opacity:0.35;cursor:not-allowed;pointer-events:none;}
-  .dp-option.dp-taken::after{content:'optaget';font-size:0.6rem;color:var(--red);margin-left:auto;
-    letter-spacing:0.1em;text-transform:uppercase;}
-  .dp-day{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.1rem;color:var(--accent);min-width:52px;}
-  .dp-meta{flex:1;}
-  .dp-time{font-size:0.82rem;font-weight:500;}
-  .dp-venue{font-size:0.68rem;color:var(--muted);margin-top:2px;}
+
 
   /* FILM SELECTION LIST */
   .film-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
@@ -474,17 +460,6 @@
   </div>
 </div>
 
-<!-- DAY PICKER MODAL -->
-<div class="modal-overlay" id="day-picker-modal">
-  <div class="modal-box" style="max-width:440px;">
-    <div class="modal-head">
-      <div><h2 id="dp-title"></h2><div class="modal-head-sub">Vælg hvilken dag og tid du vil se filmen</div></div>
-      <button class="modal-close" onclick="closeDayPicker()">×</button>
-    </div>
-    <div class="modal-body" id="dp-body"></div>
-  </div>
-</div>
-
 <!-- SAVE MODAL -->
 <div class="modal-overlay" id="save-modal">
   <div class="save-box">
@@ -661,7 +636,6 @@ const FILM_DATA = {
 let dates=[];
 let allFilms=[];        // flat list: {title, time, venue, duration, description, date, ticketUrl}
 let selectedTitles=new Set(); // unique titles selected
-let selectedShowings={}; // title → {date, time, venue, duration, slotId}
 let currentPlanData=null;
 // pdfBase64 removed — using hardcoded data
 let prefs={pauses:'',count:'',start:''};
@@ -680,7 +654,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 });
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSaveModal();closeCafeModal();closeSwapModal();closeDayPicker();}
+  if(e.key==='Escape'){closeSaveModal();closeCafeModal();closeSwapModal();}
   if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();
 });
 
@@ -747,7 +721,7 @@ function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
   dates=['2026-03-20','2026-03-21','2026-03-22'];
 
-  allFilms=[]; selectedTitles=new Set(); selectedShowings={};
+  allFilms=[]; selectedTitles=new Set();
   document.getElementById('screen-setup').style.display='none';
   document.getElementById('screen-select').style.display='block';
   document.getElementById('loading-fetch').style.display='none';
@@ -796,7 +770,7 @@ function renderFilmList(){
 
   const totalUnique=Object.keys(byTitle).length;
   document.getElementById('film-list-meta').textContent=
-    `${totalUnique} unikke film · Vælg hvad du vil se — konflikter løses automatisk af Claude`;
+    `${totalUnique} unikke film · Markér hvad du vil se — Claude finder den bedste dag og tid`;
 
   // Build day tabs
   const tabsEl=document.getElementById('day-tabs');
@@ -907,23 +881,8 @@ function renderDaySlots(d){
 
       // Restore selection state
       if(selectedTitles.has(item.title)){
-        const sel=selectedShowings[item.title];
-        if(sel&&sel.date===d){
-          card.classList.add('selected');
-          card.querySelector('.fc-check').textContent='✓';
-          const lbl=document.createElement('div');
-          lbl.className='fc-chosen-day';
-          lbl.textContent='✓ valgt denne dag';
-          card.appendChild(lbl);
-        } else if(sel){
-          card.classList.add('also-shown');
-          card.querySelector('.fc-check').textContent='↔';
-          const lbl=document.createElement('div');
-          lbl.className='fc-chosen-day';
-          lbl.style.color='var(--muted)';
-          lbl.textContent='valgt '+fmtShort(sel.date)+' '+sel.time;
-          card.appendChild(lbl);
-        }
+        card.classList.add('selected');
+        card.querySelector('.fc-check').textContent='✓';
       }
 
       card.addEventListener('click',()=>toggleFilmCard(item.title,card,slot.slotId,d));
@@ -946,8 +905,7 @@ function refreshSlotDimming(){
   });
   document.querySelectorAll('.film-card').forEach(card=>{
     const sid=card.dataset.slotId;
-    const isAlsoShown=card.classList.contains('also-shown');
-    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected') && !isAlsoShown){
+    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected')){
       card.classList.add('dimmed');
     } else {
       card.classList.remove('dimmed');
@@ -965,8 +923,7 @@ function refreshSlotDimming(){
   // Dim non-selected cards in those slots
   document.querySelectorAll('.film-card').forEach(card=>{
     const sid=card.dataset.slotId;
-    const isAlsoShown=card.classList.contains('also-shown');
-    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected') && !isAlsoShown){
+    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected')){
       card.classList.add('dimmed');
     } else {
       card.classList.remove('dimmed');
@@ -987,160 +944,24 @@ function toggleFilm(title,row){
   updateSelBar();
 }
 
-// Find byTitle entry for a film card by title
-function getFilmByTitle(title){
-  // Scan allFilms to rebuild dayShowings for this title
-  const showings={};
-  allFilms.filter(f=>f.title===title).forEach(f=>{
-    if(!showings[f.date])showings[f.date]=[];
-    if(!showings[f.date].find(s=>s.time===f.time))
-      showings[f.date].push({time:f.time,venue:f.venue,duration:f.duration});
-  });
-  return showings; // date → [{time,venue,duration}]
-}
-
-function toggleFilmCard(title,card,slotId,cardDate){
+function toggleFilmCard(title,card,slotId){
   if(selectedTitles.has(title)){
-    // Deselect
     selectedTitles.delete(title);
-    delete selectedShowings[title];
-    document.querySelectorAll('.film-card').forEach(c=>{
-      if(c.dataset.title===title){
-        c.classList.remove('selected','also-shown');
-        c.querySelector('.fc-check').textContent='○';
-        const cd=c.querySelector('.fc-chosen-day');
-        if(cd)cd.remove();
-      }
-    });
-    renderDaySlots(activeDay);
-    updateSelBar();
-    return;
-  }
-
-  // Selecting — check how many days this film is shown on
-  const dayShowings=getFilmByTitle(title);
-  const availableDays=Object.keys(dayShowings).filter(d=>dates.includes(d));
-
-  if(availableDays.length<=1){
-    // Only one day — select directly
-    const d=availableDays[0]||cardDate;
-    const s=(dayShowings[d]||[])[0]||{time:card.querySelector('.fc-time')?.textContent,venue:'',duration:''};
-    selectFilmOnDay(title,d,s,slotId);
   } else {
-    // Multiple days — show picker, pre-highlight current day
-    openDayPicker(title,dayShowings,slotId,cardDate);
+    selectedTitles.add(title);
   }
-}
-
-function selectFilmOnDay(title,date,showing,slotId){
-  selectedTitles.add(title);
-  selectedShowings[title]={date,time:showing.time,venue:showing.venue,duration:showing.duration,slotId};
-
-  // Only mark the card on the chosen day as selected
-  // Cards on other days get a subtle "also-shown" style instead
-  document.querySelectorAll('.film-card').forEach(c=>{
-    if(c.dataset.title!==title) return;
-    const cardDate=c.dataset.date;
-    // Remove any previous state
-    c.classList.remove('selected','also-shown');
-    c.querySelector('.fc-check').textContent='○';
-    const cd=c.querySelector('.fc-chosen-day'); if(cd)cd.remove();
-
-    if(cardDate===date){
-      // This is the chosen showing
-      c.classList.add('selected');
-      c.querySelector('.fc-check').textContent='✓';
-      let label=document.createElement('div');
-      label.className='fc-chosen-day';
-      label.textContent='✓ valgt denne dag';
-      c.appendChild(label);
-    } else {
-      // Film also shown here but chosen on another day
-      c.classList.add('also-shown');
-      c.querySelector('.fc-check').textContent='↔';
-      let label=document.createElement('div');
-      label.className='fc-chosen-day';
-      label.style.color='var(--muted)';
-      label.textContent='valgt '+fmtShort(date)+' '+showing.time;
-      c.appendChild(label);
-    }
-  });
-  // Re-render active day so slot dimming and card states are fresh
   renderDaySlots(activeDay);
   updateSelBar();
 }
 
-// ── DAY PICKER ──
-let _dpFilm=null;
-let _dpOptions=[]; // store options by index to avoid inline JSON issues
-
-function openDayPicker(title,dayShowings,slotId,currentDay){
-  _dpFilm={title,slotId};
-  _dpOptions=[];
-  document.getElementById('dp-title').textContent=title;
-  const body=document.getElementById('dp-body');
-  body.innerHTML='';
-
-  dates.filter(d=>dayShowings[d]).forEach(d=>{
-    (dayShowings[d]||[]).forEach(s=>{
-      const idx=_dpOptions.length;
-      _dpOptions.push({date:d,showing:s});
-
-      const slotTaken=Object.values(selectedShowings).some(sel=>
-        sel.date===d && sel.slotId===slotId
-      );
-
-      const isCurrent=d===currentDay;
-      const opt=document.createElement('div');
-      opt.className='dp-option'+(slotTaken?' dp-taken':'')+(isCurrent?' dp-current':'');
-      opt.innerHTML=`
-        <div class="dp-day">${fmtShort(d)}${isCurrent?' <span style="font-size:0.55rem;color:var(--muted)">(i dag)</span>':''}</div>
-        <div class="dp-meta">
-          <div class="dp-time">${s.time}</div>
-          <div class="dp-venue">📍 ${s.venue||''} · ${s.duration||''}</div>
-        </div>`;
-
-      if(!slotTaken){
-        opt.addEventListener('click',()=>pickDay(idx));
-      }
-      body.appendChild(opt);
-    });
-  });
-
-  document.getElementById('day-picker-modal').classList.add('open');
-}
-
-function pickDay(idx){
-  if(!_dpFilm)return;
-  const {date,showing}=_dpOptions[idx];
-  const {title,slotId}=_dpFilm;
-  closeDayPicker();
-  selectFilmOnDay(title,date,showing,slotId);
-}
-
-function closeDayPicker(){
-  document.getElementById('day-picker-modal').classList.remove('open');
-  _dpFilm=null;
-  _dpOptions=[];
-}
-
 function selectAll(){
-  // Select first showing of each film on its first available day
   if(!window._byTitle) return;
-  Object.values(window._byTitle).forEach(f=>{
-    if(selectedTitles.has(f.title)) return;
-    const d=dates.find(dd=>f.dayShowings[dd]);
-    if(!d) return;
-    const s=f.dayShowings[d][0];
-    selectedTitles.add(f.title);
-    selectedShowings[f.title]={date:d,time:s.time,venue:s.venue,duration:s.duration,slotId:null};
-  });
+  Object.values(window._byTitle).forEach(f=>{ selectedTitles.add(f.title); });
   renderDaySlots(activeDay);
   updateSelBar();
 }
 function selectNone(){
   selectedTitles.clear();
-  selectedShowings={};
   renderDaySlots(activeDay);
   updateSelBar();
 }
@@ -1174,14 +995,7 @@ async function generatePlan(){
     if(!byTitle[f.title])byTitle[f.title]={title:f.title,description:f.description,ticketUrl:f.ticketUrl,showings:[]};
     byTitle[f.title].showings.push({date:f.date,dateLabel:fmtDate(f.date),time:f.time,venue:f.venue,duration:f.duration});
   });
-  // Mark preferred showing from user's day selection
-  Object.keys(selectedShowings).forEach(title=>{
-    if(byTitle[title]){
-      const pref=selectedShowings[title];
-      byTitle[title].preferredDate=pref.date;
-      byTitle[title].preferredTime=pref.time;
-    }
-  });
+
 
   document.getElementById('screen-select').style.display='none';
   document.getElementById('loading-plan').style.display='block';
@@ -1193,10 +1007,9 @@ async function generatePlan(){
   const lt=setInterval(()=>{document.getElementById('loading-plan-text').textContent=msgs[++mi%msgs.length];},2500);
 
   // Compact scheduling data only — no descriptions to save tokens
-  const filmList=Object.values(byTitle).map(f=>{
-    const pref=f.preferredDate?` [FORETRUKKET: ${f.preferredDate} ${f.preferredTime||''}]`:'';
-    return `${f.title}|${f.showings.map(s=>`${s.date} ${s.time} ${s.venue} ${s.duration||''}`).join(' / ')}${pref}`;
-  }).join('\n');
+  const filmList=Object.values(byTitle).map(f=>
+    `${f.title}|${f.showings.map(s=>`${s.date} ${s.time} ${s.venue} ${s.duration||''}`).join(' / ')}`
+  ).join('\n');
 
   // Keep descriptions in a lookup so we can re-attach them after plan is returned
   const descLookup={};
@@ -1208,9 +1021,10 @@ async function generatePlan(){
       content:`Lav en optimal CPH:DOX festivalplan. Svar KUN med JSON.
 
 REGLER:
-- Hver film KUN én gang i planen
+- Hver film KUN én gang i hele planen — selv hvis den vises på flere dage
+- Hvis en film vises på flere dage, vælg automatisk det tidspunkt der passer bedst logistisk
 - Vælg bedste visningstidspunkt baseret på præferencer og logistik
-- Film der ikke passer ind → "missed_films"
+- Film der ikke passer ind uanset dag → "missed_films"
 - Gangtider i København: 10-20 min mellem biografer
 
 Festivaldage: ${dates.map(d=>fmtDate(d)+' ('+d+')').join(', ')}
