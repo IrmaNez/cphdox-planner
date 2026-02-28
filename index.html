@@ -42,37 +42,9 @@
   input:focus{border-color:rgba(232,240,72,0.35);background:var(--surface2);}
   label{display:block;font-size:0.68rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:7px;}
 
-  /* PDF DROP */
-  .pdf-drop{border:2px dashed var(--border);padding:36px 20px;text-align:center;cursor:pointer;
-    transition:all 0.22s;background:var(--surface);position:relative;}
-  .pdf-drop:hover,.pdf-drop.drag-over{border-color:rgba(232,240,72,0.5);background:rgba(232,240,72,0.04);}
-  .pdf-drop.has-file{border-color:rgba(72,240,168,0.5);border-style:solid;background:rgba(72,240,168,0.04);}
-  .pdf-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-  .pdf-icon{font-size:2rem;margin-bottom:10px;}
-  .pdf-label{font-size:0.78rem;color:var(--muted);line-height:1.7;}
-  .pdf-label strong{color:var(--text);}
-  .pdf-filename{font-size:0.73rem;color:var(--green);margin-top:8px;}
+  /* PDF upload removed — film data is hardcoded */
 
-  /* DAY CARDS */
-  .day-cards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-  @media(max-width:560px){.day-cards-grid{grid-template-columns:1fr;}}
-  .day-select-card{background:var(--surface);border:1px solid var(--border);padding:22px 18px;
-    transition:all 0.22s;position:relative;overflow:hidden;min-height:140px;
-    display:flex;flex-direction:column;justify-content:space-between;}
-  .day-select-card.has-date{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.04);}
-  .day-select-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity 0.22s;}
-  .day-select-card.has-date::before{opacity:1;}
-  .dcard-num{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-  .day-select-card.has-date .dcard-num{color:var(--accent);}
-  .dcard-date{font-family:'DM Serif Display',serif;font-size:1.4rem;line-height:1;color:var(--muted);margin-bottom:4px;}
-  .day-select-card.has-date .dcard-date{color:var(--text);}
-  .dcard-weekday{font-size:0.7rem;color:var(--muted);margin-bottom:8px;min-height:1.1em;}
-  .day-select-card.has-date .dcard-weekday{color:var(--accent);}
-  .dcard-status{font-size:0.63rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
-  .day-select-card.has-date .dcard-status{color:var(--green);}
-  .dcard-input{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);
-    font-family:'DM Mono',monospace;font-size:0.72rem;padding:7px 10px;outline:none;margin-top:8px;cursor:pointer;color-scheme:dark;}
+  /* Day card CSS removed — dates hardcoded */
 
   /* PREFS */
   .pref-group{margin-bottom:20px;}
@@ -115,6 +87,46 @@
   .note-box{background:rgba(232,240,72,0.04);border:1px solid rgba(232,240,72,0.14);
     padding:14px 18px;font-size:0.73rem;color:var(--muted);line-height:1.7;}
   .note-box strong{color:var(--accent);}
+
+  /* GRID LAYOUT */
+  .grid-wrapper{overflow-x:auto;margin:0 -20px;padding:0 20px 80px;}
+  .time-grid{display:grid;min-width:700px;}
+  .grid-header{display:grid;gap:10px;margin-bottom:6px;padding-left:56px;}
+  .grid-col-head{background:var(--surface2);border:1px solid var(--border);padding:10px 14px;
+    font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);text-align:center;}
+  .time-row{display:grid;gap:10px;margin-bottom:4px;align-items:start;}
+  .time-label{width:46px;flex-shrink:0;font-family:'DM Serif Display',serif;font-style:italic;
+    font-size:0.95rem;color:var(--muted);padding-top:11px;text-align:right;padding-right:10px;}
+  .grid-cell{min-height:8px;}
+  .film-card{background:var(--surface);border:1px solid var(--border);padding:10px 12px;
+    cursor:pointer;transition:all 0.18s;position:relative;margin-bottom:6px;}
+  .film-card:hover{border-color:rgba(232,240,72,0.3);background:var(--surface2);}
+  .film-card.selected{border-color:rgba(72,240,168,0.5);background:rgba(72,240,168,0.04);}
+  .film-card.selected::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);}
+  .fc-check{position:absolute;top:9px;right:9px;font-size:0.75rem;color:var(--muted);transition:color 0.18s;}
+  .film-card.selected .fc-check{color:var(--green);}
+  .fc-time{font-size:0.68rem;color:var(--accent);margin-bottom:2px;font-family:'DM Serif Display',serif;font-style:italic;}
+  .fc-title{font-size:0.78rem;font-weight:500;line-height:1.3;margin-bottom:3px;padding-right:18px;}
+  .fc-venue{font-size:0.63rem;color:var(--muted);}
+  .fc-dur{font-size:0.62rem;color:var(--muted);margin-top:1px;}
+  .fc-desc{font-size:0.67rem;color:var(--muted);line-height:1.55;margin-top:5px;padding-top:5px;
+    border-top:1px solid var(--border);display:none;}
+  .film-card:hover .fc-desc,.film-card.selected .fc-desc{display:block;}
+  .fc-multi{font-size:0.6rem;color:var(--accent2);margin-top:3px;}
+  .dp-option{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface2);
+    border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.18s;}
+  .dp-option:hover{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.05);}
+  .dp-option.dp-taken{opacity:0.35;cursor:not-allowed;pointer-events:none;}
+  .dp-option.dp-taken::after{content:'optaget';font-size:0.6rem;color:var(--red);margin-left:auto;
+    letter-spacing:0.1em;text-transform:uppercase;}
+  .dp-day{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.1rem;color:var(--accent);min-width:52px;}
+  .dp-meta{flex:1;}
+  .dp-time{font-size:0.82rem;font-weight:500;}
+  .dp-venue{font-size:0.68rem;color:var(--muted);margin-top:2px;}
+  .fc-chosen-day{font-size:0.6rem;color:var(--green);margin-top:3px;letter-spacing:0.05em;}
+  .film-card.dimmed{opacity:0.28;filter:saturate(0.2);}
+  .film-card.dimmed:hover{opacity:0.7;filter:saturate(0.5);}
+  .time-divider{grid-column:1/-1;height:1px;background:var(--border);margin:6px 0 2px;opacity:0.5;}
 
   /* FILM SELECTION LIST */
   .film-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
@@ -236,6 +248,45 @@
   .back-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 16px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;margin-bottom:28px;}
   .back-btn:hover{color:var(--text);}
   ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border)}
+
+  /* SWAP MODAL */
+  .swap-film-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--surface2);
+    border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.18s;}
+  .swap-film-item:hover{border-color:rgba(232,240,72,0.35);background:rgba(232,240,72,0.05);}
+  .swap-film-meta{flex:1;}
+  .swap-film-title{font-size:0.85rem;margin-bottom:3px;}
+  .swap-film-times{font-size:0.68rem;color:var(--muted);line-height:1.7;}
+  .swap-arrow{font-size:1.2rem;color:var(--accent);align-self:center;flex-shrink:0;}
+  .btn-replace{display:inline-flex;align-items:center;gap:5px;background:rgba(232,240,72,0.07);
+    border:1px solid rgba(232,240,72,0.22);color:var(--accent);padding:5px 12px;font-size:0.66rem;
+    letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;cursor:pointer;transition:all 0.18s;}
+  .btn-replace:hover{background:rgba(232,240,72,0.16);}
+
+  /* SUMMARY SECTION */
+  .summary-section{margin-top:28px;border:1px solid var(--border);background:var(--surface);overflow:hidden;}
+  .summary-header{padding:14px 22px;background:var(--surface2);border-bottom:1px solid var(--border);}
+  .summary-header h3{font-family:'DM Serif Display',serif;font-size:1.1rem;}
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  @media(max-width:600px){.summary-grid{grid-template-columns:1fr;}}
+  .summary-col{padding:16px 22px;}
+  .summary-col:first-child{border-right:1px solid var(--border);}
+  .summary-col-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;}
+  .summary-col:first-child .summary-col-label{color:var(--green);}
+  .summary-col:last-child .summary-col-label{color:var(--red);}
+  .summary-film{font-size:0.75rem;padding:5px 0;border-bottom:1px solid var(--border);display:flex;
+    align-items:baseline;gap:6px;color:var(--muted);}
+  .summary-film:last-child{border-bottom:none;}
+  .summary-film-title{flex:1;color:var(--text);}
+  .summary-film-when{font-size:0.65rem;color:var(--muted);}
+
+  /* ERROR LOG */
+  .error-log{background:rgba(0,0,0,0.4);border:1px solid rgba(240,72,72,0.2);padding:10px 14px;
+    font-size:0.62rem;font-family:'DM Mono',monospace;color:rgba(240,72,72,0.7);
+    white-space:pre-wrap;word-break:break-all;max-height:220px;overflow-y:auto;margin-top:10px;line-height:1.6;}
+  .copy-log-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;
+    background:none;border:1px solid rgba(240,72,72,0.3);color:var(--red);font-family:'DM Mono',monospace;
+    font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;}
+  .copy-log-btn:hover{background:rgba(240,72,72,0.1);}
 </style>
 </head>
 <body>
@@ -270,44 +321,7 @@
     </div>
 
     <div class="section">
-      <div class="section-label">02 — Program-PDF</div>
-      <div class="pdf-drop" id="pdf-drop">
-        <input type="file" id="pdf-input" accept=".pdf" onchange="onPdfSelected(this)">
-        <div class="pdf-icon">📄</div>
-        <div class="pdf-label"><strong>Klik eller træk PDF hertil</strong><br>Claude læser alle film og tider direkte fra filen.</div>
-        <div class="pdf-filename" id="pdf-filename"></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">03 — Festivaldage (11–22. marts 2026)</div>
-      <div class="day-cards-grid">
-        <div class="day-select-card" id="dcard-0">
-          <div class="dcard-num">Dag 1</div>
-          <div class="dcard-date" id="dcard-date-0">Vælg dato</div>
-          <div class="dcard-weekday" id="dcard-weekday-0"></div>
-          <div class="dcard-status" id="dcard-status-0">○ Ikke valgt</div>
-          <input type="date" id="date1" class="dcard-input" min="2026-03-11" max="2026-03-22" onchange="onDateChange(0)" />
-        </div>
-        <div class="day-select-card" id="dcard-1">
-          <div class="dcard-num">Dag 2</div>
-          <div class="dcard-date" id="dcard-date-1">Vælg dato</div>
-          <div class="dcard-weekday" id="dcard-weekday-1"></div>
-          <div class="dcard-status" id="dcard-status-1">○ Ikke valgt</div>
-          <input type="date" id="date2" class="dcard-input" min="2026-03-11" max="2026-03-22" onchange="onDateChange(1)" />
-        </div>
-        <div class="day-select-card" id="dcard-2">
-          <div class="dcard-num">Dag 3</div>
-          <div class="dcard-date" id="dcard-date-2">Vælg dato</div>
-          <div class="dcard-weekday" id="dcard-weekday-2"></div>
-          <div class="dcard-status" id="dcard-status-2">○ Ikke valgt</div>
-          <input type="date" id="date3" class="dcard-input" min="2026-03-11" max="2026-03-22" onchange="onDateChange(2)" />
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">04 — Dine præferencer</div>
+      <div class="section-label">02 — Dine præferencer</div>
       <div class="pref-group">
         <div class="pref-question">Pauser mellem film?</div>
         <div class="pref-chips" id="pg-pauses">
@@ -334,9 +348,9 @@
     </div>
 
     <div class="note-box">
-      <strong>Sådan virker det:</strong> Claude læser PDF'en og viser alle film for dine dage i en liste. Du sætter flueben ved dem du vil se — hver film kun én gang. Claude laver derefter den optimale plan og viser hvilke film der ikke kunne passe ind.
+      <strong>Sådan virker det:</strong> Programmet for alle tre dage (20.–22. marts) er klar. Sæt flueben ved de film du vil se — Claude laver derefter den optimale plan og viser hvilke film der ikke kunne passe ind.
     </div>
-    <button class="btn-primary" onclick="startPlanner()">▶ Start — hent film fra PDF</button>
+    <button class="btn-primary" onclick="startPlanner()">▶ Vis hele festivalprogrammet</button>
   </div>
 
   <!-- FILM SELECTION SCREEN -->
@@ -352,7 +366,7 @@
     </div>
     <div class="error-box" id="error-fetch"></div>
 
-    <div id="film-list-container" style="display:none;">
+    <div id="film-list-container" style="display:none;"><div class="grid-wrapper">
       <div class="film-list-header">
         <div>
           <div class="film-list-title">Vælg film du vil se</div>
@@ -366,6 +380,7 @@
       <div id="film-list"></div>
     </div>
 
+    </div></div>
     <div class="sel-bar">
       <div class="sel-count" id="sel-count">Ingen film valgt endnu</div>
       <div style="display:flex;gap:10px;">
@@ -396,6 +411,7 @@
     </div>
     <div id="plan-cards"></div>
     <div id="missed-section"></div>
+    <div id="summary-section"></div>
   </div>
 
 </div>
@@ -418,6 +434,7 @@
     </div>
     <div id="av-cards"></div>
     <div id="av-missed"></div>
+    <div id="av-summary"></div>
   </div>
 </div>
 </div>
@@ -430,6 +447,28 @@
       <button class="modal-close" onclick="closeCafeModal()">×</button>
     </div>
     <div class="modal-body" id="cafe-body"></div>
+  </div>
+</div>
+
+<!-- SWAP MODAL -->
+<div class="modal-overlay" id="swap-modal">
+  <div class="modal-box" style="max-width:540px;">
+    <div class="modal-head">
+      <div><h2>Erstat film</h2><div class="modal-head-sub" id="swap-modal-sub"></div></div>
+      <button class="modal-close" onclick="closeSwapModal()">×</button>
+    </div>
+    <div class="modal-body" id="swap-body"></div>
+  </div>
+</div>
+
+<!-- DAY PICKER MODAL -->
+<div class="modal-overlay" id="day-picker-modal">
+  <div class="modal-box" style="max-width:440px;">
+    <div class="modal-head">
+      <div><h2 id="dp-title"></h2><div class="modal-head-sub">Vælg hvilken dag og tid du vil se filmen</div></div>
+      <button class="modal-close" onclick="closeDayPicker()">×</button>
+    </div>
+    <div class="modal-body" id="dp-body"></div>
   </div>
 </div>
 
@@ -448,12 +487,170 @@
 </div>
 
 <script>
+// CPH:DOX 2026 — Hardkodet filmdata fra officielt program
+// Fredag 20. marts, Lørdag 21. marts, Søndag 22. marts
+
+const FILM_DATA = {
+  "2026-03-20": [
+    {title:"KNIFE: THE ATTEMPTED MURDER OF SALMAN RUSHDIE",time:"10:15",venue:"DFI / CINEMATEKET",duration:"107 min",description:"Den verdenskendte forfatter, der overlevede et brutalt attentatforsøg, konfronterer både sin fortid og fremtid i en dybt personlig fortælling om kampen for ytringsfrihed.",ticketUrl:"https://cphdox.dk/film/knife-the-attempted-murder-of-salman-rushdie"},
+    {title:"AMADOU & MARIAM – THE BLIND COUPLE FROM MALI",time:"12:15",venue:"GRAND TEATRET",duration:"82 min",description:"Den usandsynlige kærlighedsfortælling om de to blinde, maliske musikere Amadou og Mariam. Nu tager de hjem til Mali for at spille en stor koncert og indspille et sidste album.",ticketUrl:"https://cphdox.dk/film/amadou-mariam-the-blind-couple-from-mali"},
+    {title:"SILENCED",time:"12:15",venue:"DFI / CINEMATEKET",duration:"97 min",description:"#MeToo brød den kulturelle tavshed om kønsbaseret vold. Nu kæmper menneskerettighedsadvokat Jennifer Robinson mod brugen af æreskrænkelseslove som våben til at bringe overlevere til tavshed.",ticketUrl:"https://cphdox.dk/film/silenced"},
+    {title:"ARCTIC LINK",time:"13:00",venue:"DFI / CINEMATEKET",duration:"82 min",description:"Et fjernt hjørne af Alaska bliver omsider koblet på internettet. En episk debutfilm om teknologi og forandringer, hvor alt er enormt — fra kabler til billede og lyd.",ticketUrl:"https://cphdox.dk/film/arctic-link"},
+    {title:"SOCIAL LANDSCAPES",time:"13:00",venue:"DAGMAR TEATRET",duration:"78 min",description:"En virtuel jordomrejse, udelukkende kommenteret af TripAdvisor. En dybt original film, som med nådesløs humor konfronterer os med en verden, hvor masseturismen har sejret.",ticketUrl:"https://cphdox.dk/film/social-landscapes"},
+    {title:"THE GREAT EXPERIMENT",time:"14:15",venue:"GRAND TEATRET",duration:"100 min",description:"Det store, amerikanske eksperiment og dets dybe krise skildret i cinematisk sort-hvid. En politisk film til nuet og en tidskapsel til fremtiden.",ticketUrl:"https://cphdox.dk/film/the-great-experiment"},
+    {title:"PHANTOMS + FALLEN NOON + THE FUTORA + COMPACT DISC",time:"14:30",venue:"DFI / CINEMATEKET",duration:"80 min",description:"Fire kortfilm om spøgelser, teknologi og det skrøbelige forhold mellem krop og billede af bl.a. Apichatpong Weerasethakul.",ticketUrl:"https://cphdox.dk/film/phantoms-fallen-noon-the-futora-compact-disc"},
+    {title:"THE OLDEST PERSON IN THE WORLD",time:"14:30",venue:"GLORIA BIOGRAF",duration:"87 min",description:"Varm og underfundig film om livet, døden og alt det ind imellem. Især ikke hvis man er et af verdens ældste mennesker.",ticketUrl:"https://cphdox.dk/film/the-oldest-person-in-the-world"},
+    {title:"POWWOW PEOPLE",time:"15:00",venue:"DFI / CINEMATEKET",duration:"88 min",description:"Fra morgengry til mørket falder skildrer filmkunstneren Sky Hopinka en powwow, hvor USAs oprindelige folk mødes for at fejre fællesskabet.",ticketUrl:"https://cphdox.dk/film/powwow-people"},
+    {title:"GAZA'S TWINS, COME BACK TO ME",time:"15:00",venue:"DAGMAR TEATRET",duration:"96 min",description:"En kvinde adskilles fra sine nyfødte tvillinger under krigen i Gaza. En lokal dokumentarist følger hende i 16 lange måneder, mens krig og kaos raser.",ticketUrl:"https://cphdox.dk/film/gazas-twins-come-back-to-me"},
+    {title:"BELOW THE CLOUDS",time:"16:30",venue:"DAGMAR TEATRET",duration:"115 min",description:"I skyggen af Vesuv følger Gianfranco Rosi hverdagslivet for napolitanerne. Den sidste film i den prisvindende Italien-trilogi, fortalt i sublime sort-hvide billeder.",ticketUrl:"https://cphdox.dk/film/below-the-clouds"},
+    {title:"SOMETHING FAMILIAR",time:"16:30",venue:"GLORIA BIOGRAF",duration:"90 min",description:"En britisk kvinde søger tilbage til sin families ophav i Rumænien og opdager chokerende mønstre i søskendeflokken. Modigt, medrivende og med mere end et enkelt twist.",ticketUrl:"https://cphdox.dk/film/something-familiar"},
+    {title:"DOUBLE TROUBLE",time:"16:30",venue:"FALKONER BIOGRAF",duration:"70 min",description:"Hvad får man, hvis man overlader to aldrende, polske enker og slyngveninder i hinandens selskab i en landsby i Rumænien? Double trouble!",ticketUrl:"https://cphdox.dk/film/double-trouble"},
+    {title:"AMAZOMANIA",time:"16:45",venue:"EMPIRE BIO",duration:"93 min",description:"En farefuld ekspedition i Amazonas bliver til et moralsk minefelt om den hvide mands blik, da projektet vender kameraet mod sig selv og den koloniale arv.",ticketUrl:"https://cphdox.dk/film/amazomania"},
+    {title:"CONSCIOUS",time:"16:45",venue:"DAGMAR TEATRET",duration:"80 min",description:"Kan vores subjektive bevidsthed undersøges objektivt? Et filosofisk og videnskabeligt dilemma i en gribende film om hjernens mysterier, hvor livet selv indhenter en neuroforsker.",ticketUrl:"https://cphdox.dk/film/conscious"},
+    {title:"BOUCHRA",time:"17:00",venue:"EMPIRE BIO",duration:"82 min",description:"En af årets mest originale film — animeret autofiktion fra Marokko, hvor en queer filmskaber ringer hjem fra NYC til sin mor i Casablanca for at tale ud.",ticketUrl:"https://cphdox.dk/film/bouchra"},
+    {title:"TO HOLD A MOUNTAIN",time:"17:00",venue:"DFI / CINEMATEKET",duration:"105 min",description:"Årets Sundance-vinder er en sanselig og jordnær skildring af livets gang hos en kvinde og en ung pige i Montenegros bjerge, som er i fare for at blive et træningsområde for NATO.",ticketUrl:"https://cphdox.dk/film/to-hold-a-mountain"},
+    {title:"THE MUSICIAN AND THE WHALE",time:"17:00",venue:"BIG BIO NORDHAVN",duration:"83 min",description:"En elektronisk komponist drager ud mod det åbne hav, hvor hans musik vækker en dyb, poetisk resonans i en pukkelhval. Kan man kommunikere med havets dyr gennem musik?",ticketUrl:"https://cphdox.dk/film/the-musician-and-the-whale"},
+    {title:"TRACES",time:"17:00",venue:"DAGMAR TEATRET",duration:"85 min",description:"Ukrainske kvinder, som har overlevet seksuel vold under Ruslands krig, nægter at tie. Et brutalt ærligt vidnebyrd fra krigens kvindelige ofre.",ticketUrl:"https://cphdox.dk/film/traces"},
+    {title:"THE BALLAD OF JUDAS PRIEST",time:"19:00",venue:"VALBY KINO SAL 1",duration:"98 min",description:"50 års underholdende rockhistorie med de ikoniske heavy metal-legender for fuld spade — med Tom Morello fra Rage Against the Machine som co-instruktør.",ticketUrl:"https://cphdox.dk/film/the-ballad-of-judas-priest"},
+    {title:"BURNING VOICE",time:"19:00",venue:"EMPIRE BIO",duration:"84 min",description:"35-årige Tamara Amer kæmper en indædt kamp mod negativ social kontrol, tavshedskultur og undertrykkelse af kvinder i Irak, hvor hun selv er vokset op.",ticketUrl:"https://cphdox.dk/film/burning-voice"},
+    {title:"PALESTINIAN UNWANTED",time:"19:00",venue:"FALKONER BIOGRAF",duration:"73 min",description:"Under bombardementerne af Gaza forsøger en dansk-palæstinensisk filmskaber at råbe den danske offentlighed op. En dybt personlig film med en mission.",ticketUrl:"https://cphdox.dk/film/palestinian-unwanted"},
+    {title:"DESIRE LINES",time:"19:00",venue:"DFI / CINEMATEKET",duration:"107 min",description:"Enigmatisk queerfabel om en søvnløs mand, der følger efter sin bror på cruising gennem Beograds dunkle nætter. En elliptisk film om kroppe i bevægelse.",ticketUrl:"https://cphdox.dk/film/desire-lines"},
+    {title:"STORMBOUND",time:"19:00",venue:"VUE FISKETORVET",duration:"95 min",description:"Visuelt storslået IMAX-film om verdens mest kraftfulde tornadoer og orkaner — skildret indefra af en fotograf, der selv lever på lånt tid. Med en uventet kærlighedshistorie.",ticketUrl:"https://cphdox.dk/film/stormbound"},
+    {title:"MERCKX – RACE OF A CHAMPION",time:"19:00",venue:"DAGMAR TEATRET",duration:"84 min",description:"Eddy Merckx er den største cykelrytter nogensinde. Et stilfuldt portræt af en uovervindelig mester i medgang og modgang.",ticketUrl:"https://cphdox.dk/film/merckx-race-of-a-champion"},
+    {title:"INTELLIGENCE RISING",time:"19:00",venue:"VUE FISKETORVET",duration:"73 min",description:"Tænkere som Yuval Harari og ledere fra EU, Kina og USA deltager i et geopolitisk krigsspil om AI, konfronteret med scenarier for fremtidens mulige kriser.",ticketUrl:"https://cphdox.dk/film/intelligence-rising"},
+    {title:"REDOUBT",time:"19:00",venue:"GRAND TEATRET",duration:"81 min",description:"En mand bygger en bunker af skrammel på en pløjemark i Skåne for at være klar, når fjenden kommer. En moderne myte baseret på virkeligheden.",ticketUrl:"https://cphdox.dk/film/redoubt"},
+    {title:"YUGO GOES TO AMERICA",time:"19:15",venue:"GLORIA BIOGRAF",duration:"87 min",description:"Tre unge venner fra Beograd kører fra New York til Los Angeles i Yugo — et kultdyrket levn af en bil fra 80'erne. En livlig doku-komedie og et rabalder af et roadtrip.",ticketUrl:"https://cphdox.dk/film/yugo-goes-to-america"},
+    {title:"WHERE THE SILENCE IS HEARD",time:"19:15",venue:"DFI / CINEMATEKET",duration:"94 min",description:"En ung chilensk kvinde flytter ind i et forladt hus i Valparaíso for at samle stumperne i sin egen families historie, farvet af diktatur, eksil og stilhed.",ticketUrl:"https://cphdox.dk/film/where-the-silence-is-heard"},
+    {title:"CONSTRUCTION SITE",time:"19:15",venue:"DAGMAR TEATRET",duration:"94 min",description:"Stjerne-arkitekten Renzo Pianos projekt med at renovere en biograf midt i Paris — et spændende studie i at få visioner og praktiske realiteter til at gå op.",ticketUrl:"https://cphdox.dk/film/construction-site"},
+    {title:"KABUL BETWEEN PRAYERS",time:"19:30",venue:"BIG BIO NORDHAVN",duration:"112 min",description:"En ung Taliban-kriger viser sig at være et sammensat menneske, men de nedarvede ideologier er en tung bagage i et overdådigt cinematisk festivalhit.",ticketUrl:"https://cphdox.dk/film/kabul-between-prayers"},
+    {title:"TINGBJERG-EKSPERIMENTET",time:"19:30",venue:"DAGMAR TEATRET",duration:"75 min",description:"Hvad sker der, når en udvalgt gruppe af unge, idealistiske familier fra middelklassen slår sig ned i en københavnsk 'ghetto' med en drøm om at udvikle en ny bydel?",ticketUrl:"https://cphdox.dk/film/tingbjerg-eksperimentet"},
+    {title:"THE AI DOC: HOW I BECAME AN APOCALOPTIMIST",time:"20:00",venue:"BREMEN TEATER",duration:"104 min",description:"AI ændrer verden, som vi kender den. En Oscar-vindende instruktør stiller alle de spørgsmål, der holder ham vågen om natten, i en medrivende og foruroligende film.",ticketUrl:"https://cphdox.dk/film/the-ai-doc-how-i-became-an-apocaloptimist"},
+    {title:"THE LIVES OF MY FATHER",time:"20:00",venue:"PARK BIO",duration:"86 min",description:"Han troede, at hans norske far var journalist. I virkeligheden var han spion for CIA. Nu skal sandheden frem, og den er vildere end fiktion.",ticketUrl:"https://cphdox.dk/film/the-lives-of-my-father"},
+    {title:"KENNY DALGLISH",time:"21:00",venue:"EMPIRE BIO",duration:"103 min",description:"Fængslende portræt af den legendariske Liverpool-spiller Sir Kenny Dalglish, iscenesat af den Oscar-vindende instruktør bag 'Amy' og 'Maradona'.",ticketUrl:"https://cphdox.dk/film/kenny-dalglish"},
+    {title:"SIRI HUSTVEDT – DANCE AROUND THE SELF",time:"21:00",venue:"DAGMAR TEATRET",duration:"110 min",description:"Den norsk-amerikanske forfatter opruller sit livs rejse fra sit og ægtemanden Paul Austers smukke hjem i New York. En vellykket film om at vælge et liv med litteratur og kunst.",ticketUrl:"https://cphdox.dk/film/siri-hustvedt-dance-around-the-self"},
+    {title:"BOY GEORGE & CULTURE CLUB",time:"21:30",venue:"GLORIA BIOGRAF",duration:"96 min",description:"Historien om et af 80'ernes mest banebrydende popbands — en dramatisk rejse fyldt med intern forelskelse, hemmelig homoseksualitet og destruktivt heroinmisbrug.",ticketUrl:"https://cphdox.dk/film/boy-george-culture-club"},
+    {title:"LA BELLE ANNÉE",time:"21:30",venue:"DAGMAR TEATRET",duration:"90 min",description:"Som teenager var hun forelsket i sin lærerinde. Nu vender en fransk-svensk filmskaber tilbage til sin ungdoms besættelse i en smuk dagbogsfilm om begær og vampyrer.",ticketUrl:"https://cphdox.dk/film/la-belle-annee"},
+    {title:"THE WAY ELSEWHERE",time:"21:30",venue:"DFI / CINEMATEKET",duration:"82 min",description:"Tre rutinerede taxachauffører kører rundt i Athens gader og drømmer om kunst og nye begyndelser i en finurlig og poetisk film for natteravne.",ticketUrl:"https://cphdox.dk/film/the-way-elsewhere"},
+    {title:"OUR LAND",time:"21:30",venue:"DAGMAR TEATRET",duration:"91 min",description:"Har alle ret til at færdes frit i naturen? Ikke i England, hvor excentriske rigmænd og naturelskere brydes om jorden.",ticketUrl:"https://cphdox.dk/film/our-land"},
+    {title:"ALL ABOUT THE MONEY",time:"21:30",venue:"GRAND TEATRET",duration:"96 min",description:"Pengenes forbandelse og fortidens skygger hjemsøger en ung og ultrarig anti-kapitalist fra en af USAs rigeste familier.",ticketUrl:"https://cphdox.dk/film/all-about-the-money"},
+    {title:"NOVA '78",time:"21:45",venue:"DFI / CINEMATEKET",duration:"78 min",description:"En aldrig før set tidskapsel fra William S. Burroughs' legendariske Nova Convention i New York, hvor ikoner som Patti Smith og Frank Zappa mødtes.",ticketUrl:"https://cphdox.dk/film/nova-78"},
+    {title:"NICK CAVE'S VEILED WORLD",time:"21:45",venue:"EMPIRE BIO",duration:"65 min",description:"Venner og kolleger tegner et intimt portræt af Nick Cave — en kunstner i forvandling, formet af sorg og jagten på mening efter tabet af sin søn.",ticketUrl:"https://cphdox.dk/film/nick-caves-veiled-world"}
+  ],
+  "2026-03-21": [
+    {title:"THE OLDEST PERSON IN THE WORLD",time:"10:00",venue:"DFI / CINEMATEKET",duration:"87 min",description:"Varm og underfundig film om livet, døden og alt det ind imellem. Især ikke hvis man er et af verdens ældste mennesker.",ticketUrl:"https://cphdox.dk/film/the-oldest-person-in-the-world"},
+    {title:"WAX & GOLD",time:"12:00",venue:"DFI / CINEMATEKET",duration:"97 min",description:"Den østriske doku-veteran Ruth Beckermann er taget til Addis Ababa for at nærme sig en historisk sandhed om Etiopiens splittede fortid.",ticketUrl:"https://cphdox.dk/film/wax-gold"},
+    {title:"HOLDING LIAT",time:"12:00",venue:"DAGMAR TEATRET",duration:"97 min",description:"Vinderen af bedste dokumentar på Berlinale — et komplekst portræt af, hvordan en jødisk families tragedie den 7. oktober forvandles til en skakbrik i et geopolitisk spil.",ticketUrl:"https://cphdox.dk/film/holding-liat"},
+    {title:"MOLLY VS THE MACHINES",time:"12:00",venue:"EMPIRE BIO",duration:"83 min",description:"Tech-giganternes ansvar for unge menneskers mentale sundhed sættes på prøve, da en tragedie i en britisk familie fører til retssag.",ticketUrl:"https://cphdox.dk/film/molly-vs-the-machines"},
+    {title:"WATCHING PEOPLE WATCHING BIRDS",time:"12:30",venue:"EMPIRE BIO",duration:"90 min",description:"Himlens fugle er en truet dyreart, men verdens fuglekiggere er på sagen. En charmerende film om hobbyornitologer med Jonathan Franzen.",ticketUrl:"https://cphdox.dk/film/watching-people-watching-birds"},
+    {title:"I WANT HER DEAD",time:"12:30",venue:"GRAND TEATRET",duration:"85 min",description:"I en calabrisk landsby trues freden af to svigerinders årelange familiefejde. Et tragikomisk portræt af familiehad, hvor det ærke-italienske melodrama lever.",ticketUrl:"https://cphdox.dk/film/i-want-her-dead"},
+    {title:"COLLAPSE",time:"13:15",venue:"KUNSTHAL CHARLOTTENBORG",duration:"78 min",description:"Kort efter 7. oktober 2023 vender en israelsk filmskaber hjem til sin ødelagte kibbutz. Et essayistisk vidnesbyrd om krig og tab.",ticketUrl:"https://cphdox.dk/film/collapse"},
+    {title:"DRY LEAF",time:"14:00",venue:"EMPIRE BIO",duration:"186 min",description:"Et moderne eventyr, hvor virkelighedens verden (gen)fortrylles med en fabelagtig filmkunstnerisk opfindsomhed af den georgiske filmkunstner Alexandre Koberidze.",ticketUrl:"https://cphdox.dk/film/dry-leaf"},
+    {title:"TUTU",time:"14:00",venue:"DAGMAR TEATRET",duration:"101 min",description:"Et historisk og inspirerende portræt af den sydafrikanske Nobelprisvinder og ærkebiskop Desmond Tutu, der samlede en hel generation i kampen mod apartheid.",ticketUrl:"https://cphdox.dk/film/tutu"},
+    {title:"LITTLE SINNER",time:"14:15",venue:"DFI / CINEMATEKET",duration:"90 min",description:"20 års dybt personlige optagelser er samlet i en rå og ufiltreret rejse fra Damaskus til Danmark og skildrer en syrisk kvindes kamp mod vold og svigt.",ticketUrl:"https://cphdox.dk/film/little-sinner"},
+    {title:"A WORLD GONE MAD – THE WAR DIARIES OF ASTRID LINDGREN",time:"14:30",venue:"PARK BIO",duration:"98 min",description:"Den svenske forfatters unge år under 2. verdenskrig, fortalt gennem hendes egne dagbøger i en smuk film om livet og kunsten i krigens skygge.",ticketUrl:"https://cphdox.dk/film/a-world-gone-mad-the-war-diaries-of-astrid-lindgren"},
+    {title:"THE CYCLE OF LOVE",time:"14:30",venue:"GRAND TEATRET",duration:"98 min",description:"En ung, indisk mand cykler 10.000 km fra Delhi til Sverige for at genfinde sit livs kærlighed. En episk eventyrfilm og et af årets største romantiske publikums-hits.",ticketUrl:"https://cphdox.dk/film/the-cycle-of-love"},
+    {title:"FINDING CONNECTION",time:"14:30",venue:"DFI / CINEMATEKET",duration:"86 min",description:"Hvad er et forhold egentlig? Når mennesker forelsker sig i robotter, starter en lavine af eksistentielle spørgsmål. Engang var det sci-fi, nu er det hverdag.",ticketUrl:"https://cphdox.dk/film/finding-connection"},
+    {title:"JASON'S BOX",time:"14:30",venue:"EMPIRE BIO",duration:"89 min",description:"Hvad sker der, når en erfaren klimaforsker springer ud som aktivist? I Grønland starter forskeren Jason Box et radikalt projekt, der skal råbe verden op.",ticketUrl:"https://cphdox.dk/film/jasons-box"},
+    {title:"DRACULA",time:"15:00",venue:"GLORIA BIOGRAF",duration:"170 min",description:"Rumænske Radu Jude vælter Dracula ud af kisten i en kulsort komedie fra Transsylvanien. Ingen piller ved nationale myter med samme fandenivoldskhed.",ticketUrl:"https://cphdox.dk/film/dracula"},
+    {title:"THE CALF DOLL",time:"15:00",venue:"KUNSTHAL CHARLOTTENBORG",duration:"90 min",description:"Billedskøn fabel fra Indien, hvor beboerne i en lille landsby spiller sig selv i en enkel og gådefuld fortælling om en mand og hans ko.",ticketUrl:"https://cphdox.dk/film/the-calf-doll"},
+    {title:"THE AI DOC: HOW I BECAME AN APOCALOPTIMIST",time:"15:00",venue:"BREMEN TEATER",duration:"104 min",description:"AI ændrer verden, som vi kender den. En Oscar-vindende instruktør stiller alle de spørgsmål, der holder ham vågen om natten.",ticketUrl:"https://cphdox.dk/film/the-ai-doc-how-i-became-an-apocaloptimist"},
+    {title:"WAKING HOURS",time:"16:15",venue:"DAGMAR TEATRET",duration:"78 min",description:"Smuglere fører mennesker over grænsen til Europa i en endeløs, søvnløs nat. En cinematisk film optaget i bælgmørke, som for alt i verden skal ses i biografen.",ticketUrl:"https://cphdox.dk/film/waking-hours"},
+    {title:"ADAM'S APPLE",time:"16:30",venue:"FALKONER BIOGRAF",duration:"97 min",description:"En mor har fulgt sin transkønnede teenager gennem en kameralinse over to årtier. En rørende og øjenåbnende beretning om forældre og børn.",ticketUrl:"https://cphdox.dk/film/adams-apple"},
+    {title:"MATTER OF BRITAIN",time:"16:30",venue:"DFI / CINEMATEKET",duration:"103 min",description:"En hel britisk landsby genspiller myten om Den Hellige Gral som en kollektiv performance over et helt år. En enestående debutfilm med enorm forestillingskraft.",ticketUrl:"https://cphdox.dk/film/matter-of-britain"},
+    {title:"ØLPARADISET",time:"16:30",venue:"DAGMAR TEATRET",duration:"80 min",description:"Hvad sker der med mennesker, etik og moral, når alkohol og kapitalisme slippes løs i et fattigt og korrupt land med få restriktioner?",ticketUrl:"https://cphdox.dk/film/oelparadiset"},
+    {title:"ARCTIC LINK",time:"16:30",venue:"EMPIRE BIO",duration:"82 min",description:"Et fjernt hjørne af Alaska bliver omsider koblet på internettet. En episk debutfilm om teknologi og forandringer, hvor alt er enormt.",ticketUrl:"https://cphdox.dk/film/arctic-link"},
+    {title:"A CHILD OF MY OWN",time:"16:45",venue:"GRAND TEATRET",duration:"93 min",description:"En ung, mexicansk kvinde faker sin egen graviditet, men bliver snart et gidsel af sine historier. En utrolig historie fortalt af Oscar-nominerede Maite Alberdi.",ticketUrl:"https://cphdox.dk/film/a-child-of-my-own"},
+    {title:"80 ANGRY JOURNALISTS",time:"16:45",venue:"DAGMAR TEATRET",duration:"94 min",description:"Da Ungarns største nyhedsredaktion kollapser under politisk pres, fanger en journalist historien bag en kollektiv kamp for pressefrihed.",ticketUrl:"https://cphdox.dk/film/80-angry-journalists"},
+    {title:"LIKE ANY OTHER MORTAL",time:"16:45",venue:"DFI / CINEMATEKET",duration:"92 min",description:"En ensom robot kører rundt på en fjern planet for at finde tegn på liv, mens forskere leder efter ukendte livsformer i et Marslandskab i Andalusien.",ticketUrl:"https://cphdox.dk/film/like-any-other-mortal"},
+    {title:"ELON MUSK UNVEILED – THE TESLA EXPERIMENT",time:"17:00",venue:"PARK BIO",duration:"90 min",description:"Elon Musk ønsker at komme først i kapløbet om selvkørende biler, men det har en pris. En doku-thriller om Teslas fatale sikkerhedsbrist.",ticketUrl:"https://cphdox.dk/film/elon-musk-unveiled-the-tesla-experiment"},
+    {title:"KAMPEN OM LYNETTEHOLM",time:"17:30",venue:"EMPIRE BIO",duration:"58 min",description:"Klimabevægelsen og deres to advokater udfordrer den danske stat i en højspændt retssag for at standse Lynetteholm.",ticketUrl:"https://cphdox.dk/film/kampen-om-lynetteholm"},
+    {title:"DOUBLE TROUBLE",time:"18:00",venue:"DAGMAR TEATRET",duration:"70 min",description:"Hvad får man, hvis man overlader to aldrende, polske enker og slyngveninder i hinandens selskab i en landsby i Rumænien?",ticketUrl:"https://cphdox.dk/film/double-trouble"},
+    {title:"PATRIARKEN",time:"18:00",venue:"BREMEN TEATER",duration:"55 min",description:"Filmproducer Peter Aalbæk er selverklæret patriark. Nu bliver han sendt i terapi af sine døtre. Et kærligt, sjovt og nådesløst portræt af en truet art.",ticketUrl:"https://cphdox.dk/film/patriarken"},
+    {title:"HJEMSØGT",time:"19:00",venue:"GLORIA BIOGRAF",duration:"90 min",description:"Instruktørens rejse som adopteret fra Sydkoreas bjerge til Danmarks vestkyst, hvor en konfrontation med adoptionssystemet forbinder en dysfunktionel jysk familie med et udslettet koreansk ophav.",ticketUrl:"https://cphdox.dk/film/hjemsøgt"},
+    {title:"MARIINKA",time:"19:00",venue:"GRAND TEATRET",duration:"94 min",description:"Unge ukrainere fra byen Mariinka står over for et årti med krig, der splitter deres familier. Et episk og visionært mesterværk filmet over 10 år.",ticketUrl:"https://cphdox.dk/film/mariinka"},
+    {title:"WE WANT THE FUNK",time:"19:00",venue:"FALKONER BIOGRAF",duration:"84 min",description:"Gør dig klar til at blive ramt af ren funk-eksplosion! Vilde historier fra 70'erne tilsat svedige basgange, elektriske grooves og den slags rytmer, der går lige i kroppen.",ticketUrl:"https://cphdox.dk/film/we-want-the-funk"},
+    {title:"KING HAMLET",time:"19:00",venue:"VUE FISKETORVET",duration:"89 min",description:"Den danske dokumentarist Elvira Linds vender tilbage med et dybt personligt portræt af sin mand, skuespilleren Oscar Isaac, der står over for sit livs sværeste rolle.",ticketUrl:"https://cphdox.dk/film/king-hamlet"},
+    {title:"STORMBOUND",time:"19:00",venue:"EMPIRE BIO",duration:"95 min",description:"Visuelt storslået IMAX-film om verdens mest kraftfulde tornadoer og orkaner — skildret indefra af en fotograf, der selv lever på lånt tid.",ticketUrl:"https://cphdox.dk/film/stormbound"},
+    {title:"QAJAQ MAN",time:"19:00",venue:"DAGMAR TEATRET",duration:"67 min",description:"En britisk kok padler 3.000 kilometer langs Grønlands vestkyst, overlever på naturens nåde og opdager fællesskabets styrke.",ticketUrl:"https://cphdox.dk/film/qajaq-man"},
+    {title:"THE SANDBOX",time:"19:00",venue:"DFI / CINEMATEKET",duration:"90 min",description:"Klarsynet kortlægning af brudfladerne i det 21. århundredes verdenskort. Magtpolitik, migration og overvågning skildret med skarphed og kunstnerisk vision.",ticketUrl:"https://cphdox.dk/film/the-sandbox"},
+    {title:"THE HISTORY OF CONCRETE",time:"19:15",venue:"DFI / CINEMATEKET",duration:"101 min",description:"Manden bag HBO-serien 'How To with John Wilson' debuterer med sin første spillefilm — en hylemorsom og skæv undersøgelse af beton som fundamentalt element i bylivet.",ticketUrl:"https://cphdox.dk/film/the-history-of-concrete"},
+    {title:"MOUNTAIN OF GOLD",time:"19:15",venue:"DAGMAR TEATRET",duration:"85 min",description:"Med dollartegn i øjnene begiver guldgravere sig ud i et goldt ørkenlandskab i Niger. En intens doku-thriller om guldfeberens rasen.",ticketUrl:"https://cphdox.dk/film/mountain-of-gold"},
+    {title:"PETROLHEADS",time:"19:30",venue:"BIG BIO NORDHAVN",duration:"77 min",description:"To helt særlige venner kører de danske landeveje tynde for at finde en brugt Honda Civic. En film, der går lige i hjertet.",ticketUrl:"https://cphdox.dk/film/petrolheads"},
+    {title:"A LIFE ILLUMINATED",time:"19:30",venue:"DAGMAR TEATRET",duration:"89 min",description:"På ekspedition i dybhavet med marinebiologen Edie Widder på mission: at dokumentere de selvlysende livsformer i det tætteste mørke.",ticketUrl:"https://cphdox.dk/film/a-life-illuminated"},
+    {title:"ALL ABOUT THE MONEY",time:"20:00",venue:"PARK BIO",duration:"96 min",description:"Pengenes forbandelse og fortidens skygger hjemsøger en ung og ultrarig anti-kapitalist fra en af USAs rigeste familier.",ticketUrl:"https://cphdox.dk/film/all-about-the-money"},
+    {title:"THE BALLAD OF JUDAS PRIEST",time:"21:00",venue:"EMPIRE BIO",duration:"98 min",description:"50 års underholdende rockhistorie med de ikoniske heavy metal-legender for fuld spade — med Tom Morello som co-instruktør.",ticketUrl:"https://cphdox.dk/film/the-ballad-of-judas-priest"},
+    {title:"IN-I IN MOTION",time:"21:00",venue:"DAGMAR TEATRET",duration:"127 min",description:"Juliette Binoche besøger CPH:DOX med sin debutfilm som instruktør: en intim film om den krævende og kreative proces med at udvikle en danseforestilling.",ticketUrl:"https://cphdox.dk/film/in-i-in-motion"},
+    {title:"BARRIO TRISTE",time:"21:15",venue:"DFI / CINEMATEKET",duration:"89 min",description:"Årets vildeste banger! Hæsblæsende og trippet sensation af en hybridfilm fra colombianske Medellín. Produceret af Harmony Korine med score af Arca.",ticketUrl:"https://cphdox.dk/film/barrio-triste"},
+    {title:"BETTER GO MAD IN THE WILD",time:"21:15",venue:"DAGMAR TEATRET",duration:"83 min",description:"Tjekkisk festivalhit om to aldrende tvillinger med revolutionært blod i årene, der har skabt sig en magisk verden på en gård uden for samfundet.",ticketUrl:"https://cphdox.dk/film/better-go-mad-in-the-wild"},
+    {title:"SUMMER TOUR",time:"21:15",venue:"EMPIRE BIO",duration:"82 min",description:"Hop ombord i syreslæden på roadtrip gennem sommeren med to vanvittigt søde 'Deadheads', når de triller i hælene på Grateful Dead på deres sidste turne.",ticketUrl:"https://cphdox.dk/film/summer-tour"},
+    {title:"MARE'S NEST",time:"21:30",venue:"GLORIA BIOGRAF",duration:"98 min",description:"CPH:DOX-vinderen Ben Rivers er tilbage med en trippet og magisk hybridfilm baseret på et stykke af Don DeLillo om en piges rejse fra stenalderen til fremtiden.",ticketUrl:"https://cphdox.dk/film/mares-nest"},
+    {title:"FANTASY",time:"21:30",venue:"DAGMAR TEATRET",duration:"79 min",description:"Seksualitet, kropslighed og mørke lyster er drivkraften i en original, fransk hybridfilm om en ung kvinde, der mister en notesbog med alle sine hemmeligheder.",ticketUrl:"https://cphdox.dk/film/fantasy"},
+    {title:"WHISPERS IN MAY",time:"21:30",venue:"DFI / CINEMATEKET",duration:"95 min",description:"Tre kinesiske piger tager på et eventyrligt roadtrip gennem de barske bjerge i Sichuan-provinsen i en enestående debutfilm.",ticketUrl:"https://cphdox.dk/film/whispers-in-may"},
+    {title:"WE WANT THE FUNK",time:"21:30",venue:"GRAND TEATRET",duration:"84 min",description:"Gør dig klar til at blive ramt af ren funk-eksplosion! Vilde historier fra 70'erne tilsat svedige basgange og elektriske grooves.",ticketUrl:"https://cphdox.dk/film/we-want-the-funk"}
+  ],
+  "2026-03-22": [
+    {title:"KNIFE: THE ATTEMPTED MURDER OF SALMAN RUSHDIE",time:"12:15",venue:"BREMEN TEATER",duration:"107 min",description:"Den verdenskendte forfatter, der overlevede et brutalt attentatforsøg, konfronterer både sin fortid og fremtid.",ticketUrl:"https://cphdox.dk/film/knife-the-attempted-murder-of-salman-rushdie"},
+    {title:"THE HISTORY OF CONCRETE",time:"12:15",venue:"GRAND TEATRET",duration:"101 min",description:"Manden bag HBO-serien 'How To with John Wilson' debuterer med sin første spillefilm — en hylemorsom og skæv undersøgelse af beton.",ticketUrl:"https://cphdox.dk/film/the-history-of-concrete"},
+    {title:"PHENOMENA",time:"12:15",venue:"EMPIRE BIO",duration:"86 min",description:"En psykedelisk odyssé ind i universets struktur, guidet af en filmskabers eksperimenter i hans garage. Til et score af Nils Frahm og River Consoles.",ticketUrl:"https://cphdox.dk/film/phenomena"},
+    {title:"CELTIC UTOPIA",time:"12:30",venue:"DAGMAR TEATRET",duration:"90 min",description:"Hvordan lyder den irske folkemusik anno 2026? Sangen holdes i live over hele Irland på de utallige pubs, hvor genren stadig blomstrer.",ticketUrl:"https://cphdox.dk/film/celtic-utopia"},
+    {title:"TINGBJERG-EKSPERIMENTET",time:"12:30",venue:"EMPIRE BIO",duration:"75 min",description:"Hvad sker der, når unge, idealistiske familier fra middelklassen slår sig ned i en københavnsk 'ghetto' med en drøm om at udvikle en ny bydel?",ticketUrl:"https://cphdox.dk/film/tingbjerg-eksperimentet"},
+    {title:"THE PHANTOM PAIN OF ROJAVA",time:"13:00",venue:"KUNSTHAL CHARLOTTENBORG",duration:"81 min",description:"I et hemmeligt hus i det nordlige Syrien lever sårede, kurdiske guerillasoldater med fantomsmerter i skyggen af en svigtet revolution.",ticketUrl:"https://cphdox.dk/film/the-phantom-pain-of-rojava"},
+    {title:"POWWOW PEOPLE",time:"13:15",venue:"KUNSTHAL CHARLOTTENBORG",duration:"88 min",description:"Fra morgengry til mørket falder skildrer filmkunstneren Sky Hopinka en powwow, hvor USAs oprindelige folk mødes for at fejre fællesskabet.",ticketUrl:"https://cphdox.dk/film/powwow-people"},
+    {title:"DAUGHTERS OF THE FOREST",time:"14:15",venue:"EMPIRE BIO",duration:"95 min",description:"Science fiction møder gamle praksisser dybt inde i Mexicos svamperige skove, hvor to kvindelige mykologer søger at forene fortid og nutid.",ticketUrl:"https://cphdox.dk/film/daughters-of-the-forest"},
+    {title:"WHERE THE SILENCE IS HEARD",time:"14:30",venue:"EMPIRE BIO",duration:"94 min",description:"En ung chilensk kvinde flytter ind i et forladt hus i Valparaíso for at samle stumperne i sin families historie, farvet af diktatur og eksil.",ticketUrl:"https://cphdox.dk/film/where-the-silence-is-heard"},
+    {title:"MERCKX – RACE OF A CHAMPION",time:"14:30",venue:"GRAND TEATRET",duration:"84 min",description:"Eddy Merckx er den største cykelrytter nogensinde. Et stilfuldt portræt af en uovervindelig mester i medgang og modgang.",ticketUrl:"https://cphdox.dk/film/merckx-race-of-a-champion"},
+    {title:"AMADOU & MARIAM – THE BLIND COUPLE FROM MALI",time:"14:30",venue:"DAGMAR TEATRET",duration:"82 min",description:"Den usandsynlige kærlighedsfortælling om de to blinde, maliske musikere Amadou og Mariam, der nu tager hjem til Mali.",ticketUrl:"https://cphdox.dk/film/amadou-mariam-the-blind-couple-from-mali"},
+    {title:"SILENCED",time:"14:30",venue:"PARK BIO",duration:"97 min",description:"#MeToo brød den kulturelle tavshed om kønsbaseret vold. Jennifer Robinson kæmper mod brugen af æreskrænkelseslove som våben.",ticketUrl:"https://cphdox.dk/film/silenced"},
+    {title:"AMÍLCAR",time:"14:30",venue:"GRAND TEATRET",duration:"84 min",description:"Blændende smukt portræt af anti-kolonialismens mest ikoniske karakter, Amílcar Cabral — guerillaleder, poet og agronom.",ticketUrl:"https://cphdox.dk/film/amilcar"},
+    {title:"GAZA'S TWINS, COME BACK TO ME",time:"15:00",venue:"DFI / CINEMATEKET",duration:"96 min",description:"En kvinde adskilles fra sine nyfødte tvillinger under krigen i Gaza. En lokal dokumentarist følger hende i 16 lange måneder.",ticketUrl:"https://cphdox.dk/film/gazas-twins-come-back-to-me"},
+    {title:"THIS IS NOT A FRENCH FILM",time:"15:15",venue:"KUNSTHAL CHARLOTTENBORG",duration:"80 min",description:"En ung, racialiseret instruktørs bøvl med at lave sin debutfilm bliver til en doku-satire med politisk punch, der tager én ved næsen.",ticketUrl:"https://cphdox.dk/film/this-is-not-a-french-film"},
+    {title:"THE OLIGARCH AND THE ART DEALER",time:"15:30",venue:"KUNSTHAL CHARLOTTENBORG",duration:"174 min",description:"Den utrolige historien om en af det 21. århundredes mest opsigtsvækkende kunstskandaler — en 10 år lang krig om milliarder.",ticketUrl:"https://cphdox.dk/film/the-oligarch-and-the-art-dealer"},
+    {title:"MARIINKA",time:"15:30",venue:"BREMEN TEATER",duration:"94 min",description:"Unge ukrainere fra byen Mariinka står over for et årti med krig, der splitter deres familier. Et episk mesterværk filmet over 10 år.",ticketUrl:"https://cphdox.dk/film/mariinka"},
+    {title:"HELL'S ARMY",time:"16:15",venue:"DAGMAR TEATRET",duration:"92 min",description:"En russisk dissident-journalist afdækker verdens mest frygtede lejehær, Wagner-gruppen. Under dødstrusler kæmper hun for at afsløre dem.",ticketUrl:"https://cphdox.dk/film/hells-army"},
+    {title:"I HEARD THAT THEY ARE NOT GOING TO SEE EACH OTHER ANYMORE",time:"16:15",venue:"EMPIRE BIO",duration:"86 min",description:"Ung kærlighed og forbundne liv i Taipei i en romantisk og charmerende debutfilm, der opløser grænsen mellem fiktion og virkelighed.",ticketUrl:"https://cphdox.dk/film/i-heard-that-they-are-not-going-to-see-each-other-anymore"},
+    {title:"OPEN MY MIND",time:"16:30",venue:"FALKONER BIOGRAF",duration:"95 min",description:"Den eksperimentelle, psykedeliske terapi sættes på prøve i en lige dele videnskabelig og dybt personlig film, hvor hovedpersonen selv er forsøgskanin.",ticketUrl:"https://cphdox.dk/film/open-my-mind"},
+    {title:"IN DEFENSE OF SELF",time:"16:30",venue:"DAGMAR TEATRET",duration:"87 min",description:"Et tragisk drab på en norsk mand med akut brug for psykiatrisk hjælp rulles op i en film, der spørger hvad der skete — og hvordan det kunne undgås.",ticketUrl:"https://cphdox.dk/film/in-defense-of-self"},
+    {title:"A LITTLE GRAY WOLF WILL COME",time:"16:30",venue:"EMPIRE BIO",duration:"90 min",description:"En russisk journalist og hendes unge, vestligtsindede datter rejser tværs gennem Putins Rusland for at konfrontere sig selv med deres politiske uenigheder.",ticketUrl:"https://cphdox.dk/film/a-little-gray-wolf-will-come"},
+    {title:"MEMORY OF PRINCESS MUMBI",time:"16:30",venue:"GRAND TEATRET",duration:"79 min",description:"I et futuristisk Afrika forelsker en filmskaber sig i sin hovedperson og mister kontrollen over sin film. Et legesygt og originalt sci-fi-mockumentary.",ticketUrl:"https://cphdox.dk/film/memory-of-princess-mumbi"},
+    {title:"THE SANDBOX",time:"16:30",venue:"GRAND TEATRET",duration:"90 min",description:"Klarsynet kortlægning af brudfladerne i det 21. århundredes verdenskort. Magtpolitik, migration og overvågning.",ticketUrl:"https://cphdox.dk/film/the-sandbox"},
+    {title:"MYSTERIET OM MENOPAUSEN",time:"16:45",venue:"PARK BIO",duration:"74 min",description:"En personlig og undersøgende dokumentarfilm om en livsfase, som halvdelen af verdens befolkning gennemlever, og som vi ved forbløffende lidt om.",ticketUrl:"https://cphdox.dk/film/mysteriet-om-menopausen"},
+    {title:"THE SALISBURY POISONINGS: A SPY NEXT DOOR",time:"16:45",venue:"DAGMAR TEATRET",duration:"79 min",description:"Nervegift-angrebet på en russisk spion i en idyllisk, engelsk provinsby tænder alle røde alarmer i Downing Street. En virkelig doku-thriller.",ticketUrl:"https://cphdox.dk/film/the-salisbury-poisonings-a-spy-next-door"},
+    {title:"THE ARCTIC CIRCLE OF LUST",time:"17:00",venue:"BIG BIO NORDHAVN",duration:"97 min",description:"Langt oppe i Finland skal et midaldrende ægtepar af kartoffelavlere enes om reglerne for at leve sammen på ny, da mandens biseksualitet sætter kærlighedens grænser på prøve.",ticketUrl:"https://cphdox.dk/film/the-arctic-circle-of-lust"},
+    {title:"CINEMA KAWAKEB",time:"17:00",venue:"KUNSTHAL CHARLOTTENBORG",duration:"78 min",description:"Et charmerende og opfindsomt besøg i en slidt baggårdsbiograf i Jordan, hvor de to ansatte og deres eneste stamgæst er hovedpersoner.",ticketUrl:"https://cphdox.dk/film/cinema-kawakeb"},
+    {title:"BAUHAUS FOREVER.",time:"18:30",venue:"PARK BIO",duration:"96 min",description:"Et cinematisk manifest dedikeret til Bauhaus-bevægelsen, der revolutionerede moderne kunst, design og arkitektur.",ticketUrl:"https://cphdox.dk/film/bauhaus-forever"},
+    {title:"LANDMARKS",time:"18:30",venue:"DFI / CINEMATEKET",duration:"122 min",description:"Mordet på en forsvarsløs leder af et oprindeligt folk trækker tråde til årtiers tyverier af land og kolonialisme — Lucrecia Martels doku-debut.",ticketUrl:"https://cphdox.dk/film/landmarks"},
+    {title:"ALL RIVERS SPILL THEIR STORIES TO THE SEA",time:"18:30",venue:"DAGMAR TEATRET",duration:"90 min",description:"En bølge af bibelske plager i det nordøstlige England, hvor fiskere, øko-aktivister og erhvervsfolk kæmper om fremtiden efter Brexit.",ticketUrl:"https://cphdox.dk/film/all-rivers-spill-their-stories-to-the-sea"},
+    {title:"TO HOLD A MOUNTAIN",time:"18:30",venue:"EMPIRE BIO",duration:"105 min",description:"Årets Sundance-vinder er en sanselig og jordnær skildring af livets gang i Montenegros bjerge, som er i fare for at blive et NATO-træningsområde.",ticketUrl:"https://cphdox.dk/film/to-hold-a-mountain"},
+    {title:"KENNY DALGLISH",time:"19:00",venue:"FALKONER BIOGRAF",duration:"103 min",description:"Fængslende portræt af den legendariske Liverpool-spiller Sir Kenny Dalglish, iscenesat af den Oscar-vindende instruktør bag 'Amy' og 'Maradona'.",ticketUrl:"https://cphdox.dk/film/kenny-dalglish"},
+    {title:"BOUCHRA",time:"19:00",venue:"GLORIA BIOGRAF",duration:"82 min",description:"En af årets mest originale film — animeret autofiktion fra Marokko, hvor en queer filmskaber ringer hjem fra NYC til sin mor i Casablanca.",ticketUrl:"https://cphdox.dk/film/bouchra"},
+    {title:"THE AI DOC: HOW I BECAME AN APOCALOPTIMIST",time:"19:00",venue:"VUE FISKETORVET",duration:"104 min",description:"AI ændrer verden, som vi kender den. En Oscar-vindende instruktør stiller alle de spørgsmål, der holder ham vågen om natten.",ticketUrl:"https://cphdox.dk/film/the-ai-doc-how-i-became-an-apocaloptimist"},
+    {title:"WAX & GOLD",time:"19:00",venue:"KUNSTHAL CHARLOTTENBORG",duration:"97 min",description:"Den østriske doku-veteran Ruth Beckermann er taget til Addis Ababa for at nærme sig en historisk sandhed om Etiopiens splittede fortid.",ticketUrl:"https://cphdox.dk/film/wax-gold"},
+    {title:"TIME AND WATER",time:"19:00",venue:"GRAND TEATRET",duration:"90 min",description:"Islands urgamle landskaber er i forandring, og det sætter tankerne i gang hos forfatteren Andri Snær Magnason. Fra instruktøren af 'Fire of Love'.",ticketUrl:"https://cphdox.dk/film/time-and-water"},
+    {title:"KING HAMLET",time:"19:00",venue:"DAGMAR TEATRET",duration:"89 min",description:"Den danske dokumentarist Elvira Linds vender tilbage med et dybt personligt portræt af sin mand, skuespilleren Oscar Isaac.",ticketUrl:"https://cphdox.dk/film/king-hamlet"},
+    {title:"LITTLE SINNER",time:"19:00",venue:"EMPIRE BIO",duration:"90 min",description:"20 års dybt personlige optagelser fra Damaskus til Danmark — en syrisk kvindes uafrystelige kamp mod vold og arven fra fortiden.",ticketUrl:"https://cphdox.dk/film/little-sinner"},
+    {title:"YUGO GOES TO AMERICA",time:"19:15",venue:"DAGMAR TEATRET",duration:"87 min",description:"Tre unge venner fra Beograd kører fra New York til Los Angeles i Yugo — en livlig doku-komedie og et rabalder af et roadtrip.",ticketUrl:"https://cphdox.dk/film/yugo-goes-to-america"},
+    {title:"A SWEETNESS FROM NOWHERE",time:"19:30",venue:"KUNSTHAL CHARLOTTENBORG",duration:"86 min",description:"En performativ og visuelt eksplosiv forvandlingskugle af en film, hvor levede erfaringer tager form i en konstant tilblivelse.",ticketUrl:"https://cphdox.dk/film/a-sweetness-from-nowhere"},
+    {title:"KIKUYU LAND",time:"19:30",venue:"BIG BIO NORDHAVN",duration:"95 min",description:"En kenyansk journalist vender tilbage til sine forfædres hjem for at dække en juridisk kamp — men må forholde sig til sin egen families uskønne rolle.",ticketUrl:"https://cphdox.dk/film/kikuyu-land"},
+    {title:"THE GREAT EXPERIMENT",time:"20:30",venue:"PARK BIO",duration:"100 min",description:"Det store, amerikanske eksperiment og dets dybe krise skildret i cinematisk sort-hvid. En politisk film til nuet og en tidskapsel til fremtiden.",ticketUrl:"https://cphdox.dk/film/the-great-experiment"},
+    {title:"BELLEVILLE BEATS",time:"20:45",venue:"DAGMAR TEATRET",duration:"87 min",description:"Det er sommer i Paris, og i en ungdomsklub i Belleville-kvarteret har de unge fået en idé: De vil arrangere en musikfestival i en park.",ticketUrl:"https://cphdox.dk/film/belleville-beats"},
+    {title:"JARIPEO",time:"21:00",venue:"GRAND TEATRET",duration:"71 min",description:"Bag et mexicansk rodeo-shows hypermaskuline ritualer pulserer et skjult queer-begær. Et festival-hit om performativ maskulinitet.",ticketUrl:"https://cphdox.dk/film/jaripeo"},
+    {title:"EVERYONE IS LYING TO YOU FOR MONEY",time:"21:00",venue:"DAGMAR TEATRET",duration:"90 min",description:"Filmstjernen Ben McKenzies underholdende og øjenåbnende debutfilm — for kryptovaluta, hvad 'The Big Short' var for finanskrisen.",ticketUrl:"https://cphdox.dk/film/everyone-is-lying-to-you-for-money"},
+    {title:"THE CORD",time:"21:00",venue:"EMPIRE BIO",duration:"95 min",description:"I Venezuelas ødelagte sundhedssystem henter moderskabs-aktivisten Carolina styrke fra en fortid som bandeleder for at hjælpe gravide kvinder.",ticketUrl:"https://cphdox.dk/film/the-cord"},
+    {title:"REDOUBT",time:"21:00",venue:"GLORIA BIOGRAF",duration:"81 min",description:"En mand bygger en bunker af skrammel på en pløjemark i Skåne for at være klar, når fjenden kommer. En moderne myte baseret på virkeligheden.",ticketUrl:"https://cphdox.dk/film/redoubt"},
+    {title:"LA BELLE ANNÉE",time:"21:15",venue:"DAGMAR TEATRET",duration:"90 min",description:"Som teenager var hun forelsket i sin lærerinde. Nu vender en fransk-svensk filmskaber tilbage i en smuk dagbogsfilm om begær og vampyrer.",ticketUrl:"https://cphdox.dk/film/la-belle-annee"},
+    {title:"UNDERLAND",time:"21:15",venue:"EMPIRE BIO",duration:"79 min",description:"Tre undergrunds-astronauter går på opdagelse i underverdenen. Baseret på Robert Macfarlanes bestseller med Sandra Hüller som fortæller.",ticketUrl:"https://cphdox.dk/film/underland"},
+    {title:"WHISPERS IN THE WOODS",time:"21:15",venue:"DFI / CINEMATEKET",duration:"94 min",description:"Filmsensationen der har solgt over en million biografbilletter i Frankrig — en enestående smuk og sanselig naturoplevelse med musik af Warren Ellis.",ticketUrl:"https://cphdox.dk/film/whispers-in-the-woods"}
+  ]
+};
+
+
 // ── STATE ──
 let dates=[];
 let allFilms=[];        // flat list: {title, time, venue, duration, description, date, ticketUrl}
 let selectedTitles=new Set(); // unique titles selected
+let selectedShowings={}; // title → {date, time, venue, duration, slotId}
 let currentPlanData=null;
-let pdfBase64=null;
+// pdfBase64 removed — using hardcoded data
 let prefs={pauses:'',count:'',start:''};
 
 // ── STORAGE ──
@@ -467,14 +664,10 @@ window.addEventListener('DOMContentLoaded',()=>{
   const ok=!!window.storage;
   document.getElementById('sdot').className='sdot'+(ok?' ok':'');
   document.getElementById('slabel').textContent=ok?'Cloud-lagring':'Lokal lagring';
-  const drop=document.getElementById('pdf-drop');
-  drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag-over');});
-  drop.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));
-  drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag-over');
-    const f=e.dataTransfer.files[0];if(f&&f.type==='application/pdf')loadPdfFile(f);});
+
 });
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSaveModal();closeCafeModal();}
+  if(e.key==='Escape'){closeSaveModal();closeCafeModal();closeSwapModal();closeDayPicker();}
   if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();
 });
 
@@ -487,43 +680,14 @@ function showPage(n){
   if(n==='archive')renderArchive();
 }
 
-// ── PDF ──
-function onPdfSelected(input){const f=input.files[0];if(f)loadPdfFile(f);}
-function loadPdfFile(file){
-  const reader=new FileReader();
-  reader.onload=e=>{
-    pdfBase64=e.target.result.split(',')[1];
-    document.getElementById('pdf-drop').classList.add('has-file');
-    document.getElementById('pdf-filename').textContent='✓ '+file.name+' ('+Math.round(file.size/1024)+' KB)';
-  };
-  reader.readAsDataURL(file);
-}
+// PDF upload removed — film data is hardcoded
 
 // ── HELPERS ──
 function toggleKey(){const i=document.getElementById('api-key'),b=document.getElementById('toggle-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Vis':'Skjul';}
 function getKey(){return document.getElementById('api-key').value.trim();}
-function getDates(){return['date1','date2','date3'].map(id=>document.getElementById(id).value).filter(Boolean);}
 function fmtDate(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});}
 function fmtShort(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'});}
 
-function onDateChange(idx){
-  const ids=['date1','date2','date3'];
-  const v=document.getElementById(ids[idx]).value;
-  const card=document.getElementById('dcard-'+idx);
-  if(v){
-    const d=new Date(v);
-    document.getElementById('dcard-date-'+idx).textContent=d.toLocaleDateString('da-DK',{day:'numeric',month:'long'});
-    const wd=d.toLocaleDateString('da-DK',{weekday:'long'});
-    document.getElementById('dcard-weekday-'+idx).textContent=wd.charAt(0).toUpperCase()+wd.slice(1);
-    document.getElementById('dcard-status-'+idx).textContent='✓ Valgt';
-    card.classList.add('has-date');
-  }else{
-    document.getElementById('dcard-date-'+idx).textContent='Vælg dato';
-    document.getElementById('dcard-weekday-'+idx).textContent='';
-    document.getElementById('dcard-status-'+idx).textContent='○ Ikke valgt';
-    card.classList.remove('has-date');
-  }
-}
 
 function pickChip(gid,el){
   document.querySelectorAll('#'+gid+' .pref-chip').forEach(c=>c.classList.remove('selected'));
@@ -568,139 +732,232 @@ function parseJSON(t){
 // ── START ──
 function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
-  if(!pdfBase64){alert('Upload program-PDF først.');return;}
-  dates=getDates();
-  if(!dates.length){alert('Vælg mindst én festivaldato.');return;}
+  dates=['2026-03-20','2026-03-21','2026-03-22'];
 
-  allFilms=[]; selectedTitles=new Set();
+  allFilms=[]; selectedTitles=new Set(); selectedShowings={};
   document.getElementById('screen-setup').style.display='none';
   document.getElementById('screen-select').style.display='block';
-  document.getElementById('loading-fetch').style.display='block';
+  document.getElementById('loading-fetch').style.display='none';
   document.getElementById('film-list-container').style.display='none';
   document.getElementById('error-fetch').style.display='none';
   document.getElementById('output').style.display='none';
   document.getElementById('error-plan').style.display='none';
-  fetchFilms();
+  fetchFilms();  // synchronous — hardcoded data
 }
 
-async function fetchFilms(){
-  try{
-    for(let i=0;i<dates.length;i++){
-      const d=dates[i];
-      document.getElementById('loading-text').textContent=`Læser dag ${i+1} af ${dates.length}...`;
-      document.getElementById('loading-sub').textContent=fmtDate(d);
+function fetchFilms(){
+  // Film data is hardcoded — no API call needed here
+  dates.forEach(d=>{
+    const films=FILM_DATA[d]||[];
+    films.forEach(f=>allFilms.push({...f,date:d}));
+  });
 
-      const raw=await callAI([{
-        role:'user',
-        content:[
-          {type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfBase64}},
-          {type:'text',text:`CPH:DOX 2026 program-PDF.
-
-Udtræk KUN filmvisninger for datoen ${d} (${fmtDate(d)}).
-
-Returner KUN et JSON array — ingen markdown:
-[{"title":"...","time":"14:00","venue":"...","duration":"85 min","description":"2 sætninger dansk om filmens indhold","ticketUrl":"https://cphdox.dk/film/filmtitel-med-bindestreger"}]
-
-Inkluder ALLE film der vises denne dag. Samme film med flere visninger = separate objekter. Svar starter med [`}
-        ]
-      }],8000);
-
-      const films=parseJSON(raw);
-      if(!Array.isArray(films))throw new Error(`Dag ${i+1}: uventet format`);
-      films.forEach(f=>allFilms.push({...f,date:d}));
-    }
-
-    document.getElementById('loading-fetch').style.display='none';
-    renderFilmList();
-  }catch(err){
-    document.getElementById('loading-fetch').style.display='none';
+  if(!allFilms.length){
     const eb=document.getElementById('error-fetch');
+    document.getElementById('loading-fetch').style.display='none';
     eb.style.display='block';
-    eb.textContent='⚠ '+err.message;
+    eb.textContent='⚠ Ingen film fundet for de valgte dage. Vælg 20., 21. eller 22. marts 2026.';
+    return;
   }
+
+  document.getElementById('loading-fetch').style.display='none';
+  renderFilmList();
 }
 
-// ── FILM LIST ──
+// ── FILM LIST — OVERLAP-BASED TIME GRID ──
+function timeToMin(t){if(!t)return 0;const[h,m]=(t||'').split(':');return parseInt(h||0)*60+parseInt(m||0);}
+
 function renderFilmList(){
-  // Deduplicate by title for display — group all showings under each unique title
+  // Build lookup: title → {film, dayShowings{date:[showings]}}
   const byTitle={};
   allFilms.forEach(f=>{
-    if(!byTitle[f.title])byTitle[f.title]={...f,showings:[]};
-    byTitle[f.title].showings.push({date:f.date,time:f.time,venue:f.venue,duration:f.duration});
+    if(!byTitle[f.title])byTitle[f.title]={...f,dayShowings:{}};
+    const ds=byTitle[f.title].dayShowings;
+    if(!ds[f.date])ds[f.date]=[];
+    // avoid duplicate time entries
+    if(!ds[f.date].find(x=>x.time===f.time))
+      ds[f.date].push({time:f.time,venue:f.venue,duration:f.duration});
   });
 
-  // Group by day
-  const byDay={};
-  dates.forEach(d=>{byDay[d]=[];});
-  // For each unique title, assign it to the day of its first showing
+  // ── Build overlap-based slots ──
+  // Collect every (date, time, duration) combo as an event
+  // Two events overlap if their time windows intersect (with 15min buffer)
+  // Group overlapping events into slots; a slot spans max(end times) of all events in it
+  // We do this per-day first, then merge across days by time proximity
+
+  // Step 1: collect all unique start times across all days
+  const allTimes=new Set();
   Object.values(byTitle).forEach(f=>{
-    // Group showings by day
-    const dayShowings={};
-    f.showings.forEach(s=>{
-      if(!dayShowings[s.date])dayShowings[s.date]=[];
-      dayShowings[s.date].push(s);
+    Object.values(f.dayShowings).forEach(showings=>{
+      showings.forEach(s=>{ if(s.time)allTimes.add(s.time); });
     });
-    // Assign to first matching selected day
-    for(const d of dates){
-      if(dayShowings[d]){
-        byDay[d].push({...f,primaryDay:d,dayShowings});
-        break;
-      }
+  });
+
+  // Step 2: build overlap groups — sort times, merge if within 45 min of group start
+  const sortedTimes=[...allTimes].sort((a,b)=>timeToMin(a)-timeToMin(b));
+  const slotGroups=[]; // [{startMin, endMin, label, times:Set}]
+
+  sortedTimes.forEach(t=>{
+    const m=timeToMin(t);
+    // Find existing group where this time is within 45 min of group start
+    const grp=slotGroups.find(g=>m-g.startMin<=45 && m>=g.startMin);
+    if(grp){
+      grp.times.add(t);
+      // extend end if needed
+      if(m>grp.endMin)grp.endMin=m;
+    } else {
+      slotGroups.push({startMin:m,endMin:m,label:t,times:new Set([t])});
     }
   });
 
-  // Sort each day by first showing time
-  dates.forEach(d=>{
-    byDay[d].sort((a,b)=>{
-      const at=a.dayShowings[d]?.[0]?.time||'99:99';
-      const bt=b.dayShowings[d]?.[0]?.time||'99:99';
-      return at.localeCompare(bt);
+  // Step 3: label each slot by earliest time
+  slotGroups.forEach(g=>{
+    const sorted=[...g.times].sort((a,b)=>timeToMin(a)-timeToMin(b));
+    g.label=sorted[0];
+  });
+
+  // Step 4: for each slot, collect films per day whose showing time is in that slot
+  const grid=slotGroups.map(g=>({
+    label:g.label,
+    startMin:g.startMin,
+    days: Object.fromEntries(dates.map(d=>[d,[]]))
+  }));
+
+  Object.values(byTitle).forEach(f=>{
+    dates.forEach(d=>{
+      (f.dayShowings[d]||[]).forEach(s=>{
+        const m=timeToMin(s.time);
+        const slot=grid.find(g=>m>=g.startMin && m<=g.startMin+45);
+        if(slot && !slot.days[d].find(x=>x.title===f.title)){
+          slot.days[d].push({...f,_showing:s});
+        }
+      });
+    });
+  });
+
+  // Step 5: assign slot IDs so toggling can dim siblings
+  grid.forEach((slot,si)=>{
+    dates.forEach(d=>{
+      slot.days[d].forEach(f=>{f._slotId=si;});
     });
   });
 
   const totalUnique=Object.keys(byTitle).length;
-  document.getElementById('film-list-meta').textContent=`${totalUnique} unikke film fundet · Klik for at vælge`;
+  document.getElementById('film-list-meta').textContent=
+    `${totalUnique} unikke film · Vælg én pr. tidspunkt — de andre dæmpes automatisk`;
 
   const listEl=document.getElementById('film-list');
   listEl.innerHTML='';
 
-  dates.forEach(d=>{
-    if(!byDay[d].length)return;
-    const grp=document.createElement('div');
-    grp.className='day-group';
-    grp.innerHTML=`<div class="day-group-label">${fmtDate(d)}</div>`;
+  const cols=dates.length;
+  const gridFr=`52px ${Array(cols).fill('1fr').join(' ')}`;
 
-    byDay[d].forEach(f=>{
-      const row=document.createElement('div');
-      row.className='film-row';
-      row.dataset.title=f.title;
+  // ── Header ──
+  const hdr=document.createElement('div');
+  hdr.style.cssText=`display:grid;grid-template-columns:${gridFr};gap:10px;margin-bottom:8px;position:sticky;top:56px;z-index:10;background:var(--bg);padding:8px 0 4px;`;
+  hdr.innerHTML='<div></div>'+dates.map(d=>`
+    <div style="background:var(--surface2);border:1px solid var(--border);padding:10px 14px;
+      font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);text-align:center;">
+      ${fmtDate(d)}
+    </div>`).join('');
+  listEl.appendChild(hdr);
 
-      // Build showings summary across all days
-      const allShowingsText=dates.flatMap(dd=>(f.dayShowings[dd]||[]).map(s=>
-        `${fmtShort(dd)} ${s.time}${s.venue?' · '+s.venue:''}`
-      )).join(' &nbsp;|&nbsp; ');
+  // ── Time rows ──
+  let lastSlotHour=-1;
+  grid.forEach((slot,si)=>{
+    const hasAny=dates.some(d=>slot.days[d].length>0);
+    if(!hasAny)return;
 
-      const primaryShowing=f.dayShowings[d]?.[0]||{};
+    const slotHour=Math.floor(slot.startMin/60);
 
-      row.innerHTML=`
-        <div class="film-check">○</div>
-        <div class="film-info">
-          <div class="film-time">${primaryShowing.time||'?'}</div>
-          <div class="film-title">${f.title}</div>
-          <div class="film-meta">📍 ${primaryShowing.venue||''} · ${primaryShowing.duration||''}</div>
-          ${f.description?`<div class="film-desc">${f.description}</div>`:''}
-          ${dates.length>1?`<div class="film-meta" style="margin-top:4px;opacity:0.7;">Alle visninger: ${allShowingsText}</div>`:''}
-        </div>`;
+    // Hour-break divider
+    if(lastSlotHour>=0 && slotHour-lastSlotHour>=2){
+      const div=document.createElement('div');
+      div.style.cssText=`display:grid;grid-template-columns:${gridFr};gap:10px;margin:6px 0;`;
+      div.innerHTML=`<div></div><div style="grid-column:2/-1;height:1px;background:rgba(232,240,72,0.15);"></div>`;
+      listEl.appendChild(div);
+    }
+    lastSlotHour=slotHour;
 
-      row.addEventListener('click',()=>toggleFilm(f.title,row));
-      grp.appendChild(row);
+    const row=document.createElement('div');
+    row.className='time-row-el';
+    row.dataset.slotId=si;
+    row.style.cssText=`display:grid;grid-template-columns:${gridFr};gap:10px;margin-bottom:6px;align-items:start;`;
+
+    // Time label
+    const tl=document.createElement('div');
+    tl.style.cssText='padding-top:10px;text-align:right;padding-right:8px;font-family:"DM Serif Display",serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.2;';
+    tl.textContent=slot.label;
+    row.appendChild(tl);
+
+    // Day columns
+    dates.forEach(d=>{
+      const cell=document.createElement('div');
+      const films=slot.days[d];
+      if(!films.length){
+        // empty placeholder keeps grid aligned
+        const ph=document.createElement('div');
+        ph.style.cssText='min-height:4px;border-left:1px solid rgba(255,255,255,0.03);';
+        cell.appendChild(ph);
+      } else {
+        films.forEach(f=>{
+          const card=document.createElement('div');
+          card.className='film-card';
+          card.dataset.title=f.title;
+          card.dataset.slotId=si;
+          card.dataset.date=d;
+
+          const otherDays=dates.filter(dd=>dd!==d&&f.dayShowings[dd]);
+          const multiText=otherDays.map(dd=>{
+            const s=f.dayShowings[dd]?.[0];
+            return s?`${fmtShort(dd)} ${s.time}`:'';
+          }).filter(Boolean).join(' · ');
+
+          card.innerHTML=`
+            <div class="fc-check">○</div>
+            <div class="fc-time">${f._showing.time}</div>
+            <div class="fc-title">${f.title}</div>
+            <div class="fc-venue">📍 ${f._showing.venue||''}</div>
+            <div class="fc-dur">${f._showing.duration||''}</div>
+            ${f.description?`<div class="fc-desc">${f.description}</div>`:''}
+            ${multiText?`<div class="fc-multi">↔ Også: ${multiText}</div>`:''}`;
+
+          if(selectedTitles.has(f.title)){
+            card.classList.add('selected');
+            card.querySelector('.fc-check').textContent='✓';
+          }
+
+          card.addEventListener('click',()=>toggleFilmCard(f.title,card,si));
+          cell.appendChild(card);
+        });
+      }
+      row.appendChild(cell);
     });
 
-    listEl.appendChild(grp);
+    listEl.appendChild(row);
   });
 
   document.getElementById('film-list-container').style.display='block';
+  refreshSlotDimming();
   updateSelBar();
+}
+
+// Dim unselected cards in slots where something is already selected
+function refreshSlotDimming(){
+  // Find which slot IDs have a selected film
+  const selectedSlots=new Set();
+  document.querySelectorAll('.film-card.selected').forEach(card=>{
+    if(card.dataset.slotId!==undefined) selectedSlots.add(card.dataset.slotId);
+  });
+  // Dim non-selected cards in those slots
+  document.querySelectorAll('.film-card').forEach(card=>{
+    const sid=card.dataset.slotId;
+    if(sid!==undefined && selectedSlots.has(sid) && !card.classList.contains('selected')){
+      card.classList.add('dimmed');
+    } else {
+      card.classList.remove('dimmed');
+    }
+  });
 }
 
 function toggleFilm(title,row){
@@ -716,21 +973,133 @@ function toggleFilm(title,row){
   updateSelBar();
 }
 
-function selectAll(){
-  document.querySelectorAll('.film-row').forEach(row=>{
-    const title=row.dataset.title;
-    selectedTitles.add(title);
-    row.classList.add('selected');
-    row.querySelector('.film-check').textContent='✓';
+// Find byTitle entry for a film card by title
+function getFilmByTitle(title){
+  // Scan allFilms to rebuild dayShowings for this title
+  const showings={};
+  allFilms.filter(f=>f.title===title).forEach(f=>{
+    if(!showings[f.date])showings[f.date]=[];
+    if(!showings[f.date].find(s=>s.time===f.time))
+      showings[f.date].push({time:f.time,venue:f.venue,duration:f.duration});
   });
+  return showings; // date → [{time,venue,duration}]
+}
+
+function toggleFilmCard(title,card,slotId){
+  if(selectedTitles.has(title)){
+    // Deselect
+    selectedTitles.delete(title);
+    delete selectedShowings[title];
+    document.querySelectorAll('.film-card').forEach(c=>{
+      if(c.dataset.title===title){
+        c.classList.remove('selected');
+        c.querySelector('.fc-check').textContent='○';
+        const cd=c.querySelector('.fc-chosen-day');
+        if(cd)cd.remove();
+      }
+    });
+    refreshSlotDimming();
+    updateSelBar();
+    return;
+  }
+
+  // Selecting — check how many days this film is shown on
+  const dayShowings=getFilmByTitle(title);
+  const availableDays=Object.keys(dayShowings).filter(d=>dates.includes(d));
+
+  if(availableDays.length<=1){
+    // Only one day — select directly
+    const d=availableDays[0]||card.dataset.date;
+    const s=(dayShowings[d]||[])[0]||{time:card.querySelector('.fc-time')?.textContent,venue:'',duration:''};
+    selectFilmOnDay(title,d,s,slotId);
+  } else {
+    // Multiple days — show picker
+    openDayPicker(title,dayShowings,slotId);
+  }
+}
+
+function selectFilmOnDay(title,date,showing,slotId){
+  selectedTitles.add(title);
+  selectedShowings[title]={date,time:showing.time,venue:showing.venue,duration:showing.duration,slotId};
+
+  // Update all cards for this title
+  document.querySelectorAll('.film-card').forEach(c=>{
+    if(c.dataset.title===title){
+      c.classList.add('selected');
+      c.querySelector('.fc-check').textContent='✓';
+      // Show chosen day label
+      let cd=c.querySelector('.fc-chosen-day');
+      if(!cd){cd=document.createElement('div');cd.className='fc-chosen-day';c.appendChild(cd);}
+      cd.textContent='✓ '+fmtShort(date)+' '+showing.time;
+    }
+  });
+  refreshSlotDimming();
+  updateSelBar();
+}
+
+// ── DAY PICKER ──
+let _dpFilm=null;
+function openDayPicker(title,dayShowings,slotId){
+  _dpFilm={title,slotId};
+  document.getElementById('dp-title').textContent=title;
+  const body=document.getElementById('dp-body');
+
+  // Check which slots are already taken (another selected film in same slot on that day)
+  // We detect "taken" if another selected film's slotId matches on that date
+  // Simplified: check if any selected film occupies same time slot on that day
+  body.innerHTML=dates.filter(d=>dayShowings[d]).map(d=>{
+    const showings=dayShowings[d];
+    return showings.map(s=>{
+      // Is this slot taken? Check if selectedShowings has something at same slotId on same day
+      const slotTaken=Object.values(selectedShowings).some(sel=>
+        sel.date===d && sel.slotId===slotId
+      );
+      const takenClass=slotTaken?' dp-taken':'';
+      return `<div class="dp-option${takenClass}" onclick="pickDay('${d}',${JSON.stringify(s).replace(/"/g,'&quot;')},${slotId})">
+        <div class="dp-day">${fmtShort(d)}</div>
+        <div class="dp-meta">
+          <div class="dp-time">${s.time}</div>
+          <div class="dp-venue">📍 ${s.venue||''} · ${s.duration||''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }).join('');
+
+  document.getElementById('day-picker-modal').classList.add('open');
+}
+
+function pickDay(date,showing,slotId){
+  if(!_dpFilm)return;
+  closeDayPicker();
+  selectFilmOnDay(_dpFilm.title,date,showing,slotId);
+}
+
+function closeDayPicker(){
+  document.getElementById('day-picker-modal').classList.remove('open');
+  _dpFilm=null;
+}
+
+function selectAll(){
+  document.querySelectorAll('.film-row,.film-card').forEach(el=>{
+    const title=el.dataset.title;
+    if(title){
+      selectedTitles.add(title);
+      el.classList.add('selected');
+      const chk=el.querySelector('.film-check,.fc-check');
+      if(chk)chk.textContent='✓';
+    }
+  });
+  refreshSlotDimming();
   updateSelBar();
 }
 function selectNone(){
   selectedTitles.clear();
-  document.querySelectorAll('.film-row').forEach(row=>{
-    row.classList.remove('selected');
-    row.querySelector('.film-check').textContent='○';
+  document.querySelectorAll('.film-row,.film-card').forEach(el=>{
+    el.classList.remove('selected');
+    const chk=el.querySelector('.film-check,.fc-check');
+    if(chk)chk.textContent='○';
   });
+  refreshSlotDimming();
   updateSelBar();
 }
 
@@ -763,6 +1132,14 @@ async function generatePlan(){
     if(!byTitle[f.title])byTitle[f.title]={title:f.title,description:f.description,ticketUrl:f.ticketUrl,showings:[]};
     byTitle[f.title].showings.push({date:f.date,dateLabel:fmtDate(f.date),time:f.time,venue:f.venue,duration:f.duration});
   });
+  // Mark preferred showing from user's day selection
+  Object.keys(selectedShowings).forEach(title=>{
+    if(byTitle[title]){
+      const pref=selectedShowings[title];
+      byTitle[title].preferredDate=pref.date;
+      byTitle[title].preferredTime=pref.time;
+    }
+  });
 
   document.getElementById('screen-select').style.display='none';
   document.getElementById('loading-plan').style.display='block';
@@ -773,79 +1150,68 @@ async function generatePlan(){
   let mi=0;
   const lt=setInterval(()=>{document.getElementById('loading-plan-text').textContent=msgs[++mi%msgs.length];},2500);
 
-  const filmList=Object.values(byTitle).map(f=>
-    `${f.title}: ${f.showings.map(s=>`${s.dateLabel} ${s.time} @ ${s.venue} (${s.duration||'?'})`).join(', ')}`
-  ).join('\n');
+  // Compact scheduling data only — no descriptions to save tokens
+  const filmList=Object.values(byTitle).map(f=>{
+    const pref=f.preferredDate?` [FORETRUKKET: ${f.preferredDate} ${f.preferredTime||''}]`:'';
+    return `${f.title}|${f.showings.map(s=>`${s.date} ${s.time} ${s.venue} ${s.duration||''}`).join(' / ')}${pref}`;
+  }).join('\n');
+
+  // Keep descriptions in a lookup so we can re-attach them after plan is returned
+  const descLookup={};
+  Object.values(byTitle).forEach(f=>{descLookup[f.title]={description:f.description,ticketUrl:f.ticketUrl};});
 
   try{
     const raw=await callAI([{
       role:'user',
       content:`Lav en optimal CPH:DOX festivalplan. Svar KUN med JSON.
 
-VIGTIGE REGLER:
-- Hver film må KUN forekomme ÉN gang i planen — selv om den vises flere dage
-- Vælg den bedste visning af hver film baseret på præferencer og logistik
-- Film der ikke kan passes ind (overlap, for mange om dagen) samles i "missed_films"
-- Beregn realistiske gangtider i København (10-20 min mellem de fleste biografer)
+REGLER:
+- Hver film KUN én gang i planen
+- Vælg bedste visningstidspunkt baseret på præferencer og logistik
+- Film der ikke passer ind → "missed_films"
+- Gangtider i København: 10-20 min mellem biografer
 
 Festivaldage: ${dates.map(d=>fmtDate(d)+' ('+d+')').join(', ')}
 Præferencer: ${prefsText()}
 
-Valgte film med alle mulige visninger:
+Film (titel|dato tid sted varighed):
 ${filmList}
 
-JSON format:
-{
-  "days": [
-    {
-      "date": "2026-03-14",
-      "date_label": "Lørdag 14. marts",
-      "screenings": [
-        {
-          "time": "13:00",
-          "title": "...",
-          "venue": "...",
-          "duration": "90 min",
-          "description": "...",
-          "ticketUrl": "https://cphdox.dk/film/...",
-          "distance_to_next": 1.2,
-          "walk_minutes_to_next": 15
-        }
-      ]
-    }
-  ],
-  "missed_films": [
-    {
-      "title": "...",
-      "reason": "Kort forklaring på dansk hvorfor den ikke passede ind",
-      "all_showings": [
-        {"date_label": "Lørdag 14. marts", "time": "14:00", "venue": "Empire Bio"}
-      ]
-    }
-  ],
-  "notes": "Kort forklaring af planens logik"
-}
-
-Filmdata: ${JSON.stringify(Object.values(byTitle))}`
+JSON:
+{"days":[{"date":"2026-03-14","date_label":"Lørdag 14. marts","screenings":[{"time":"13:00","title":"...","venue":"...","duration":"90 min","distance_to_next":1.2,"walk_minutes_to_next":15}]}],"missed_films":[{"title":"...","reason":"...","all_showings":[{"date_label":"...","time":"14:00","venue":"..."}]}],"notes":"..."}`
     }], 4000);
 
     const plan=parseJSON(raw);
+    // Re-attach descriptions and ticketUrls from our local lookup
+    (plan.days||[]).forEach(day=>{
+      (day.screenings||[]).forEach(s=>{
+        const meta=descLookup[s.title];
+        if(meta){
+          if(!s.description)s.description=meta.description||'';
+          if(!s.ticketUrl)s.ticketUrl=meta.ticketUrl||`https://cphdox.dk/film/${(s.title||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`;
+        }
+      });
+    });
     clearInterval(lt);
     currentPlanData=plan;
     document.getElementById('loading-plan').style.display='none';
     document.getElementById('output').style.display='block';
-    renderPlan(plan, document.getElementById('plan-cards'), document.getElementById('missed-section'));
+    renderPlan(plan, document.getElementById('plan-cards'), document.getElementById('missed-section'), document.getElementById('summary-section'));
   }catch(err){
     clearInterval(lt);
     document.getElementById('loading-plan').style.display='none';
     document.getElementById('screen-select').style.display='block';
     document.getElementById('error-plan').style.display='block';
-    document.getElementById('error-plan').textContent='⚠ '+err.message;
+    const errMsg=err.message+(err.stack?'\n\n'+err.stack:'');
+    document.getElementById('error-plan').innerHTML=
+      '<strong>⚠ Fejl:</strong> '+err.message+
+      '<div class="error-log" id="err-log-plan">'+errMsg+'</div>'+
+      '<button class="copy-log-btn" onclick="copyLog(\'err-log-plan\')">📋 Kopiér fejllog</button>';
   }
 }
 
 // ── RENDER PLAN ──
-function renderPlan(data, planContainer, missedContainer){
+function renderPlan(data, planContainer, missedContainer, summaryContainer){
   planContainer.innerHTML='';
   if(!data.days?.length){planContainer.innerHTML='<p style="color:var(--muted);">Ingen plan.</p>';return;}
 
@@ -871,6 +1237,7 @@ function renderPlan(data, planContainer, missedContainer){
         <div class="sc-btns">
           <a href="${tickUrl}" target="_blank" class="btn-ticket">🎟 Køb billet</a>
           <button class="btn-cafe" onclick="openCafeModal('${venueEsc}')">☕ Cafeer</button>
+          <button class="btn-replace" onclick="openSwapModal(${JSON.stringify(s)}, '${day.date}', ${i})">⇄ Erstat</button>
         </div>`;
       card.appendChild(sc);
 
@@ -923,6 +1290,177 @@ function renderPlan(data, planContainer, missedContainer){
     });
     missedContainer.appendChild(sec);
   }
+
+  // ── SUMMARY SECTION ──
+  if(summaryContainer){
+    summaryContainer.innerHTML='';
+    const inPlan=[];
+    (data.days||[]).forEach(day=>{
+      (day.screenings||[]).forEach(s=>{
+        inPlan.push({title:s.title,when:`${day.date_label||day.date} ${s.time} @ ${s.venue||''}`});
+      });
+    });
+    const missed=data.missed_films||[];
+    if(!inPlan.length&&!missed.length)return;
+
+    const sec=document.createElement('div');
+    sec.className='summary-section';
+    sec.innerHTML=`<div class="summary-header"><h3>📋 Alle valgte film</h3></div>
+      <div class="summary-grid">
+        <div class="summary-col">
+          <div class="summary-col-label">✓ I planen (${inPlan.length})</div>
+          ${inPlan.map(f=>`<div class="summary-film"><span class="summary-film-title">${f.title}</span><span class="summary-film-when">${f.when}</span></div>`).join('')}
+        </div>
+        <div class="summary-col">
+          <div class="summary-col-label">✕ Ikke i planen (${missed.length})</div>
+          ${missed.length?missed.map(f=>`<div class="summary-film"><span class="summary-film-title">${f.title}</span><span class="summary-film-when">${(f.all_showings||[]).map(s=>s.time+' '+s.venue).join(', ')}</span></div>`).join(''):'<div style="font-size:0.75rem;color:var(--green);padding:8px 0;">Alle film er med! 🎉</div>'}
+        </div>
+      </div>`;
+    summaryContainer.appendChild(sec);
+  }
+}
+
+// ── SWAP MODAL ──
+let _swapTarget=null; // {screening, date, idx}
+
+function timeToMin(t){if(!t)return 0;const[h,m]=(t||'').split(':');return parseInt(h||0)*60+parseInt(m||0);}
+
+function openSwapModal(screening, date, idx){
+  _swapTarget={screening,date,idx};
+  document.getElementById('swap-modal-sub').textContent=`Erstatter: ${screening.title} (${screening.time} @ ${screening.venue||'?'})`;
+  const missed=currentPlanData?.missed_films||[];
+  const body=document.getElementById('swap-body');
+
+  // Find the day object to know what other screenings are already there
+  const dayObj=currentPlanData.days.find(d=>d.date===date);
+  const otherScreenings=(dayObj?.screenings||[]).filter((_,i2)=>i2!==idx);
+
+  // For each missed film, find showings on the target day within ±3 hours of the replaced slot
+  const targetMin=timeToMin(screening.time);
+  const filmDurMin=parseInt((screening.duration||'90 min').match(/\d+/)?.[0]||90);
+
+  // Build candidates: missed films that have a showing on the same date, roughly same time window
+  const candidates=[];
+  missed.forEach((f,fi)=>{
+    const showingsOnDay=(f.all_showings||[]).filter(s=>{
+      // Match by date: all_showings store date_label, but we need to match the date string
+      // We'll match by checking if the showing time exists and is within window
+      return s.time && s.date_label;
+    });
+
+    // Try to find showings on the target date
+    // all_showings may have date_label like "Fredag 20. marts" — match by day number
+    const dayNum=parseInt(date.slice(8,10)); // e.g. 20 from 2026-03-20
+    const showingsThisDay=showingsOnDay.filter(s=>{
+      // Check if date_label contains the day number
+      const labelNums=s.date_label.match(/\d+/g)||[];
+      return labelNums.includes(String(dayNum));
+    });
+
+    if(!showingsThisDay.length)return; // no showing this day → skip
+
+    showingsThisDay.forEach(showing=>{
+      const showMin=timeToMin(showing.time);
+      const timeDiff=Math.abs(showMin-targetMin);
+
+      // Check it doesn't overlap with other screenings already in the day
+      const showDur=parseInt((showing.duration||f.duration||'90 min').match(/\d+/)?.[0]||90);
+      const showEnd=showMin+showDur;
+      const conflicts=otherScreenings.some(s2=>{
+        const s2Min=timeToMin(s2.time);
+        const s2Dur=parseInt((s2.duration||'90 min').match(/\d+/)?.[0]||90);
+        const s2End=s2Min+s2Dur;
+        return showMin<s2End+20 && showEnd>s2Min-20; // 20 min buffer
+      });
+
+      candidates.push({film:f,filmIdx:fi,showing,timeDiff,conflicts});
+    });
+  });
+
+  // Sort: non-conflicting first, then by closeness to original time
+  candidates.sort((a,b)=>{
+    if(a.conflicts!==b.conflicts)return a.conflicts?1:-1;
+    return a.timeDiff-b.timeDiff;
+  });
+
+  if(!candidates.length){
+    // Fallback: show all missed films but grayed, with their showings
+    const fallback=missed.map((f,fi)=>({film:f,filmIdx:fi,showing:(f.all_showings||[])[0]||{},timeDiff:999,conflicts:true}));
+    body.innerHTML='<p style="color:var(--muted);font-size:0.73rem;margin-bottom:14px;">Ingen film på ventelisten vises på denne dag. Viser alle muligheder:</p>'+
+      renderSwapCandidates(fallback);
+  }else{
+    const hasConflicts=candidates.some(c=>c.conflicts);
+    body.innerHTML=(hasConflicts?'<p style="color:var(--muted);font-size:0.73rem;margin-bottom:12px;">⚠ Film markeret med rød kan overlappe med andre film i planen.</p>':'')+
+      renderSwapCandidates(candidates);
+  }
+  document.getElementById('swap-modal').classList.add('open');
+}
+
+function renderSwapCandidates(candidates){
+  return candidates.map((c,ci)=>{
+    const conflictStyle=c.conflicts?'border-color:rgba(240,72,72,0.3);':'';
+    const conflictBadge=c.conflicts?'<span style="font-size:0.6rem;color:var(--red);margin-left:6px;">⚠ muligt overlap</span>':'';
+    return `<div class="swap-film-item" style="${conflictStyle}" onclick="doSwap(${c.filmIdx},${ci})">
+      <div class="swap-film-meta">
+        <div class="swap-film-title">${c.film.title}${conflictBadge}</div>
+        <div class="swap-film-times">${c.showing.time||'?'} · ${c.showing.venue||''}</div>
+        ${c.film.description?`<div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">${c.film.description}</div>`:''}
+      </div>
+      <div class="swap-arrow">→</div>
+    </div>`;
+  }).join('');
+}
+
+function closeSwapModal(){document.getElementById('swap-modal').classList.remove('open');_swapTarget=null;}
+
+function doSwap(missedIdx, candidateIdx){
+  if(!_swapTarget||!currentPlanData)return;
+  const missed=currentPlanData.missed_films||[];
+  const incoming=missed[missedIdx];
+  if(!incoming)return;
+
+  const targetDate=_swapTarget.date;
+  const dayObj=currentPlanData.days.find(d=>d.date===targetDate);
+  if(!dayObj)return;
+
+  // Find the specific showing that was presented in the modal
+  const dayNum=parseInt(targetDate.slice(8,10));
+  const showingsThisDay=(incoming.all_showings||[]).filter(s=>{
+    const labelNums=(s.date_label||'').match(/\d+/g)||[];
+    return labelNums.includes(String(dayNum));
+  });
+  const chosenShowing=showingsThisDay[0]||(incoming.all_showings||[])[0]||{};
+
+  const replacement={
+    time:chosenShowing.time||_swapTarget.screening.time,
+    title:incoming.title,
+    venue:chosenShowing.venue||'',
+    duration:chosenShowing.duration||incoming.duration||'',
+    description:incoming.description||'',
+    ticketUrl:`https://cphdox.dk/film/${incoming.title.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`,
+    distance_to_next:null,
+    walk_minutes_to_next:null
+  };
+
+  const evicted=dayObj.screenings[_swapTarget.idx];
+  dayObj.screenings[_swapTarget.idx]=replacement;
+  // Re-sort day screenings by time after swap
+  dayObj.screenings.sort((a,b)=>timeToMin(a.time)-timeToMin(b.time));
+
+  currentPlanData.missed_films.splice(missedIdx,1);
+  currentPlanData.missed_films.push({
+    title:evicted.title,
+    reason:'Manuelt byttet ud',
+    all_showings:[{date_label:dayObj.date_label,time:evicted.time,venue:evicted.venue}],
+    description:evicted.description
+  });
+
+  closeSwapModal();
+  renderPlan(currentPlanData,document.getElementById('plan-cards'),document.getElementById('missed-section'),document.getElementById('summary-section'));
+  const btn=document.getElementById('save-btn');
+  btn.textContent='💾 Gem ændringer';
+  btn.style.cssText+='background:rgba(232,240,72,0.15);border-color:rgba(232,240,72,0.5);';
+  setTimeout(()=>{btn.textContent='💾 Gem plan';btn.style.cssText='';},4000);
 }
 
 // ── CAFE MODAL ──
@@ -978,6 +1516,15 @@ function downloadICS(){
   a.download='cphdox-2026.ics';a.click();
 }
 
+function copyLog(elId){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  navigator.clipboard.writeText(el.textContent).then(()=>{
+    const btn=el.nextElementSibling;
+    if(btn){btn.textContent='✓ Kopieret!';setTimeout(()=>{btn.textContent='📋 Kopiér fejllog';},2000);}
+  });
+}
+
 // ── SAVE / ARCHIVE ──
 function openSaveModal(){if(!currentPlanData)return;document.getElementById('plan-name-input').value='';document.getElementById('save-modal').classList.add('open');setTimeout(()=>document.getElementById('plan-name-input').focus(),100);}
 function closeSaveModal(){document.getElementById('save-modal').classList.remove('open');}
@@ -1026,7 +1573,7 @@ function openAV(plan){
   document.getElementById('av-title').textContent=plan.name;
   document.getElementById('av-sub').textContent=`// ${films.length} film i planen`;
   currentPlanData=plan.data;
-  renderPlan(plan.data,document.getElementById('av-cards'),document.getElementById('av-missed'));
+  renderPlan(plan.data,document.getElementById('av-cards'),document.getElementById('av-missed'),document.getElementById('av-summary'));
 }
 function closeArchiveView(){document.getElementById('archive-list').style.display='block';document.getElementById('archive-view').style.display='none';}
 async function delPlan(e,id){e.stopPropagation();if(!confirm('Slet denne plan?'))return;await sDel(id);renderArchive();}
