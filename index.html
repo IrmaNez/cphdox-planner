@@ -1039,44 +1039,55 @@ function selectFilmOnDay(title,date,showing,slotId){
 
 // ── DAY PICKER ──
 let _dpFilm=null;
+let _dpOptions=[]; // store options by index to avoid inline JSON issues
+
 function openDayPicker(title,dayShowings,slotId){
   _dpFilm={title,slotId};
+  _dpOptions=[];
   document.getElementById('dp-title').textContent=title;
   const body=document.getElementById('dp-body');
+  body.innerHTML='';
 
-  // Check which slots are already taken (another selected film in same slot on that day)
-  // We detect "taken" if another selected film's slotId matches on that date
-  // Simplified: check if any selected film occupies same time slot on that day
-  body.innerHTML=dates.filter(d=>dayShowings[d]).map(d=>{
-    const showings=dayShowings[d];
-    return showings.map(s=>{
-      // Is this slot taken? Check if selectedShowings has something at same slotId on same day
+  dates.filter(d=>dayShowings[d]).forEach(d=>{
+    (dayShowings[d]||[]).forEach(s=>{
+      const idx=_dpOptions.length;
+      _dpOptions.push({date:d,showing:s});
+
       const slotTaken=Object.values(selectedShowings).some(sel=>
         sel.date===d && sel.slotId===slotId
       );
-      const takenClass=slotTaken?' dp-taken':'';
-      return `<div class="dp-option${takenClass}" onclick="pickDay('${d}',${JSON.stringify(s).replace(/"/g,'&quot;')},${slotId})">
+
+      const opt=document.createElement('div');
+      opt.className='dp-option'+(slotTaken?' dp-taken':'');
+      opt.innerHTML=`
         <div class="dp-day">${fmtShort(d)}</div>
         <div class="dp-meta">
           <div class="dp-time">${s.time}</div>
           <div class="dp-venue">📍 ${s.venue||''} · ${s.duration||''}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }).join('');
+        </div>`;
+
+      if(!slotTaken){
+        opt.addEventListener('click',()=>pickDay(idx));
+      }
+      body.appendChild(opt);
+    });
+  });
 
   document.getElementById('day-picker-modal').classList.add('open');
 }
 
-function pickDay(date,showing,slotId){
+function pickDay(idx){
   if(!_dpFilm)return;
+  const {date,showing}=_dpOptions[idx];
+  const {title,slotId}=_dpFilm;
   closeDayPicker();
-  selectFilmOnDay(_dpFilm.title,date,showing,slotId);
+  selectFilmOnDay(title,date,showing,slotId);
 }
 
 function closeDayPicker(){
   document.getElementById('day-picker-modal').classList.remove('open');
   _dpFilm=null;
+  _dpOptions=[];
 }
 
 function selectAll(){
