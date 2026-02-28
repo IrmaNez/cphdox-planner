@@ -16,7 +16,6 @@
   body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(232,240,72,0.07) 0%,transparent 60%),
                radial-gradient(ellipse 60% 40% at 80% 100%,rgba(72,200,240,0.05) 0%,transparent 60%);}
-
   nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.94);backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;height:56px;}
   .nav-brand{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);margin-right:32px;}
@@ -29,86 +28,66 @@
   .storage-status{font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:6px;margin-left:auto;}
   .sdot{width:6px;height:6px;border-radius:50%;background:var(--muted);}
   .sdot.ok{background:var(--accent);}
-
   .page{display:none;}.page.active{display:block;}
-  .container{max-width:900px;margin:0 auto;padding:40px 20px 100px;position:relative;z-index:1;}
+  .container{max-width:960px;margin:0 auto;padding:40px 20px 100px;position:relative;z-index:1;}
   .page-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px;line-height:1.1;}
   .page-sub{font-size:0.75rem;color:var(--muted);letter-spacing:0.05em;margin-bottom:40px;}
   .section-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
     margin-bottom:14px;display:flex;align-items:center;gap:12px;}
   .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
   .section{margin-bottom:32px;}
-
   input[type="text"],input[type="password"]{width:100%;background:var(--surface);
     border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:0.85rem;
     padding:11px 14px;outline:none;transition:border-color 0.2s,background 0.2s;}
   input:focus{border-color:rgba(232,240,72,0.35);background:var(--surface2);}
   label{display:block;font-size:0.68rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:7px;}
 
-  /* PDF UPLOAD */
-  .pdf-drop{border:2px dashed var(--border);padding:40px 20px;text-align:center;cursor:pointer;
+  /* PDF DROP */
+  .pdf-drop{border:2px dashed var(--border);padding:36px 20px;text-align:center;cursor:pointer;
     transition:all 0.22s;background:var(--surface);position:relative;}
   .pdf-drop:hover,.pdf-drop.drag-over{border-color:rgba(232,240,72,0.5);background:rgba(232,240,72,0.04);}
   .pdf-drop.has-file{border-color:rgba(72,240,168,0.5);border-style:solid;background:rgba(72,240,168,0.04);}
   .pdf-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-  .pdf-icon{font-size:2.5rem;margin-bottom:12px;}
-  .pdf-label{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+  .pdf-icon{font-size:2rem;margin-bottom:10px;}
+  .pdf-label{font-size:0.78rem;color:var(--muted);line-height:1.7;}
   .pdf-label strong{color:var(--text);}
-  .pdf-filename{font-size:0.75rem;color:var(--green);margin-top:8px;letter-spacing:0.05em;}
-
-  /* PARSE STATUS */
-  .parse-status{display:none;margin-top:12px;padding:12px 16px;background:var(--surface2);
-    border:1px solid var(--border);font-size:0.73rem;color:var(--muted);}
-  .parse-status.ok{border-color:rgba(72,240,168,0.3);color:var(--green);}
-  .parse-status.err{border-color:rgba(240,72,72,0.3);color:var(--red);}
+  .pdf-filename{font-size:0.73rem;color:var(--green);margin-top:8px;}
 
   /* DAY CARDS */
   .day-cards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
   @media(max-width:560px){.day-cards-grid{grid-template-columns:1fr;}}
-  .day-select-card{background:var(--surface);border:1px solid var(--border);padding:24px 20px;
-    transition:all 0.22s;position:relative;overflow:hidden;min-height:150px;
+  .day-select-card{background:var(--surface);border:1px solid var(--border);padding:22px 18px;
+    transition:all 0.22s;position:relative;overflow:hidden;min-height:140px;
     display:flex;flex-direction:column;justify-content:space-between;}
   .day-select-card.has-date{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.04);}
   .day-select-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity 0.22s;}
   .day-select-card.has-date::before{opacity:1;}
-  .dcard-num{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .dcard-num{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
   .day-select-card.has-date .dcard-num{color:var(--accent);}
-  .dcard-date{font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1;color:var(--muted);margin-bottom:4px;}
+  .dcard-date{font-family:'DM Serif Display',serif;font-size:1.4rem;line-height:1;color:var(--muted);margin-bottom:4px;}
   .day-select-card.has-date .dcard-date{color:var(--text);}
-  .dcard-weekday{font-size:0.72rem;color:var(--muted);margin-bottom:10px;min-height:1.1em;}
+  .dcard-weekday{font-size:0.7rem;color:var(--muted);margin-bottom:8px;min-height:1.1em;}
   .day-select-card.has-date .dcard-weekday{color:var(--accent);}
-  .dcard-status{font-size:0.65rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+  .dcard-status{font-size:0.63rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
   .day-select-card.has-date .dcard-status{color:var(--green);}
   .dcard-input{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);
-    font-family:'DM Mono',monospace;font-size:0.72rem;padding:7px 10px;outline:none;margin-top:8px;
-    cursor:pointer;color-scheme:dark;}
+    font-family:'DM Mono',monospace;font-size:0.72rem;padding:7px 10px;outline:none;margin-top:8px;cursor:pointer;color-scheme:dark;}
 
   /* PREFS */
-  .pref-group{margin-bottom:22px;}
-  .pref-question{font-size:0.78rem;color:var(--text);margin-bottom:12px;}
+  .pref-group{margin-bottom:20px;}
+  .pref-question{font-size:0.78rem;color:var(--text);margin-bottom:10px;}
   .pref-chips{display:flex;gap:8px;flex-wrap:wrap;}
-  .pref-chip{padding:9px 18px;background:var(--surface);border:1px solid var(--border);color:var(--muted);
-    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;
-    transition:all 0.18s;user-select:none;}
+  .pref-chip{padding:8px 16px;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+    font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.18s;user-select:none;}
   .pref-chip:hover{border-color:rgba(232,240,72,0.3);color:var(--text);}
   .pref-chip.selected{background:rgba(232,240,72,0.08);border-color:rgba(232,240,72,0.5);color:var(--accent);}
-
-  /* STEPPER */
-  .stepper{display:flex;margin-bottom:32px;border:1px solid var(--border);overflow:hidden;}
-  .step-item{flex:1;padding:12px 10px;text-align:center;font-size:0.6rem;letter-spacing:0.12em;
-    text-transform:uppercase;color:var(--muted);background:var(--surface);border-right:1px solid var(--border);transition:all 0.3s;}
-  .step-item:last-child{border-right:none;}
-  .step-item.active{color:var(--accent);background:rgba(232,240,72,0.06);}
-  .step-item.done{color:var(--green);background:rgba(72,240,168,0.04);}
-  .step-num{font-size:1rem;display:block;margin-bottom:3px;font-family:'DM Serif Display',serif;}
 
   /* BUTTONS */
   .btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;
     background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.84rem;font-weight:600;
     letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.18s;margin-top:24px;}
   .btn-primary:hover{background:#f0fa60;transform:translateY(-1px);}
-  .btn-primary:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed;transform:none;}
   .btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:none;
     border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;
     letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;}
@@ -131,63 +110,40 @@
   @keyframes filmroll{0%,100%{background:var(--surface2)}50%{background:var(--accent)}}
   .loading-text{font-size:0.73rem;color:var(--muted);letter-spacing:0.1em;}
   .loading-sub{font-size:0.65rem;color:var(--muted);margin-top:8px;opacity:0.6;}
-
   .error-box{border:1px solid rgba(240,72,72,0.3);background:rgba(240,72,72,0.07);padding:16px;
     color:var(--red);font-size:0.78rem;line-height:1.6;display:none;margin-bottom:16px;}
   .note-box{background:rgba(232,240,72,0.04);border:1px solid rgba(232,240,72,0.14);
     padding:14px 18px;font-size:0.73rem;color:var(--muted);line-height:1.7;}
   .note-box strong{color:var(--accent);}
 
-  /* SWIPE */
-  .swipe-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-  .swipe-day-label{font-family:'DM Serif Display',serif;font-size:1.3rem;}
-  .swipe-prog-text{font-size:0.68rem;color:var(--muted);}
-  .swipe-bar{height:3px;background:var(--surface2);margin-bottom:28px;}
-  .swipe-bar-fill{height:100%;background:var(--accent);transition:width 0.3s ease;}
-  .swipe-arena{display:flex;flex-direction:column;align-items:center;min-height:420px;position:relative;}
-  .film-swipe-card{width:100%;max-width:580px;background:var(--surface);border:1px solid var(--border);
-    padding:28px 32px;position:relative;animation:cardIn 0.3s ease;}
-  @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  .film-swipe-card.go-left{animation:goLeft 0.32s ease forwards;}
-  .film-swipe-card.go-right{animation:goRight 0.32s ease forwards;}
-  @keyframes goLeft{to{transform:translateX(-130%) rotate(-8deg);opacity:0;}}
-  @keyframes goRight{to{transform:translateX(130%) rotate(8deg);opacity:0;}}
-  .swipe-lbl-yes{position:absolute;top:18px;left:18px;padding:5px 13px;border:3px solid var(--green);
-    color:var(--green);font-size:0.9rem;letter-spacing:0.2em;font-weight:700;opacity:0;transform:rotate(-12deg);}
-  .swipe-lbl-no{position:absolute;top:18px;right:18px;padding:5px 13px;border:3px solid var(--red);
-    color:var(--red);font-size:0.9rem;letter-spacing:0.2em;font-weight:700;opacity:0;transform:rotate(12deg);}
-  .sc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
-  .sc-time-big{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.6rem;color:var(--accent);}
-  .sc-venue-right{font-size:0.7rem;color:var(--muted);text-align:right;line-height:1.6;}
-  .sc-title-big{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:6px;line-height:1.2;}
-  .sc-dur-sm{font-size:0.68rem;color:var(--muted);margin-bottom:14px;}
-  .sc-desc-sm{font-size:0.77rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
-  .sc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border);}
-  .sc-times-all{font-size:0.65rem;color:var(--muted);line-height:1.7;}
-  .sc-times-all span{color:var(--text);}
-  .btn-ticket-sm{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;
-    background:rgba(232,240,72,0.08);border:1px solid rgba(232,240,72,0.25);color:var(--accent);
-    font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
-    font-family:'DM Mono',monospace;transition:all 0.18s;}
-  .btn-ticket-sm:hover{background:rgba(232,240,72,0.16);}
-  .swipe-btns{display:flex;gap:20px;justify-content:center;margin-top:28px;}
-  .btn-nope{width:66px;height:66px;border-radius:50%;border:2px solid rgba(240,72,72,0.4);
-    background:rgba(240,72,72,0.08);color:var(--red);font-size:1.7rem;cursor:pointer;
-    transition:all 0.18s;display:flex;align-items:center;justify-content:center;}
-  .btn-nope:hover{background:rgba(240,72,72,0.2);border-color:var(--red);transform:scale(1.1);}
-  .btn-like{width:66px;height:66px;border-radius:50%;border:2px solid rgba(72,240,168,0.4);
-    background:rgba(72,240,168,0.08);color:var(--green);font-size:1.7rem;cursor:pointer;
-    transition:all 0.18s;display:flex;align-items:center;justify-content:center;}
-  .btn-like:hover{background:rgba(72,240,168,0.2);border-color:var(--green);transform:scale(1.1);}
-  .swipe-hint{font-size:0.63rem;color:var(--muted);text-align:center;margin-top:10px;letter-spacing:0.08em;}
-  .day-done{text-align:center;padding:48px 20px;border:1px solid var(--border);background:var(--surface);}
-  .day-done-emoji{font-size:3rem;margin-bottom:16px;}
-  .day-done h2{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:6px;}
-  .day-done-count{font-size:2.5rem;font-family:'DM Serif Display',serif;color:var(--accent);line-height:1;}
-  .day-done p{font-size:0.78rem;color:var(--muted);margin-top:4px;margin-bottom:24px;line-height:1.7;}
+  /* FILM SELECTION LIST */
+  .film-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+  .film-list-title{font-family:'DM Serif Display',serif;font-size:1.4rem;}
+  .film-list-meta{font-size:0.7rem;color:var(--muted);}
+  .film-list-actions{display:flex;gap:8px;align-items:center;}
+
+  .day-group{margin-bottom:28px;}
+  .day-group-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+  .day-group-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .film-row{display:flex;align-items:flex-start;gap:0;border:1px solid var(--border);
+    background:var(--surface);margin-bottom:8px;cursor:pointer;transition:all 0.18s;position:relative;}
+  .film-row:hover{border-color:rgba(232,240,72,0.25);background:var(--surface2);}
+  .film-row.selected{border-color:rgba(72,240,168,0.5);background:rgba(72,240,168,0.05);}
+  .film-row.selected::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);}
+  .film-check{width:48px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;color:var(--muted);padding:16px 0;border-right:1px solid var(--border);transition:color 0.18s;}
+  .film-row.selected .film-check{color:var(--green);}
+  .film-info{flex:1;padding:14px 16px;}
+  .film-time{font-family:'DM Serif Display',serif;font-style:italic;font-size:1rem;color:var(--accent);margin-bottom:2px;}
+  .film-title{font-size:0.88rem;font-weight:500;margin-bottom:3px;line-height:1.3;}
+  .film-meta{font-size:0.67rem;color:var(--muted);margin-bottom:5px;}
+  .film-desc{font-size:0.72rem;color:var(--muted);line-height:1.6;}
+
   .sel-bar{position:sticky;bottom:0;z-index:50;background:rgba(10,10,15,0.96);backdrop-filter:blur(12px);
     border-top:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;
-    justify-content:space-between;gap:12px;margin:0 -20px;}
+    justify-content:space-between;gap:12px;margin:0 -20px;flex-wrap:wrap;}
   .sel-count{font-size:0.75rem;color:var(--muted);}
   .sel-count strong{color:var(--accent);}
 
@@ -195,38 +151,48 @@
   #output{display:none;animation:fadeIn 0.4s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   .output-actions{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+
   .day-card{background:var(--surface);border:1px solid var(--border);margin-bottom:20px;overflow:hidden;}
   .day-card-header{padding:14px 22px;background:var(--surface2);border-bottom:1px solid var(--border);
     display:flex;justify-content:space-between;align-items:center;}
   .day-card-title{font-family:'DM Serif Display',serif;font-size:1.2rem;}
   .day-card-date{font-size:0.68rem;color:var(--accent);letter-spacing:0.1em;}
-  .screening{padding:18px 22px;border-bottom:1px solid var(--border);}
+  .screening{padding:16px 22px;border-bottom:1px solid var(--border);}
   .screening:last-child{border-bottom:none;}
-  .sc-time{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.25rem;color:var(--accent);margin-bottom:3px;}
-  .sc-title{font-size:0.92rem;margin-bottom:3px;font-weight:500;}
-  .sc-venue{font-size:0.72rem;color:var(--muted);}
-  .sc-dur{font-size:0.67rem;color:var(--muted);margin-top:2px;}
-  .sc-desc{font-size:0.73rem;color:var(--muted);line-height:1.65;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
-  .sc-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;}
+  .sc-time{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.2rem;color:var(--accent);margin-bottom:2px;}
+  .sc-title{font-size:0.9rem;margin-bottom:2px;font-weight:500;}
+  .sc-venue{font-size:0.7rem;color:var(--muted);}
+  .sc-dur{font-size:0.66rem;color:var(--muted);margin-top:1px;}
+  .sc-desc{font-size:0.72rem;color:var(--muted);line-height:1.6;margin-top:7px;padding-top:7px;border-top:1px solid var(--border);}
+  .sc-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;align-items:center;}
   .btn-ticket{display:inline-flex;align-items:center;gap:5px;background:rgba(232,240,72,0.07);
-    border:1px solid rgba(232,240,72,0.22);color:var(--accent);padding:6px 13px;font-size:0.67rem;
+    border:1px solid rgba(232,240,72,0.22);color:var(--accent);padding:5px 12px;font-size:0.66rem;
     letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:all 0.18s;}
   .btn-ticket:hover{background:rgba(232,240,72,0.14);}
-  .btn-trailer-sm{display:inline-flex;align-items:center;gap:5px;background:rgba(72,200,240,0.08);
-    border:1px solid rgba(72,200,240,0.22);color:var(--accent2);padding:6px 13px;font-size:0.67rem;
-    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:all 0.18s;}
-  .btn-trailer-sm:hover{background:rgba(72,200,240,0.16);}
   .btn-cafe{display:inline-flex;align-items:center;gap:5px;background:transparent;
-    border:1px solid var(--border);color:var(--muted);padding:6px 13px;font-size:0.67rem;
+    border:1px solid var(--border);color:var(--muted);padding:5px 12px;font-size:0.66rem;
     letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;cursor:pointer;transition:all 0.18s;}
   .btn-cafe:hover{border-color:rgba(232,240,72,0.3);color:var(--accent);}
-  .travel-badge{display:flex;align-items:center;gap:12px;padding:11px 22px;background:rgba(72,200,240,0.04);
+  .travel-badge{display:flex;align-items:center;gap:12px;padding:10px 22px;background:rgba(72,200,240,0.04);
     border-top:1px dashed rgba(72,200,240,0.18);border-bottom:1px dashed rgba(72,200,240,0.18);}
-  .travel-info{font-size:0.72rem;color:var(--accent2);}
+  .travel-info{font-size:0.7rem;color:var(--accent2);}
   .btn-maps{margin-left:auto;display:inline-flex;align-items:center;gap:5px;background:rgba(72,200,240,0.1);
-    border:1px solid rgba(72,200,240,0.28);color:var(--accent2);padding:6px 13px;font-size:0.67rem;
-    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:all 0.18s;flex-shrink:0;}
+    border:1px solid rgba(72,200,240,0.28);color:var(--accent2);padding:5px 12px;font-size:0.66rem;
+    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;
+    transition:all 0.18s;flex-shrink:0;}
   .btn-maps:hover{background:rgba(72,200,240,0.18);}
+
+  /* MISSED FILMS SECTION */
+  .missed-section{margin-top:28px;border:1px solid rgba(240,72,72,0.2);background:rgba(240,72,72,0.03);overflow:hidden;}
+  .missed-header{padding:14px 22px;background:rgba(240,72,72,0.08);border-bottom:1px solid rgba(240,72,72,0.15);
+    display:flex;align-items:center;gap:10px;}
+  .missed-header h3{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--red);}
+  .missed-header p{font-size:0.7rem;color:var(--muted);}
+  .missed-film{padding:14px 22px;border-bottom:1px solid rgba(240,72,72,0.1);}
+  .missed-film:last-child{border-bottom:none;}
+  .missed-title{font-size:0.88rem;margin-bottom:4px;}
+  .missed-showings{font-size:0.7rem;color:var(--muted);line-height:1.8;}
+  .missed-showing-time{color:var(--accent2);}
 
   /* MODALS */
   .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.78);
@@ -246,7 +212,6 @@
   .cafe-name{font-size:0.88rem;margin-bottom:3px;}
   .cafe-type{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-left:6px;}
   .cafe-meta{font-size:0.68rem;color:var(--muted);line-height:1.65;margin-top:3px;}
-  .cafe-dist{color:var(--accent);}
   .save-box{background:var(--surface);border:1px solid rgba(232,240,72,0.2);padding:32px;max-width:420px;width:100%;animation:fadeUp 0.25s ease;}
   .save-box h2{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px;}
   .save-box p{font-size:0.75rem;color:var(--muted);margin-bottom:20px;}
@@ -254,7 +219,7 @@
   .btn-msave{flex:1;background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;padding:11px;cursor:pointer;border:none;font-weight:600;}
   .btn-msave:hover{background:#f0fa60;}
   .btn-mcancel{padding:11px 18px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;}
-  .btn-mcancel:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
+  .btn-mcancel:hover{color:var(--text);}
 
   /* ARCHIVE */
   .archive-empty{text-align:center;padding:60px 20px;border:1px solid var(--border);background:var(--surface);}
@@ -269,7 +234,7 @@
   .arc-del:hover{border-color:rgba(240,72,72,0.4);color:var(--red);}
   #archive-view{display:none;}
   .back-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 16px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;margin-bottom:28px;}
-  .back-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
+  .back-btn:hover{color:var(--text);}
   ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border)}
 </style>
 </head>
@@ -290,9 +255,10 @@
 <div class="page active" id="page-planner">
 <div class="container">
 
+  <!-- SETUP -->
   <div id="screen-setup">
     <h1 class="page-title">Lav en festivalplan</h1>
-    <p class="page-sub">// CPH:DOX 2026 · 11–22. marts · Upload program-PDF og swipe</p>
+    <p class="page-sub">// CPH:DOX 2026 · 11–22. marts · Upload PDF og vælg film</p>
 
     <div class="section">
       <div class="section-label">01 — API-nøgle</div>
@@ -308,10 +274,9 @@
       <div class="pdf-drop" id="pdf-drop">
         <input type="file" id="pdf-input" accept=".pdf" onchange="onPdfSelected(this)">
         <div class="pdf-icon">📄</div>
-        <div class="pdf-label"><strong>Klik eller træk PDF hertil</strong><br>Upload din CPH:DOX program-PDF.<br>Claude læser alle film, tider og steder direkte fra filen.</div>
+        <div class="pdf-label"><strong>Klik eller træk PDF hertil</strong><br>Claude læser alle film og tider direkte fra filen.</div>
         <div class="pdf-filename" id="pdf-filename"></div>
       </div>
-      <div class="parse-status" id="parse-status"></div>
     </div>
 
     <div class="section">
@@ -369,41 +334,44 @@
     </div>
 
     <div class="note-box">
-      <strong>Sådan virker det:</strong> Claude læser PDF'en og udtrækker hele programmet. Derefter swiper du film for de dage du har valgt — ✓ for dem du vil se, ✕ for skip. Til sidst laver Claude den optimale plan med gangtider og billetlinks.
+      <strong>Sådan virker det:</strong> Claude læser PDF'en og viser alle film for dine dage i en liste. Du sætter flueben ved dem du vil se — hver film kun én gang. Claude laver derefter den optimale plan og viser hvilke film der ikke kunne passe ind.
     </div>
-
-    <button class="btn-primary" id="start-btn" onclick="startPlanner()">▶ Start — analyser PDF og swipe</button>
+    <button class="btn-primary" onclick="startPlanner()">▶ Start — hent film fra PDF</button>
   </div>
 
-  <!-- SWIPE SCREEN -->
-  <div id="screen-swipe" style="display:none;">
-    <div class="stepper" id="stepper"></div>
-    <div class="error-box" id="error-fetch"></div>
+  <!-- FILM SELECTION SCREEN -->
+  <div id="screen-select" style="display:none;">
     <div class="loading-box" id="loading-fetch">
       <div class="film-strip">
         <div class="film-frame"></div><div class="film-frame"></div>
         <div class="film-frame"></div><div class="film-frame"></div>
         <div class="film-frame"></div>
       </div>
-      <div class="loading-text" id="loading-text">Læser PDF...</div>
-      <div class="loading-sub" id="loading-sub">Claude udtrækker film fra programmet</div>
+      <div class="loading-text" id="loading-text">Claude læser PDF...</div>
+      <div class="loading-sub" id="loading-sub">Udtrækker filmprogram</div>
     </div>
-    <div id="swipe-content" style="display:none;">
-      <div class="swipe-header">
-        <div class="swipe-day-label" id="swipe-day-label"></div>
-        <div class="swipe-prog-text" id="swipe-prog-text"></div>
+    <div class="error-box" id="error-fetch"></div>
+
+    <div id="film-list-container" style="display:none;">
+      <div class="film-list-header">
+        <div>
+          <div class="film-list-title">Vælg film du vil se</div>
+          <div class="film-list-meta" id="film-list-meta"></div>
+        </div>
+        <div class="film-list-actions">
+          <button class="btn-secondary" style="font-size:0.65rem;padding:7px 14px;" onclick="selectAll()">Vælg alle</button>
+          <button class="btn-secondary" style="font-size:0.65rem;padding:7px 14px;" onclick="selectNone()">Fravælg alle</button>
+        </div>
       </div>
-      <div class="swipe-bar"><div class="swipe-bar-fill" id="swipe-bar-fill"></div></div>
-      <div class="swipe-arena" id="swipe-arena"></div>
-      <div class="swipe-btns">
-        <button class="btn-nope" onclick="swipe(false)" title="Spring over (←)">✕</button>
-        <button class="btn-like" onclick="swipe(true)" title="Vil se (→)">✓</button>
-      </div>
-      <div class="swipe-hint">← Spring over &nbsp;·&nbsp; Vil se → &nbsp;·&nbsp; Piletaster virker</div>
+      <div id="film-list"></div>
     </div>
+
     <div class="sel-bar">
       <div class="sel-count" id="sel-count">Ingen film valgt endnu</div>
-      <button class="btn-secondary" onclick="goBackSetup()">← Tilbage</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn-secondary" onclick="goBackSetup()">← Tilbage</button>
+        <button class="btn-accent" id="plan-btn" onclick="generatePlan()" disabled>Lav plan →</button>
+      </div>
     </div>
   </div>
 
@@ -415,7 +383,7 @@
       <div class="film-frame"></div>
     </div>
     <div class="loading-text" id="loading-plan-text">Sammensætter din festivalplan...</div>
-    <div class="loading-sub">Claude optimerer planen på tværs af dagene</div>
+    <div class="loading-sub">Claude optimerer planen og finder hvad der ikke kan passe ind</div>
   </div>
   <div class="error-box" id="error-plan" style="margin-top:20px;"></div>
 
@@ -427,6 +395,7 @@
       <button class="btn-cyan" onclick="downloadICS()">📅 Tilføj til kalender</button>
     </div>
     <div id="plan-cards"></div>
+    <div id="missed-section"></div>
   </div>
 
 </div>
@@ -448,6 +417,7 @@
       <button class="btn-cyan" onclick="downloadICS()">📅 Tilføj til kalender</button>
     </div>
     <div id="av-cards"></div>
+    <div id="av-missed"></div>
   </div>
 </div>
 </div>
@@ -479,9 +449,9 @@
 
 <script>
 // ── STATE ──
-let dates=[], dayIdx=0, filmIdx=0;
-let allFilms={};        // { "2026-03-14": [...films] }
-let selectedFilms={};
+let dates=[];
+let allFilms=[];        // flat list: {title, time, venue, duration, description, date, ticketUrl}
+let selectedTitles=new Set(); // unique titles selected
 let currentPlanData=null;
 let pdfBase64=null;
 let prefs={pauses:'',count:'',start:''};
@@ -497,26 +467,16 @@ window.addEventListener('DOMContentLoaded',()=>{
   const ok=!!window.storage;
   document.getElementById('sdot').className='sdot'+(ok?' ok':'');
   document.getElementById('slabel').textContent=ok?'Cloud-lagring':'Lokal lagring';
-
-  // Drag & drop on PDF area
   const drop=document.getElementById('pdf-drop');
   drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag-over');});
   drop.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));
-  drop.addEventListener('drop',e=>{
-    e.preventDefault();drop.classList.remove('drag-over');
-    const file=e.dataTransfer.files[0];
-    if(file&&file.type==='application/pdf')loadPdfFile(file);
-  });
+  drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag-over');
+    const f=e.dataTransfer.files[0];if(f&&f.type==='application/pdf')loadPdfFile(f);});
 });
-
 document.addEventListener('keydown',e=>{
-  if(document.getElementById('screen-swipe').style.display==='none')return;
-  if(document.getElementById('swipe-content').style.display==='none')return;
-  if(e.key==='ArrowRight')swipe(true);
-  if(e.key==='ArrowLeft')swipe(false);
   if(e.key==='Escape'){closeSaveModal();closeCafeModal();}
+  if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();
 });
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();});
 
 // ── NAV ──
 function showPage(n){
@@ -527,24 +487,14 @@ function showPage(n){
   if(n==='archive')renderArchive();
 }
 
-// ── PDF HANDLING ──
-function onPdfSelected(input){
-  const file=input.files[0];
-  if(file)loadPdfFile(file);
-}
-
+// ── PDF ──
+function onPdfSelected(input){const f=input.files[0];if(f)loadPdfFile(f);}
 function loadPdfFile(file){
   const reader=new FileReader();
   reader.onload=e=>{
-    const base64=e.target.result.split(',')[1];
-    pdfBase64=base64;
-    const drop=document.getElementById('pdf-drop');
-    drop.classList.add('has-file');
+    pdfBase64=e.target.result.split(',')[1];
+    document.getElementById('pdf-drop').classList.add('has-file');
     document.getElementById('pdf-filename').textContent='✓ '+file.name+' ('+Math.round(file.size/1024)+' KB)';
-    const ps=document.getElementById('parse-status');
-    ps.style.display='block';
-    ps.className='parse-status ok';
-    ps.textContent='✓ PDF klar — programmet analyseres når du starter';
   };
   reader.readAsDataURL(file);
 }
@@ -612,52 +562,32 @@ function parseJSON(t){
   try{return JSON.parse(c);}catch{}
   const m=c.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
   if(m){try{return JSON.parse(m[0]);}catch{}}
-  throw new Error('Kunne ikke parse svaret. Prøv igen.');
+  throw new Error('Kunne ikke læse svaret fra Claude. Prøv igen.');
 }
 
-// ── STEPPER ──
-function buildStepper(){
-  const el=document.getElementById('stepper');
-  el.innerHTML='';
-  dates.forEach((d,i)=>{
-    const div=document.createElement('div');
-    div.className='step-item'+(i<dayIdx?' done':i===dayIdx?' active':'');
-    const sel=(selectedFilms[d]||[]).length;
-    div.innerHTML=`<span class="step-num">${i<dayIdx?'✓':i+1}</span>${i<dayIdx?sel+' valgt':fmtShort(d)}`;
-    el.appendChild(div);
-  });
-  const plan=document.createElement('div');
-  plan.className='step-item'+(dayIdx>=dates.length?' active':'');
-  plan.innerHTML=`<span class="step-num">${dayIdx>=dates.length?'→':dates.length+1}</span>Plan`;
-  el.appendChild(plan);
-}
-
-// ── START — reads PDF once for all selected days ──
-async function startPlanner(){
+// ── START ──
+function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
   if(!pdfBase64){alert('Upload program-PDF først.');return;}
   dates=getDates();
   if(!dates.length){alert('Vælg mindst én festivaldato.');return;}
 
-  dayIdx=0; filmIdx=0; allFilms={}; selectedFilms={};
-  dates.forEach(d=>{selectedFilms[d]=[];});
-
+  allFilms=[]; selectedTitles=new Set();
   document.getElementById('screen-setup').style.display='none';
-  document.getElementById('screen-swipe').style.display='block';
+  document.getElementById('screen-select').style.display='block';
+  document.getElementById('loading-fetch').style.display='block';
+  document.getElementById('film-list-container').style.display='none';
+  document.getElementById('error-fetch').style.display='none';
   document.getElementById('output').style.display='none';
   document.getElementById('error-plan').style.display='none';
-  document.getElementById('loading-fetch').style.display='block';
-  document.getElementById('swipe-content').style.display='none';
-  document.getElementById('error-fetch').style.display='none';
-  document.getElementById('loading-text').textContent='Claude læser program-PDF...';
-  document.getElementById('loading-sub').textContent='Udtrækker alle film for '+dates.length+' dag'+(dates.length>1?'e':'');
-  buildStepper();
+  fetchFilms();
+}
 
+async function fetchFilms(){
   try{
-    // Fetch one day at a time to avoid token limits
-    for(let i=0; i<dates.length; i++){
+    for(let i=0;i<dates.length;i++){
       const d=dates[i];
-      document.getElementById('loading-text').textContent=`Læser program for dag ${i+1} af ${dates.length}...`;
+      document.getElementById('loading-text').textContent=`Læser dag ${i+1} af ${dates.length}...`;
       document.getElementById('loading-sub').textContent=fmtDate(d);
 
       const raw=await callAI([{
@@ -668,172 +598,257 @@ async function startPlanner(){
 
 Udtræk KUN filmvisninger for datoen ${d} (${fmtDate(d)}).
 
-Returner KUN et JSON array — ingen markdown, ingen forklaringer:
-[{"title":"...","time":"14:00","venue":"...","duration":"85 min","description":"1-2 sætninger dansk","ticketUrl":"https://cphdox.dk/film/filmtitel-med-bindestreger"}]
+Returner KUN et JSON array — ingen markdown:
+[{"title":"...","time":"14:00","venue":"...","duration":"85 min","description":"2 sætninger dansk om filmens indhold","ticketUrl":"https://cphdox.dk/film/filmtitel-med-bindestreger"}]
 
-- Inkluder ALLE film der vises denne dag
-- Samme film kan have flere visninger — inkluder dem alle som separate objekter
-- Array starter med [ og slutter med ]`}
+Inkluder ALLE film der vises denne dag. Samme film med flere visninger = separate objekter. Svar starter med [`}
         ]
-      }], 8000);
+      }],8000);
 
-      window._lastRaw=raw;
       const films=parseJSON(raw);
       if(!Array.isArray(films))throw new Error(`Dag ${i+1}: uventet format`);
-      allFilms[d]=films.map(f=>({...f,date:d,screenings:[{time:f.time,venue:f.venue,duration:f.duration}]}));
+      films.forEach(f=>allFilms.push({...f,date:d}));
     }
 
     document.getElementById('loading-fetch').style.display='none';
-    showSwipeForCurrentDay();
-
+    renderFilmList();
   }catch(err){
     document.getElementById('loading-fetch').style.display='none';
     const eb=document.getElementById('error-fetch');
     eb.style.display='block';
-    eb.innerHTML='⚠ '+err.message+'<br><br><details style="margin-top:8px;"><summary style="cursor:pointer;font-size:0.68rem;opacity:0.7;">Vis råt svar fra Claude</summary><pre style="font-size:0.6rem;margin-top:6px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow:auto;background:rgba(0,0,0,0.3);padding:8px;">'+((window._lastRaw||'(intet svar)').substring(0,1000))+'</pre></details>';
+    eb.textContent='⚠ '+err.message;
   }
 }
 
-function showSwipeForCurrentDay(){
-  filmIdx=0;
-  buildStepper();
-  const date=dates[dayIdx];
-  document.getElementById('swipe-content').style.display='block';
-  document.getElementById('swipe-day-label').textContent=fmtDate(date);
-  renderCard();
-  updateSelCount();
+// ── FILM LIST ──
+function renderFilmList(){
+  // Deduplicate by title for display — group all showings under each unique title
+  const byTitle={};
+  allFilms.forEach(f=>{
+    if(!byTitle[f.title])byTitle[f.title]={...f,showings:[]};
+    byTitle[f.title].showings.push({date:f.date,time:f.time,venue:f.venue,duration:f.duration});
+  });
+
+  // Group by day
+  const byDay={};
+  dates.forEach(d=>{byDay[d]=[];});
+  // For each unique title, assign it to the day of its first showing
+  Object.values(byTitle).forEach(f=>{
+    // Group showings by day
+    const dayShowings={};
+    f.showings.forEach(s=>{
+      if(!dayShowings[s.date])dayShowings[s.date]=[];
+      dayShowings[s.date].push(s);
+    });
+    // Assign to first matching selected day
+    for(const d of dates){
+      if(dayShowings[d]){
+        byDay[d].push({...f,primaryDay:d,dayShowings});
+        break;
+      }
+    }
+  });
+
+  // Sort each day by first showing time
+  dates.forEach(d=>{
+    byDay[d].sort((a,b)=>{
+      const at=a.dayShowings[d]?.[0]?.time||'99:99';
+      const bt=b.dayShowings[d]?.[0]?.time||'99:99';
+      return at.localeCompare(bt);
+    });
+  });
+
+  const totalUnique=Object.keys(byTitle).length;
+  document.getElementById('film-list-meta').textContent=`${totalUnique} unikke film fundet · Klik for at vælge`;
+
+  const listEl=document.getElementById('film-list');
+  listEl.innerHTML='';
+
+  dates.forEach(d=>{
+    if(!byDay[d].length)return;
+    const grp=document.createElement('div');
+    grp.className='day-group';
+    grp.innerHTML=`<div class="day-group-label">${fmtDate(d)}</div>`;
+
+    byDay[d].forEach(f=>{
+      const row=document.createElement('div');
+      row.className='film-row';
+      row.dataset.title=f.title;
+
+      // Build showings summary across all days
+      const allShowingsText=dates.flatMap(dd=>(f.dayShowings[dd]||[]).map(s=>
+        `${fmtShort(dd)} ${s.time}${s.venue?' · '+s.venue:''}`
+      )).join(' &nbsp;|&nbsp; ');
+
+      const primaryShowing=f.dayShowings[d]?.[0]||{};
+
+      row.innerHTML=`
+        <div class="film-check">○</div>
+        <div class="film-info">
+          <div class="film-time">${primaryShowing.time||'?'}</div>
+          <div class="film-title">${f.title}</div>
+          <div class="film-meta">📍 ${primaryShowing.venue||''} · ${primaryShowing.duration||''}</div>
+          ${f.description?`<div class="film-desc">${f.description}</div>`:''}
+          ${dates.length>1?`<div class="film-meta" style="margin-top:4px;opacity:0.7;">Alle visninger: ${allShowingsText}</div>`:''}
+        </div>`;
+
+      row.addEventListener('click',()=>toggleFilm(f.title,row));
+      grp.appendChild(row);
+    });
+
+    listEl.appendChild(grp);
+  });
+
+  document.getElementById('film-list-container').style.display='block';
+  updateSelBar();
 }
 
-function goBackSetup(){document.getElementById('screen-swipe').style.display='none';document.getElementById('screen-setup').style.display='block';}
-function restartPlanner(){document.getElementById('output').style.display='none';document.getElementById('screen-setup').style.display='block';currentPlanData=null;}
-
-// ── SWIPE ──
-function renderCard(){
-  const date=dates[dayIdx];
-  const films=allFilms[date]||[];
-  const arena=document.getElementById('swipe-arena');
-  const total=films.length;
-
-  document.getElementById('swipe-prog-text').textContent=`Film ${Math.min(filmIdx+1,total)} af ${total}`;
-  document.getElementById('swipe-bar-fill').style.width=(total>0?Math.round((filmIdx/total)*100):0)+'%';
-
-  if(filmIdx>=total){
-    const sel=(selectedFilms[date]||[]).length;
-    const isLast=dayIdx>=dates.length-1;
-    arena.innerHTML=`
-      <div class="day-done">
-        <div class="day-done-emoji">🎬</div>
-        <h2>${fmtDate(date)}</h2>
-        <div class="day-done-count">${sel}</div>
-        <p>${sel===0?'Du valgte ingen film denne dag.':'film valgt til din plan.'}</p>
-        <button class="btn-primary" style="max-width:300px;margin:0 auto;" onclick="${isLast?'generatePlan()':'nextDay()'}">${isLast?'▶ Lav min festivalplan':'Næste dag →'}</button>
-      </div>`;
-    return;
-  }
-
-  const f=films[filmIdx];
-  arena.innerHTML=`
-    <div class="film-swipe-card" id="swipe-card">
-      <div class="swipe-lbl-yes" id="lbl-yes">SER DEN ✓</div>
-      <div class="swipe-lbl-no" id="lbl-no">✕ SKIP</div>
-      <div class="sc-header">
-        <div class="sc-time-big">${f.time||'?'}</div>
-        <div class="sc-venue-right">${f.venue||''}</div>
-      </div>
-      <div class="sc-title-big">${f.title}</div>
-      <div class="sc-dur-sm">${f.duration||''}</div>
-      <div class="sc-desc-sm">${f.description||''}</div>
-      <div class="sc-footer">
-        <div class="sc-times-all">Tid &amp; sted:<br><span>${f.time||'?'}${f.venue?' · '+f.venue:''}</span></div>
-        ${f.ticketUrl?`<a href="${f.ticketUrl}" target="_blank" class="btn-ticket-sm" onclick="event.stopPropagation()">🎟 Billet</a>`:''}
-      </div>
-    </div>`;
-}
-
-function swipe(liked){
-  const date=dates[dayIdx];
-  const films=allFilms[date]||[];
-  if(filmIdx>=films.length)return;
-  const card=document.getElementById('swipe-card');
-  if(!card)return;
-  if(liked){
-    document.getElementById('lbl-yes').style.opacity='1';
-    card.classList.add('go-right');
-    selectedFilms[date].push(films[filmIdx]);
+function toggleFilm(title,row){
+  if(selectedTitles.has(title)){
+    selectedTitles.delete(title);
+    row.classList.remove('selected');
+    row.querySelector('.film-check').textContent='○';
   }else{
-    document.getElementById('lbl-no').style.opacity='1';
-    card.classList.add('go-left');
+    selectedTitles.add(title);
+    row.classList.add('selected');
+    row.querySelector('.film-check').textContent='✓';
   }
-  filmIdx++;
-  updateSelCount();
-  setTimeout(()=>renderCard(),330);
+  updateSelBar();
 }
 
-function nextDay(){
-  dayIdx++;
-  showSwipeForCurrentDay();
-  document.getElementById('screen-swipe').scrollIntoView({behavior:'smooth'});
+function selectAll(){
+  document.querySelectorAll('.film-row').forEach(row=>{
+    const title=row.dataset.title;
+    selectedTitles.add(title);
+    row.classList.add('selected');
+    row.querySelector('.film-check').textContent='✓';
+  });
+  updateSelBar();
+}
+function selectNone(){
+  selectedTitles.clear();
+  document.querySelectorAll('.film-row').forEach(row=>{
+    row.classList.remove('selected');
+    row.querySelector('.film-check').textContent='○';
+  });
+  updateSelBar();
 }
 
-function updateSelCount(){
-  const total=Object.values(selectedFilms).reduce((s,a)=>s+a.length,0);
-  document.getElementById('sel-count').innerHTML=total===0?'Ingen film valgt endnu':`<strong>${total}</strong> film valgt i alt`;
+function updateSelBar(){
+  const n=selectedTitles.size;
+  document.getElementById('sel-count').innerHTML=n===0?'Ingen film valgt':`<strong>${n}</strong> film valgt`;
+  document.getElementById('plan-btn').disabled=n===0;
+}
+
+function goBackSetup(){
+  document.getElementById('screen-select').style.display='none';
+  document.getElementById('screen-setup').style.display='block';
+}
+function restartPlanner(){
+  document.getElementById('output').style.display='none';
+  document.getElementById('screen-setup').style.display='block';
+  currentPlanData=null;
 }
 
 // ── GENERATE PLAN ──
 async function generatePlan(){
-  const all=Object.values(selectedFilms).flat();
-  if(!all.length){alert('Du valgte ingen film.');return;}
+  if(!selectedTitles.size){alert('Vælg mindst én film.');return;}
 
-  document.getElementById('screen-swipe').style.display='none';
+  // Collect all showings for selected titles
+  const selectedFilms=allFilms.filter(f=>selectedTitles.has(f.title));
+
+  // Group by title with all showings
+  const byTitle={};
+  selectedFilms.forEach(f=>{
+    if(!byTitle[f.title])byTitle[f.title]={title:f.title,description:f.description,ticketUrl:f.ticketUrl,showings:[]};
+    byTitle[f.title].showings.push({date:f.date,dateLabel:fmtDate(f.date),time:f.time,venue:f.venue,duration:f.duration});
+  });
+
+  document.getElementById('screen-select').style.display='none';
   document.getElementById('loading-plan').style.display='block';
   document.getElementById('error-plan').style.display='none';
   document.getElementById('output').style.display='none';
 
-  const msgs=['Analyserer dine valg...','Finder optimal fordeling...','Beregner gangtider...','Næsten klar...'];
+  const msgs=['Analyserer dine valg...','Finder optimal fordeling...','Beregner gangtider...','Identificerer film der ikke passer...','Næsten klar...'];
   let mi=0;
   const lt=setInterval(()=>{document.getElementById('loading-plan-text').textContent=msgs[++mi%msgs.length];},2500);
 
-  const filmList=all.map(f=>`- ${f.title}: ${fmtDate(f.date)} kl. ${f.time} @ ${f.venue} (${f.duration||'?'})`).join('\n');
+  const filmList=Object.values(byTitle).map(f=>
+    `${f.title}: ${f.showings.map(s=>`${s.dateLabel} ${s.time} @ ${s.venue} (${s.duration||'?'})`).join(', ')}`
+  ).join('\n');
 
   try{
     const raw=await callAI([{
       role:'user',
       content:`Lav en optimal CPH:DOX festivalplan. Svar KUN med JSON.
 
+VIGTIGE REGLER:
+- Hver film må KUN forekomme ÉN gang i planen — selv om den vises flere dage
+- Vælg den bedste visning af hver film baseret på præferencer og logistik
+- Film der ikke kan passes ind (overlap, for mange om dagen) samles i "missed_films"
+- Beregn realistiske gangtider i København (10-20 min mellem de fleste biografer)
+
 Festivaldage: ${dates.map(d=>fmtDate(d)+' ('+d+')').join(', ')}
 Præferencer: ${prefsText()}
 
-Valgte film:
+Valgte film med alle mulige visninger:
 ${filmList}
 
-Regler: Undgå overlap, overhold præferencer om buffer og antal film, beregn realistiske gangtider i København (typisk 10-20 min mellem biografer).
-
 JSON format:
-{"days":[{"date":"YYYY-MM-DD","date_label":"Mandag 11. marts","screenings":[{"time":"13:00","title":"...","venue":"...","duration":"90 min","description":"...","ticketUrl":"https://cphdox.dk/film/...","distance_to_next":1.2,"walk_minutes_to_next":15}]}],"notes":"..."}
+{
+  "days": [
+    {
+      "date": "2026-03-14",
+      "date_label": "Lørdag 14. marts",
+      "screenings": [
+        {
+          "time": "13:00",
+          "title": "...",
+          "venue": "...",
+          "duration": "90 min",
+          "description": "...",
+          "ticketUrl": "https://cphdox.dk/film/...",
+          "distance_to_next": 1.2,
+          "walk_minutes_to_next": 15
+        }
+      ]
+    }
+  ],
+  "missed_films": [
+    {
+      "title": "...",
+      "reason": "Kort forklaring på dansk hvorfor den ikke passede ind",
+      "all_showings": [
+        {"date_label": "Lørdag 14. marts", "time": "14:00", "venue": "Empire Bio"}
+      ]
+    }
+  ],
+  "notes": "Kort forklaring af planens logik"
+}
 
-Filmdata: ${JSON.stringify(all)}`
-    }]);
+Filmdata: ${JSON.stringify(Object.values(byTitle))}`
+    }], 4000);
 
     const plan=parseJSON(raw);
     clearInterval(lt);
     currentPlanData=plan;
     document.getElementById('loading-plan').style.display='none';
     document.getElementById('output').style.display='block';
-    renderPlan(plan,document.getElementById('plan-cards'));
+    renderPlan(plan, document.getElementById('plan-cards'), document.getElementById('missed-section'));
   }catch(err){
     clearInterval(lt);
     document.getElementById('loading-plan').style.display='none';
-    document.getElementById('screen-swipe').style.display='block';
+    document.getElementById('screen-select').style.display='block';
     document.getElementById('error-plan').style.display='block';
     document.getElementById('error-plan').textContent='⚠ '+err.message;
   }
 }
 
 // ── RENDER PLAN ──
-function renderPlan(data,container){
-  container.innerHTML='';
-  if(!data.days?.length){container.innerHTML='<p style="color:var(--muted);">Ingen plan.</p>';return;}
+function renderPlan(data, planContainer, missedContainer){
+  planContainer.innerHTML='';
+  if(!data.days?.length){planContainer.innerHTML='<p style="color:var(--muted);">Ingen plan.</p>';return;}
+
   data.days.forEach(day=>{
     const card=document.createElement('div');
     card.className='day-card';
@@ -841,10 +856,11 @@ function renderPlan(data,container){
     hdr.className='day-card-header';
     hdr.innerHTML=`<span class="day-card-title">${day.date_label||day.date}</span><span class="day-card-date">${day.date}</span>`;
     card.appendChild(hdr);
+
     (day.screenings||[]).forEach((s,i)=>{
       const sc=document.createElement('div');
       sc.className='screening';
-      const tickUrl=s.ticketUrl||`https://cphdox.dk/film/${s.title.toLowerCase().replace(/\s+/g,'-')}`;
+      const tickUrl=s.ticketUrl||`https://cphdox.dk/film/${(s.title||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`;
       const venueEsc=(s.venue||'').replace(/'/g,"\\'");
       sc.innerHTML=`
         <div class="sc-time">${s.time}</div>
@@ -857,6 +873,7 @@ function renderPlan(data,container){
           <button class="btn-cafe" onclick="openCafeModal('${venueEsc}')">☕ Cafeer</button>
         </div>`;
       card.appendChild(sc);
+
       const next=day.screenings[i+1];
       if(next){
         const t=document.createElement('div');t.className='travel-badge';
@@ -871,12 +888,40 @@ function renderPlan(data,container){
         card.appendChild(t);
       }
     });
-    container.appendChild(card);
+    planContainer.appendChild(card);
   });
+
   if(data.notes){
     const nb=document.createElement('div');nb.className='note-box';nb.style.marginTop='20px';
     nb.innerHTML=`<strong>Planens logik:</strong> ${data.notes}`;
-    container.appendChild(nb);
+    planContainer.appendChild(nb);
+  }
+
+  // Missed films
+  missedContainer.innerHTML='';
+  if(data.missed_films?.length){
+    const sec=document.createElement('div');
+    sec.className='missed-section';
+    sec.innerHTML=`
+      <div class="missed-header">
+        <div>
+          <h3>🎬 Film der ikke kunne passes ind</h3>
+          <p style="margin-top:4px;">${data.missed_films.length} film kunne ikke placeres i planen</p>
+        </div>
+      </div>`;
+    data.missed_films.forEach(f=>{
+      const mf=document.createElement('div');
+      mf.className='missed-film';
+      const showings=(f.all_showings||[]).map(s=>
+        `<span class="missed-showing-time">${s.date_label} ${s.time}</span> · ${s.venue||''}`
+      ).join('<br>');
+      mf.innerHTML=`
+        <div class="missed-title">${f.title}</div>
+        <div class="missed-showings" style="margin-top:4px;color:var(--muted);font-size:0.7rem;">${f.reason||''}</div>
+        ${showings?`<div class="missed-showings" style="margin-top:6px;">Vises:<br>${showings}</div>`:''}`;
+      sec.appendChild(mf);
+    });
+    missedContainer.appendChild(sec);
   }
 }
 
@@ -885,23 +930,20 @@ function openCafeModal(venue){
   document.getElementById('cafe-modal-sub').textContent='Tæt på '+venue;
   document.getElementById('cafe-body').innerHTML='<div style="text-align:center;padding:32px;font-size:0.75rem;color:var(--muted);">⏳ Finder cafeer...</div>';
   document.getElementById('cafe-modal').classList.add('open');
-  fetchCafes(venue);
-}
-function closeCafeModal(){document.getElementById('cafe-modal').classList.remove('open');}
-async function fetchCafes(venue){
-  try{
-    const raw=await callAI([{role:'user',content:`Find 5 cafeer eller restauranter tæt på ${venue} i København til en pause. JSON kun:
-[{"name":"...","type":"Café","distance":"3 min gang","description":"1 linje","mapsUrl":"https://maps.google.com/?q=...+Copenhagen"}]`}]);
+  callAI([{role:'user',content:`Find 5 cafeer eller restauranter tæt på ${venue} i København. JSON kun:
+[{"name":"...","type":"Café","distance":"3 min gang","description":"1 linje","mapsUrl":"https://maps.google.com/?q=...+Copenhagen"}]`}])
+  .then(raw=>{
     const cafes=parseJSON(raw);
     document.getElementById('cafe-body').innerHTML=cafes.map(c=>`
       <div class="cafe-card">
         <div class="cafe-name">${c.name}<span class="cafe-type">${c.type||''}</span></div>
-        <div class="cafe-meta"><span class="cafe-dist">📍 ${c.distance||''}</span> — ${c.description||''}
+        <div class="cafe-meta"><span style="color:var(--accent);">📍 ${c.distance||''}</span> — ${c.description||''}
           ${c.mapsUrl?`<br><a href="${c.mapsUrl}" target="_blank" style="color:var(--accent2);font-size:0.67rem;text-decoration:none;">Google Maps →</a>`:''}
         </div>
       </div>`).join('');
-  }catch(err){document.getElementById('cafe-body').innerHTML=`<p style="color:var(--red);font-size:0.78rem;">${err.message}</p>`;}
+  }).catch(err=>{document.getElementById('cafe-body').innerHTML=`<p style="color:var(--red);font-size:0.78rem;">${err.message}</p>`;});
 }
+function closeCafeModal(){document.getElementById('cafe-modal').classList.remove('open');}
 
 // ── ICS EXPORT ──
 function downloadICS(){
@@ -921,7 +963,7 @@ function downloadICS(){
         `DESCRIPTION:${(s.description||'').replace(/\n/g,'\\n')}\\n\\nBillet: ${s.ticketUrl||'cphdox.dk'}`,
         'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY',`DESCRIPTION:Om 30 min: ${s.title}`,'END:VALARM','END:VEVENT');
       const next=day.screenings[i+1];
-      if(next&&s.venue!==next.venue&&s.walk_minutes_to_next){
+      if(next&&(s.venue||'')!==(next.venue||'')&&s.walk_minutes_to_next){
         const tw=te+parseInt(s.walk_minutes_to_next);
         lines.push('BEGIN:VEVENT',`UID:travel-${ds}-${i}@planner`,
           `DTSTART;TZID=Europe/Copenhagen:${dtE}`,
@@ -936,7 +978,7 @@ function downloadICS(){
   a.download='cphdox-2026.ics';a.click();
 }
 
-// ── SAVE ──
+// ── SAVE / ARCHIVE ──
 function openSaveModal(){if(!currentPlanData)return;document.getElementById('plan-name-input').value='';document.getElementById('save-modal').classList.add('open');setTimeout(()=>document.getElementById('plan-name-input').focus(),100);}
 function closeSaveModal(){document.getElementById('save-modal').classList.remove('open');}
 async function confirmSave(){
@@ -951,7 +993,6 @@ async function confirmSave(){
   setTimeout(()=>{btn.textContent='💾 Gem plan';btn.style.cssText='';},2200);
 }
 
-// ── ARCHIVE ──
 async function renderArchive(){
   document.getElementById('archive-list').style.display='block';
   document.getElementById('archive-view').style.display='none';
@@ -965,25 +1006,27 @@ async function renderArchive(){
     const card=document.createElement('div');card.className='archive-card';
     const days=plan.data.days||[];
     const films=days.flatMap(d=>(d.screenings||[]).map(s=>s.title));
+    const missed=(plan.data.missed_films||[]).length;
     const saved=new Date(plan.savedAt).toLocaleDateString('da-DK',{day:'numeric',month:'long',year:'numeric'});
     const pills=days.map(d=>`<span class="day-pill">${(d.date_label||d.date).split(' ').slice(0,2).join(' ')}</span>`).join('');
     card.innerHTML=`<button class="arc-del" onclick="delPlan(event,'${plan.id}')">Slet</button>
       <div class="arc-name">${plan.name}</div>
-      <div class="arc-meta">Gemt ${saved} · ${films.length} film over ${days.length} dage</div>
+      <div class="arc-meta">Gemt ${saved} · ${films.length} film i planen${missed?' · '+missed+' ikke passet ind':''}</div>
       <div class="arc-days">${pills}</div>`;
     card.addEventListener('click',e=>{if(e.target.classList.contains('arc-del'))return;openAV(plan);});
     container.appendChild(card);
   });
 }
+
 function openAV(plan){
   document.getElementById('archive-list').style.display='none';
   document.getElementById('archive-view').style.display='block';
   const days=plan.data.days||[];
   const films=days.flatMap(d=>(d.screenings||[]).map(s=>s.title));
   document.getElementById('av-title').textContent=plan.name;
-  document.getElementById('av-sub').textContent=`// ${films.length} film over ${days.length} dage`;
+  document.getElementById('av-sub').textContent=`// ${films.length} film i planen`;
   currentPlanData=plan.data;
-  renderPlan(plan.data,document.getElementById('av-cards'));
+  renderPlan(plan.data,document.getElementById('av-cards'),document.getElementById('av-missed'));
 }
 function closeArchiveView(){document.getElementById('archive-list').style.display='block';document.getElementById('archive-view').style.display='none';}
 async function delPlan(e,id){e.stopPropagation();if(!confirm('Slet denne plan?'))return;await sDel(id);renderArchive();}
