@@ -17,7 +17,6 @@
     background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(232,240,72,0.07) 0%,transparent 60%),
                radial-gradient(ellipse 60% 40% at 80% 100%,rgba(72,200,240,0.05) 0%,transparent 60%);}
 
-  /* NAV */
   nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.94);backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;height:56px;}
   .nav-brand{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);margin-right:32px;}
@@ -31,8 +30,7 @@
   .sdot{width:6px;height:6px;border-radius:50%;background:var(--muted);}
   .sdot.ok{background:var(--accent);}
 
-  /* PAGES */
-  .page{display:none;} .page.active{display:block;}
+  .page{display:none;}.page.active{display:block;}
   .container{max-width:900px;margin:0 auto;padding:40px 20px 100px;position:relative;z-index:1;}
   .page-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px;line-height:1.1;}
   .page-sub{font-size:0.75rem;color:var(--muted);letter-spacing:0.05em;margin-bottom:40px;}
@@ -41,20 +39,17 @@
   .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
   .section{margin-bottom:32px;}
 
-  /* INPUTS */
-  input[type="text"],input[type="password"],textarea{width:100%;background:var(--surface);
+  input[type="text"],input[type="password"]{width:100%;background:var(--surface);
     border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:0.85rem;
     padding:11px 14px;outline:none;transition:border-color 0.2s,background 0.2s;}
-  input:focus,textarea:focus{border-color:rgba(232,240,72,0.35);background:var(--surface2);}
+  input:focus{border-color:rgba(232,240,72,0.35);background:var(--surface2);}
   label{display:block;font-size:0.68rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:7px;}
 
-  /* DAY CARDS */
   .day-cards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
   @media(max-width:560px){.day-cards-grid{grid-template-columns:1fr;}}
   .day-select-card{background:var(--surface);border:1px solid var(--border);padding:24px 20px;
     transition:all 0.22s;position:relative;overflow:hidden;min-height:150px;
     display:flex;flex-direction:column;justify-content:space-between;}
-  .day-select-card:hover{border-color:rgba(232,240,72,0.3);background:var(--surface2);}
   .day-select-card.has-date{border-color:rgba(232,240,72,0.4);background:rgba(232,240,72,0.04);}
   .day-select-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity 0.22s;}
@@ -69,12 +64,10 @@
   .day-select-card.has-date .dcard-status{color:var(--green);}
   .dcard-input{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);
     font-family:'DM Mono',monospace;font-size:0.72rem;padding:7px 10px;outline:none;margin-top:8px;
-    cursor:pointer;transition:border-color 0.2s;color-scheme:dark;}
-  .dcard-input:focus{border-color:rgba(232,240,72,0.4);}
+    cursor:pointer;color-scheme:dark;}
 
-  /* PREF CHIPS */
   .pref-group{margin-bottom:22px;}
-  .pref-question{font-size:0.78rem;color:var(--text);margin-bottom:12px;line-height:1.5;}
+  .pref-question{font-size:0.78rem;color:var(--text);margin-bottom:12px;}
   .pref-chips{display:flex;gap:8px;flex-wrap:wrap;}
   .pref-chip{padding:9px 18px;background:var(--surface);border:1px solid var(--border);color:var(--muted);
     font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;
@@ -82,7 +75,6 @@
   .pref-chip:hover{border-color:rgba(232,240,72,0.3);color:var(--text);}
   .pref-chip.selected{background:rgba(232,240,72,0.08);border-color:rgba(232,240,72,0.5);color:var(--accent);}
 
-  /* STEPPER */
   .stepper{display:flex;margin-bottom:32px;border:1px solid var(--border);overflow:hidden;}
   .step-item{flex:1;padding:12px 10px;text-align:center;font-size:0.6rem;letter-spacing:0.12em;
     text-transform:uppercase;color:var(--muted);background:var(--surface);border-right:1px solid var(--border);transition:all 0.3s;}
@@ -91,7 +83,6 @@
   .step-item.done{color:var(--green);background:rgba(72,240,168,0.04);}
   .step-num{font-size:1rem;display:block;margin-bottom:3px;font-family:'DM Serif Display',serif;}
 
-  /* BUTTONS */
   .btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;
     background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.84rem;font-weight:600;
     letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.18s;margin-top:24px;}
@@ -110,30 +101,28 @@
     font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;text-decoration:none;}
   .btn-cyan:hover{background:rgba(72,200,240,0.16);}
 
-  /* LOADING */
   .loading-box{display:none;text-align:center;padding:48px 20px;border:1px solid var(--border);background:var(--surface);}
   .film-strip{display:flex;gap:4px;justify-content:center;margin-bottom:16px;}
   .film-frame{width:13px;height:19px;background:var(--surface2);border:1px solid var(--border);animation:filmroll 1.2s ease-in-out infinite;}
   .film-frame:nth-child(2){animation-delay:.1s}.film-frame:nth-child(3){animation-delay:.2s}
   .film-frame:nth-child(4){animation-delay:.3s}.film-frame:nth-child(5){animation-delay:.4s}
-  @keyframes filmroll{0%,100%{background:var(--surface2);border-color:var(--border)}50%{background:var(--accent);border-color:var(--accent)}}
+  @keyframes filmroll{0%,100%{background:var(--surface2)}50%{background:var(--accent)}}
   .loading-text{font-size:0.73rem;color:var(--muted);letter-spacing:0.1em;}
   .loading-sub{font-size:0.65rem;color:var(--muted);margin-top:8px;opacity:0.6;}
 
-  /* ERROR / NOTE */
   .error-box{border:1px solid rgba(240,72,72,0.3);background:rgba(240,72,72,0.07);padding:16px;
     color:var(--red);font-size:0.78rem;line-height:1.6;display:none;margin-bottom:16px;}
   .note-box{background:rgba(232,240,72,0.04);border:1px solid rgba(232,240,72,0.14);
     padding:14px 18px;font-size:0.73rem;color:var(--muted);line-height:1.7;}
   .note-box strong{color:var(--accent);}
+  .note-box a{color:var(--accent2);text-decoration:none;}
 
-  /* SWIPE SCREEN */
-  .swipe-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+  /* SWIPE */
+  .swipe-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
   .swipe-day-label{font-family:'DM Serif Display',serif;font-size:1.3rem;}
-  .swipe-progress-text{font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;}
+  .swipe-prog-text{font-size:0.68rem;color:var(--muted);}
   .swipe-bar{height:3px;background:var(--surface2);margin-bottom:28px;}
   .swipe-bar-fill{height:100%;background:var(--accent);transition:width 0.3s ease;}
-
   .swipe-arena{display:flex;flex-direction:column;align-items:center;min-height:420px;position:relative;}
 
   .film-swipe-card{width:100%;max-width:580px;background:var(--surface);border:1px solid var(--border);
@@ -155,18 +144,15 @@
   .sc-title-big{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:6px;line-height:1.2;}
   .sc-dur-sm{font-size:0.68rem;color:var(--muted);margin-bottom:14px;}
   .sc-desc-sm{font-size:0.77rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
-  .sc-footer{display:flex;justify-content:space-between;align-items:center;
-    padding-top:14px;border-top:1px solid var(--border);}
+  .sc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border);}
   .sc-times-all{font-size:0.65rem;color:var(--muted);line-height:1.7;}
   .sc-times-all span{color:var(--text);}
-
   .btn-trailer-link{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;
     background:rgba(72,200,240,0.08);border:1px solid rgba(72,200,240,0.22);color:var(--accent2);
     font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
     font-family:'DM Mono',monospace;transition:all 0.18s;}
   .btn-trailer-link:hover{background:rgba(72,200,240,0.16);}
 
-  /* SWIPE ACTION BUTTONS */
   .swipe-btns{display:flex;gap:20px;justify-content:center;margin-top:28px;}
   .btn-nope{width:66px;height:66px;border-radius:50%;border:2px solid rgba(240,72,72,0.4);
     background:rgba(240,72,72,0.08);color:var(--red);font-size:1.7rem;cursor:pointer;
@@ -178,26 +164,22 @@
   .btn-like:hover{background:rgba(72,240,168,0.2);border-color:var(--green);transform:scale(1.1);}
   .swipe-hint{font-size:0.63rem;color:var(--muted);text-align:center;margin-top:10px;letter-spacing:0.08em;}
 
-  /* DAY DONE */
   .day-done{text-align:center;padding:48px 20px;border:1px solid var(--border);background:var(--surface);}
   .day-done-emoji{font-size:3rem;margin-bottom:16px;}
   .day-done h2{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:6px;}
   .day-done-count{font-size:2.5rem;font-family:'DM Serif Display',serif;color:var(--accent);line-height:1;}
   .day-done p{font-size:0.78rem;color:var(--muted);margin-top:4px;margin-bottom:24px;line-height:1.7;}
 
-  /* STICKY BAR */
   .sel-bar{position:sticky;bottom:0;z-index:50;background:rgba(10,10,15,0.96);backdrop-filter:blur(12px);
     border-top:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;
-    justify-content:space-between;gap:12px;margin:0 -20px;flex-wrap:wrap;}
+    justify-content:space-between;gap:12px;margin:0 -20px;}
   .sel-count{font-size:0.75rem;color:var(--muted);}
   .sel-count strong{color:var(--accent);}
 
-  /* OUTPUT */
   #output{display:none;animation:fadeIn 0.4s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   .output-actions{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
 
-  /* PLAN CARDS */
   .day-card{background:var(--surface);border:1px solid var(--border);margin-bottom:20px;overflow:hidden;}
   .day-card-header{padding:14px 22px;background:var(--surface2);border-bottom:1px solid var(--border);
     display:flex;justify-content:space-between;align-items:center;}
@@ -223,7 +205,6 @@
     border:1px solid var(--border);color:var(--muted);padding:6px 13px;font-size:0.67rem;
     letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Mono',monospace;cursor:pointer;transition:all 0.18s;}
   .btn-cafe:hover{border-color:rgba(232,240,72,0.3);color:var(--accent);}
-
   .travel-badge{display:flex;align-items:center;gap:12px;padding:11px 22px;background:rgba(72,200,240,0.04);
     border-top:1px dashed rgba(72,200,240,0.18);border-bottom:1px dashed rgba(72,200,240,0.18);}
   .travel-info{font-size:0.72rem;color:var(--accent2);}
@@ -233,12 +214,10 @@
     transition:all 0.18s;flex-shrink:0;}
   .btn-maps:hover{background:rgba(72,200,240,0.18);}
 
-  /* MODALS */
   .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.78);
     align-items:center;justify-content:center;padding:20px;}
   .modal-overlay.open{display:flex;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
   .modal-box{background:var(--surface);border:1px solid rgba(232,240,72,0.2);
     max-width:480px;width:100%;max-height:85vh;overflow-y:auto;animation:fadeUp 0.25s ease;}
   .modal-head{padding:22px 26px 16px;border-bottom:1px solid var(--border);
@@ -248,23 +227,20 @@
   .modal-close{background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;padding:0 4px;line-height:1;}
   .modal-close:hover{color:var(--text);}
   .modal-body{padding:20px 26px 26px;}
-
   .cafe-card{background:var(--surface2);border:1px solid var(--border);padding:13px 16px;margin-bottom:10px;}
   .cafe-name{font-size:0.88rem;margin-bottom:3px;}
   .cafe-type{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-left:6px;}
   .cafe-meta{font-size:0.68rem;color:var(--muted);line-height:1.65;margin-top:3px;}
   .cafe-dist{color:var(--accent);}
-
   .save-box{background:var(--surface);border:1px solid rgba(232,240,72,0.2);padding:32px;max-width:420px;width:100%;animation:fadeUp 0.25s ease;}
   .save-box h2{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px;}
   .save-box p{font-size:0.75rem;color:var(--muted);margin-bottom:20px;}
   .modal-btns{display:flex;gap:10px;margin-top:20px;}
-  .btn-msave{flex:1;background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;padding:11px;cursor:pointer;border:none;font-weight:600;transition:background 0.18s;}
+  .btn-msave{flex:1;background:var(--accent);color:#0a0a0f;font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;padding:11px;cursor:pointer;border:none;font-weight:600;}
   .btn-msave:hover{background:#f0fa60;}
-  .btn-mcancel{padding:11px 18px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;}
+  .btn-mcancel{padding:11px 18px;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;}
   .btn-mcancel:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
 
-  /* ARCHIVE */
   .archive-empty{text-align:center;padding:60px 20px;border:1px solid var(--border);background:var(--surface);}
   .archive-empty p{font-size:0.8rem;color:var(--muted);line-height:1.7;}
   .archive-card{background:var(--surface);border:1px solid var(--border);padding:20px 22px;cursor:pointer;transition:all 0.18s;position:relative;margin-bottom:12px;}
@@ -278,7 +254,6 @@
   #archive-view{display:none;}
   .back-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 16px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;margin-bottom:28px;}
   .back-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
-
   ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border)}
 </style>
 </head>
@@ -296,11 +271,9 @@
   </div>
 </nav>
 
-<!-- PLANNER PAGE -->
 <div class="page active" id="page-planner">
 <div class="container">
 
-  <!-- SETUP -->
   <div id="screen-setup">
     <h1 class="page-title">Lav en festivalplan</h1>
     <p class="page-sub">// CPH:DOX 2026 · 11–22. marts · Swipe dig til din plan</p>
@@ -368,16 +341,13 @@
       </div>
     </div>
 
-    <div class="note-box" style="margin-bottom:16px;">
-      <strong>Sådan virker det:</strong> Gå ind på <a href="https://cphdox.dk/program" target="_blank" style="color:var(--accent);">cphdox.dk/program</a>, vælg en dag, tryk <strong>Cmd+A</strong> → <strong>Cmd+C</strong> og sæt teksten ind herunder. Claude finder selv filmene i teksten.
+    <div class="note-box">
+      <strong>Fuldt automatisk:</strong> Programmet hentes direkte fra <a href="https://cphdox.dk/schedule" target="_blank">cphdox.dk/schedule</a> — ingen copy-paste, ingen rate limits. Claude bruges kun til den endelige planlægning.
     </div>
 
-    <div id="paste-days-container"></div>
-
-    <button class="btn-primary" onclick="startPlanner()">▶ Start — analyser program</button>
+    <button class="btn-primary" onclick="startPlanner()">▶ Start — hent program og swipe</button>
   </div>
 
-  <!-- SWIPE SCREEN -->
   <div id="screen-swipe" style="display:none;">
     <div class="stepper" id="stepper"></div>
     <div class="error-box" id="error-fetch"></div>
@@ -387,31 +357,28 @@
         <div class="film-frame"></div><div class="film-frame"></div>
         <div class="film-frame"></div>
       </div>
-      <div class="loading-text" id="loading-text">Henter filmprogram...</div>
-      <div class="loading-sub">Søger i CPH:DOX programmet</div>
+      <div class="loading-text" id="loading-text">Henter program...</div>
+      <div class="loading-sub" id="loading-sub">Henter direkte fra cphdox.dk</div>
     </div>
-
     <div id="swipe-content" style="display:none;">
       <div class="swipe-header">
         <div class="swipe-day-label" id="swipe-day-label"></div>
-        <div class="swipe-progress-text" id="swipe-prog-text"></div>
+        <div class="swipe-prog-text" id="swipe-prog-text"></div>
       </div>
       <div class="swipe-bar"><div class="swipe-bar-fill" id="swipe-bar-fill"></div></div>
       <div class="swipe-arena" id="swipe-arena"></div>
       <div class="swipe-btns">
-        <button class="btn-nope" onclick="swipe(false)" title="Spring over (← pil)">✕</button>
-        <button class="btn-like" onclick="swipe(true)" title="Vil se (→ pil)">✓</button>
+        <button class="btn-nope" onclick="swipe(false)" title="Spring over (←)">✕</button>
+        <button class="btn-like" onclick="swipe(true)" title="Vil se (→)">✓</button>
       </div>
       <div class="swipe-hint">← Spring over &nbsp;·&nbsp; Vil se → &nbsp;·&nbsp; Piletaster virker</div>
     </div>
-
     <div class="sel-bar">
       <div class="sel-count" id="sel-count">Ingen film valgt endnu</div>
       <button class="btn-secondary" onclick="goBackSetup()">← Tilbage</button>
     </div>
   </div>
 
-  <!-- LOADING PLAN -->
   <div class="loading-box" id="loading-plan" style="margin-top:40px;">
     <div class="film-strip">
       <div class="film-frame"></div><div class="film-frame"></div>
@@ -419,11 +386,10 @@
       <div class="film-frame"></div>
     </div>
     <div class="loading-text" id="loading-plan-text">Sammensætter din festivalplan...</div>
-    <div class="loading-sub">Analyserer alle valgte film på tværs af dagene</div>
+    <div class="loading-sub">Claude optimerer din plan på tværs af dagene</div>
   </div>
   <div class="error-box" id="error-plan" style="margin-top:20px;"></div>
 
-  <!-- OUTPUT -->
   <div id="output">
     <div class="output-actions">
       <button class="btn-secondary" onclick="restartPlanner()">← Ny plan</button>
@@ -436,7 +402,6 @@
 </div>
 </div>
 
-<!-- ARCHIVE PAGE -->
 <div class="page" id="page-archive">
 <div class="container">
   <div id="archive-list">
@@ -456,21 +421,16 @@
 </div>
 </div>
 
-<!-- CAFE MODAL -->
 <div class="modal-overlay" id="cafe-modal">
   <div class="modal-box">
     <div class="modal-head">
-      <div>
-        <h2>Cafeer i nærheden</h2>
-        <div class="modal-head-sub" id="cafe-modal-sub"></div>
-      </div>
+      <div><h2>Cafeer i nærheden</h2><div class="modal-head-sub" id="cafe-modal-sub"></div></div>
       <button class="modal-close" onclick="closeCafeModal()">×</button>
     </div>
     <div class="modal-body" id="cafe-body"></div>
   </div>
 </div>
 
-<!-- SAVE MODAL -->
 <div class="modal-overlay" id="save-modal">
   <div class="save-box">
     <h2>Gem plan</h2>
@@ -485,41 +445,33 @@
 </div>
 
 <script>
-// ══ STATE ══
+// ── STATE ──
 let dates=[], dayIdx=0, filmIdx=0;
 let fetchedDays={}, selectedFilms={};
-let pastedPrograms={};
 let currentPlanData=null;
 let prefs={pauses:'',count:'',start:''};
 
-// ══ STORAGE ══
+// ── STORAGE ──
 async function sSet(k,v){if(window.storage){try{await window.storage.set(k,JSON.stringify(v));return;}catch{}}localStorage.setItem(k,JSON.stringify(v));}
 async function sGet(k){if(window.storage){try{const r=await window.storage.get(k);return r?JSON.parse(r.value):null;}catch{return null;}}try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 async function sDel(k){if(window.storage){try{await window.storage.delete(k);}catch{}}else localStorage.removeItem(k);}
 async function sList(p){if(window.storage){try{const r=await window.storage.list(p);return r?r.keys:[];}catch{return[];}}const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(p))ks.push(k);}return ks;}
 
-// ══ INIT ══
+// ── INIT ──
 window.addEventListener('DOMContentLoaded',()=>{
   const ok=!!window.storage;
   document.getElementById('sdot').className='sdot'+(ok?' ok':'');
   document.getElementById('slabel').textContent=ok?'Cloud-lagring':'Lokal lagring';
 });
-
-// Keyboard swipe
 document.addEventListener('keydown',e=>{
   if(document.getElementById('screen-swipe').style.display==='none')return;
   if(document.getElementById('swipe-content').style.display==='none')return;
   if(e.key==='ArrowRight')swipe(true);
   if(e.key==='ArrowLeft')swipe(false);
-});
-
-// Modal keyboard
-document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){closeSaveModal();closeCafeModal();}
-  if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();
 });
 
-// ══ NAV ══
+// ── NAV ──
 function showPage(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
@@ -528,98 +480,13 @@ function showPage(n){
   if(n==='archive')renderArchive();
 }
 
-// ══ HELPERS ══
+// ── HELPERS ──
 function toggleKey(){const i=document.getElementById('api-key'),b=document.getElementById('toggle-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Vis':'Skjul';}
 function getKey(){return document.getElementById('api-key').value.trim();}
 function getDates(){return['date1','date2','date3'].map(id=>document.getElementById(id).value).filter(Boolean);}
 function fmtDate(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});}
 function fmtShort(s){if(!s)return'';return new Date(s).toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'});}
 
-// onDateChange defined above in buildPasteUI block
-
-function pickChip(gid,el){
-  document.querySelectorAll('#'+gid+' .pref-chip').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  if(gid==='pg-pauses')prefs.pauses=el.dataset.val;
-  if(gid==='pg-count')prefs.count=el.dataset.val;
-  if(gid==='pg-start')prefs.start=el.dataset.val;
-}
-
-function prefsText(){
-  const p=[];
-  if(prefs.pauses==='relaxed')p.push('Vil have god tid til mad og kaffe — mindst 60 min pause mellem film');
-  if(prefs.pauses==='packed')p.push('Vil se så mange film som muligt — minimal pause (30 min buffer)');
-  if(prefs.count==='1-2')p.push('Max 1-2 film om dagen');
-  if(prefs.count==='3-4')p.push('Gerne 3-4 film om dagen');
-  if(prefs.count==='max')p.push('Så mange film som muligt om dagen');
-  if(prefs.start==='morning')p.push('Starter gerne fra kl. 10');
-  if(prefs.start==='midday')p.push('Foretrækker at starte fra kl. 12');
-  if(prefs.start==='afternoon')p.push('Foretrækker at starte fra kl. 15');
-  return p.join('. ')||'Ingen særlige præferencer';
-}
-
-async function callAI(prompt,search=true){
-  const body={model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]};
-  if(search)body.tools=[{type:'web_search_20250305',name:'web_search'}];
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify(body)});
-  const d=await res.json();
-  if(d.error)throw new Error(d.error.message);
-  return(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-}
-
-function parseJSON(t){
-  // Try to extract JSON array or object from response
-  let c=t.replace(/```json|```/g,'').trim();
-  // Try direct parse first
-  try{ return JSON.parse(c); }catch{}
-  // Try to find array
-  const arrMatch=c.match(/\[[\s\S]*\]/);
-  if(arrMatch){try{return JSON.parse(arrMatch[0]);}catch{}}
-  // Try to find object
-  const objMatch=c.match(/\{[\s\S]*\}/);
-  if(objMatch){try{return JSON.parse(objMatch[0]);}catch{}}
-  // Show raw for debugging
-  const preview=t.length>200?t.substring(0,200)+'...':t;
-  throw new Error('Ingen JSON i svaret. Svar begyndte med: '+preview);
-}
-
-// ══ STEPPER ══
-function buildStepper(){
-  const el=document.getElementById('stepper');
-  el.innerHTML='';
-  dates.forEach((d,i)=>{
-    const div=document.createElement('div');
-    div.className='step-item'+(i<dayIdx?' done':i===dayIdx?' active':'');
-    const sel=(selectedFilms[d]||[]).length;
-    div.innerHTML=`<span class="step-num">${i<dayIdx?'✓':i+1}</span>${i<dayIdx?(sel+' valgt'):fmtShort(d)}`;
-    el.appendChild(div);
-  });
-  const plan=document.createElement('div');
-  plan.className='step-item'+(dayIdx>=dates.length?' active':'');
-  plan.innerHTML=`<span class="step-num">${dayIdx>=dates.length?'→':dates.length+1}</span>Plan`;
-  el.appendChild(plan);
-}
-
-// ══ START ══
-function buildPasteUI(){
-  const dates=getDates();
-  const container=document.getElementById('paste-days-container');
-  if(!dates.length){container.innerHTML='';return;}
-  container.innerHTML=dates.map((d,i)=>{
-    const label=fmtDate(d);
-    return `<div style="margin-bottom:16px;">
-      <label style="color:var(--accent);margin-bottom:8px;display:block;">Dag ${i+1} — ${label}</label>
-      <div style="font-size:0.68rem;color:var(--muted);margin-bottom:6px;line-height:1.6;">
-        Gå til <a href="https://cphdox.dk/program/${d}" target="_blank" style="color:var(--accent2);text-decoration:none;">cphdox.dk/program/${d}</a> → Cmd+A → Cmd+C → sæt ind herunder
-      </div>
-      <textarea id="paste-${d}" placeholder="Sæt programtekst ind her..." style="min-height:100px;font-size:0.72rem;" oninput="pastedPrograms['${d}']=this.value"></textarea>
-    </div>`;
-  }).join('');
-}
-
-// Call buildPasteUI when dates change
 function onDateChange(idx){
   const ids=['date1','date2','date3'];
   const v=document.getElementById(ids[idx]).value;
@@ -637,16 +504,197 @@ function onDateChange(idx){
     document.getElementById('dcard-status-'+idx).textContent='○ Ikke valgt';
     card.classList.remove('has-date');
   }
-  buildPasteUI();
 }
 
+function pickChip(gid,el){
+  document.querySelectorAll('#'+gid+' .pref-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  if(gid==='pg-pauses')prefs.pauses=el.dataset.val;
+  if(gid==='pg-count')prefs.count=el.dataset.val;
+  if(gid==='pg-start')prefs.start=el.dataset.val;
+}
+
+function prefsText(){
+  const p=[];
+  if(prefs.pauses==='relaxed')p.push('Vil have pauser til mad og kaffe — mindst 60 min buffer');
+  if(prefs.pauses==='packed')p.push('Vil se så mange film som muligt — minimal pause (30 min buffer)');
+  if(prefs.count==='1-2')p.push('Max 1-2 film om dagen');
+  if(prefs.count==='3-4')p.push('Gerne 3-4 film om dagen');
+  if(prefs.count==='max')p.push('Så mange film som muligt');
+  if(prefs.start==='morning')p.push('Starter gerne fra kl. 10');
+  if(prefs.start==='midday')p.push('Foretrækker at starte fra kl. 12');
+  if(prefs.start==='afternoon')p.push('Foretrækker at starte fra kl. 15');
+  return p.join('. ')||'Ingen særlige præferencer';
+}
+
+// ── FETCH SCHEDULE FROM CPHDOX.DK (no Claude, no API key) ──
+async function fetchSchedule(date) {
+  // date format: "2026-03-14" → URL date: "20260314"
+  const urlDate = date.replace(/-/g,'');
+  const url = `https://cphdox.dk/schedule/?date=${urlDate}`;
+
+  const res = await fetch(url, {
+    headers: { 'Accept': 'text/html' }
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const html = await res.text();
+
+  // Parse HTML with DOMParser
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+
+  const films = [];
+  const seen = new Set();
+
+  // Each film is in an <article> or a section with an <h3> title + time info
+  // Structure from the fetched HTML:
+  // <h3 class="...">TIME</h3>
+  // then film blocks with <h3><a href="/film/slug">Title</a></h3>
+  // + <em>director / country / year / duration</em>
+  // + <p>description</p>
+  // + venue info
+
+  // Find all film links — each film has a link to /film/slug
+  const filmLinks = doc.querySelectorAll('a[href*="/film/"]');
+
+  filmLinks.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    if (!href.includes('/film/')) return;
+
+    // Get the parent container (article or section or div)
+    const container = link.closest('article') || link.closest('.film-item') || link.parentElement?.closest('div');
+    if (!container) return;
+
+    const title = link.textContent.trim();
+    if (!title || title.length < 2) return;
+    if (seen.has(title)) return;
+
+    // Find time — look for preceding h3 with time pattern or time element
+    let time = '';
+    let venue = '';
+    let duration = '';
+    let description = '';
+
+    // Get all text around the container
+    const containerText = container.innerText || container.textContent || '';
+
+    // Time pattern HH:MM
+    const timeMatch = containerText.match(/\b(\d{1,2}:\d{2})\b/);
+    if (timeMatch) time = timeMatch[1];
+
+    // Duration pattern "XX min"
+    const durMatch = containerText.match(/(\d+)\s*min/);
+    if (durMatch) duration = durMatch[1] + ' min';
+
+    // Find venue link (cphdox.dk/venue/...)
+    const venueLink = container.querySelector('a[href*="/venue/"]');
+    if (venueLink) venue = venueLink.textContent.trim();
+
+    // Find description paragraph
+    const descP = container.querySelector('p');
+    if (descP) description = descP.textContent.trim();
+
+    // Get film URL for ticket link
+    const filmUrl = href.startsWith('http') ? href : 'https://cphdox.dk' + href;
+
+    if (title && time) {
+      seen.add(title);
+      films.push({ title, screenings: [{ time, venue, duration }], description, trailerUrl: null, ticketUrl: filmUrl, date });
+    }
+  });
+
+  // If the above didn't work well, try a broader approach
+  if (films.length < 3) {
+    films.length = 0;
+    seen.clear();
+
+    // Find time headers (h3 containing just a time) and collect films after each
+    const allH3 = Array.from(doc.querySelectorAll('h3'));
+    let currentTime = '';
+
+    allH3.forEach(h3 => {
+      const text = h3.textContent.trim();
+      // Is this a time header?
+      if (/^\d{1,2}:\d{2}$/.test(text)) {
+        currentTime = text;
+        return;
+      }
+      // Is this a film title (has an <a href="/film/...">)?
+      const a = h3.querySelector('a[href*="/film/"]');
+      if (!a) return;
+
+      const title = a.textContent.trim();
+      if (!title || seen.has(title)) return;
+
+      const container = h3.closest('article') || h3.parentElement;
+      const containerText = container ? (container.innerText || container.textContent) : '';
+
+      let venue = '';
+      let duration = '';
+      let description = '';
+
+      const durMatch = containerText.match(/(\d+)\s*min/);
+      if (durMatch) duration = durMatch[1] + ' min';
+
+      const venueEl = container ? container.querySelector('a[href*="/venue/"]') : null;
+      if (venueEl) venue = venueEl.textContent.trim();
+
+      const descEl = container ? container.querySelector('p') : null;
+      if (descEl) description = descEl.textContent.trim();
+
+      const href = a.getAttribute('href');
+      const filmUrl = href && href.startsWith('http') ? href : 'https://cphdox.dk' + (href||'');
+
+      seen.add(title);
+      films.push({ title, screenings: [{ time: currentTime, venue, duration }], description, trailerUrl: null, ticketUrl: filmUrl, date });
+    });
+  }
+
+  if (films.length === 0) throw new Error('Ingen film fundet — siden loadede muligvis ikke korrekt');
+  return films;
+}
+
+// ── CLAUDE API (only for planning) ──
+async function callAI(prompt){
+  const body={model:'claude-sonnet-4-20250514',max_tokens:3000,messages:[{role:'user',content:prompt}]};
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify(body)});
+  const d=await res.json();
+  if(d.error)throw new Error(d.error.message);
+  return(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+}
+
+function parseJSON(t){
+  let c=t.replace(/```json|```/g,'').trim();
+  try{return JSON.parse(c);}catch{}
+  const m=c.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+  if(m){try{return JSON.parse(m[0]);}catch{}}
+  throw new Error('Kunne ikke parse plan. Prøv igen.');
+}
+
+// ── STEPPER ──
+function buildStepper(){
+  const el=document.getElementById('stepper');
+  el.innerHTML='';
+  dates.forEach((d,i)=>{
+    const div=document.createElement('div');
+    div.className='step-item'+(i<dayIdx?' done':i===dayIdx?' active':'');
+    const sel=(selectedFilms[d]||[]).length;
+    div.innerHTML=`<span class="step-num">${i<dayIdx?'✓':i+1}</span>${i<dayIdx?(sel+' valgt'):fmtShort(d)}`;
+    el.appendChild(div);
+  });
+  const plan=document.createElement('div');
+  plan.className='step-item'+(dayIdx>=dates.length?' active':'');
+  plan.innerHTML=`<span class="step-num">${dayIdx>=dates.length?'→':dates.length+1}</span>Plan`;
+  el.appendChild(plan);
+}
+
+// ── START ──
 function startPlanner(){
   if(!getKey()){alert('Indtast din API-nøgle.');return;}
   dates=getDates();
   if(!dates.length){alert('Vælg mindst én festivaldato.');return;}
-  // Check at alle dage har tekst
-  const missing=dates.filter(d=>!pastedPrograms[d]||pastedPrograms[d].trim().length<50);
-  if(missing.length){alert('Sæt programtekst ind for alle valgte dage.');return;}
   dayIdx=0; filmIdx=0; fetchedDays={}; selectedFilms={};
   dates.forEach(d=>{selectedFilms[d]=[];});
   document.getElementById('screen-setup').style.display='none';
@@ -656,19 +704,10 @@ function startPlanner(){
   buildStepper();
   loadDay();
 }
+function goBackSetup(){document.getElementById('screen-swipe').style.display='none';document.getElementById('screen-setup').style.display='block';}
+function restartPlanner(){document.getElementById('output').style.display='none';document.getElementById('screen-setup').style.display='block';currentPlanData=null;}
 
-function goBackSetup(){
-  document.getElementById('screen-swipe').style.display='none';
-  document.getElementById('screen-setup').style.display='block';
-}
-
-function restartPlanner(){
-  document.getElementById('output').style.display='none';
-  document.getElementById('screen-setup').style.display='block';
-  currentPlanData=null;
-}
-
-// ══ LOAD DAY (parse from pasted text) ══
+// ── LOAD DAY (direct fetch, no Claude) ──
 async function loadDay(){
   const date=dates[dayIdx];
   filmIdx=0;
@@ -678,21 +717,11 @@ async function loadDay(){
   document.getElementById('loading-fetch').style.display='block';
   document.getElementById('swipe-content').style.display='none';
   document.getElementById('error-fetch').style.display='none';
-  document.getElementById('loading-text').textContent=`Analyserer program for ${fmtDate(date)}...`;
-
-  const pastedText=pastedPrograms[date]||'';
-
-  const prompt=`Udtræk CPH:DOX film fra denne tekst. Returner KUN et JSON array, ingen markdown, ingen forklaring.
-
-Format: [{"title":"...","screenings":[{"time":"14:00","venue":"...","duration":"85 min"}],"description":"1-2 sætninger dansk","trailerUrl":null}]
-
-Tekst:
-${pastedText.substring(0,6000)}`;
+  document.getElementById('loading-text').textContent=`Henter program for ${fmtDate(date)}...`;
+  document.getElementById('loading-sub').textContent='Direkte fra cphdox.dk — ingen AI brugt';
 
   try{
-    const raw=await callAI(prompt, false);
-    const films=parseJSON(raw);
-    if(!Array.isArray(films))throw new Error('Uventet format');
+    const films = await fetchSchedule(date);
     fetchedDays[date]=films;
     document.getElementById('loading-fetch').style.display='none';
     showSwipe(date);
@@ -704,7 +733,7 @@ ${pastedText.substring(0,6000)}`;
   }
 }
 
-// ══ SWIPE ══
+// ── SWIPE ──
 function showSwipe(date){
   document.getElementById('swipe-content').style.display='block';
   document.getElementById('swipe-day-label').textContent=fmtDate(date);
@@ -718,12 +747,10 @@ function renderCard(){
   const arena=document.getElementById('swipe-arena');
   const total=films.length;
 
-  // progress bar
   document.getElementById('swipe-prog-text').textContent=`Film ${Math.min(filmIdx+1,total)} af ${total}`;
   document.getElementById('swipe-bar-fill').style.width=(total>0?Math.round((filmIdx/total)*100):0)+'%';
 
   if(filmIdx>=films.length){
-    // Day done screen
     const sel=(selectedFilms[date]||[]).length;
     const isLast=dayIdx>=dates.length-1;
     arena.innerHTML=`
@@ -731,31 +758,30 @@ function renderCard(){
         <div class="day-done-emoji">🎬</div>
         <h2>${fmtDate(date)}</h2>
         <div class="day-done-count">${sel}</div>
-        <p>${sel===1?'film valgt til din plan.':sel===0?'Du valgte ingen film denne dag.':'film valgt til din plan.'}</p>
+        <p>${sel===0?'Du valgte ingen film denne dag.':'film valgt til din plan.'}</p>
         <button class="btn-primary" style="margin-top:0;max-width:300px;margin:0 auto;" onclick="${isLast?'generatePlan()':'nextDay()'}">${isLast?'▶ Lav min festivalplan':'Næste dag →'}</button>
       </div>`;
     return;
   }
 
   const f=films[filmIdx];
-  const times=(f.screenings||[]).map(s=>`${s.time} · ${s.venue}${s.duration?' ('+s.duration+')':''}`).join('<br>');
-  const venues=[...new Set((f.screenings||[]).map(s=>s.venue))].join(', ');
-  const trailer=f.trailerUrl?`<a href="${f.trailerUrl}" target="_blank" class="btn-trailer-link" onclick="event.stopPropagation()">▶ Trailer</a>`:'';
+  const s=f.screenings?.[0]||{};
+  const times=(f.screenings||[]).map(sc=>`${sc.time}${sc.venue?' · '+sc.venue:''}${sc.duration?' ('+sc.duration+')':''}`).join('<br>');
 
   arena.innerHTML=`
     <div class="film-swipe-card" id="swipe-card">
       <div class="swipe-lbl-yes" id="lbl-yes">SER DEN ✓</div>
       <div class="swipe-lbl-no" id="lbl-no">✕ SKIP</div>
       <div class="sc-header">
-        <div class="sc-time-big">${f.screenings?.[0]?.time||'?'}</div>
-        <div class="sc-venue-right">${venues}</div>
+        <div class="sc-time-big">${s.time||'?'}</div>
+        <div class="sc-venue-right">${s.venue||''}</div>
       </div>
       <div class="sc-title-big">${f.title}</div>
-      <div class="sc-dur-sm">${(f.screenings||[]).map(s=>s.duration).filter(Boolean)[0]||''}</div>
+      <div class="sc-dur-sm">${s.duration||''}</div>
       <div class="sc-desc-sm">${f.description||''}</div>
       <div class="sc-footer">
-        <div class="sc-times-all">Alle tidspunkter:<br><span>${times}</span></div>
-        ${trailer}
+        <div class="sc-times-all">Visning:<br><span>${times||'?'}</span></div>
+        ${f.ticketUrl?`<a href="${f.ticketUrl}" target="_blank" class="btn-trailer-link" onclick="event.stopPropagation()">🎟 Billet</a>`:''}
       </div>
     </div>`;
 }
@@ -764,81 +790,66 @@ function swipe(liked){
   const date=dates[dayIdx];
   const films=fetchedDays[date]||[];
   if(filmIdx>=films.length)return;
-
   const card=document.getElementById('swipe-card');
   if(!card)return;
-
   if(liked){
     document.getElementById('lbl-yes').style.opacity='1';
     card.classList.add('go-right');
     selectedFilms[date].push({...films[filmIdx],date});
-  } else {
+  }else{
     document.getElementById('lbl-no').style.opacity='1';
     card.classList.add('go-left');
   }
-
   filmIdx++;
   updateSelCount();
-  setTimeout(()=>renderCard(), 330);
+  setTimeout(()=>renderCard(),330);
 }
 
-function nextDay(){
-  dayIdx++;
-  loadDay();
-  document.getElementById('screen-swipe').scrollIntoView({behavior:'smooth'});
-}
-
+function nextDay(){dayIdx++;loadDay();document.getElementById('screen-swipe').scrollIntoView({behavior:'smooth'});}
 function updateSelCount(){
   const total=Object.values(selectedFilms).reduce((s,a)=>s+a.length,0);
   document.getElementById('sel-count').innerHTML=total===0?'Ingen film valgt endnu':`<strong>${total}</strong> film valgt i alt`;
 }
 
-// ══ GENERATE PLAN ══
+// ── GENERATE PLAN (only Claude call in the whole flow) ──
 async function generatePlan(){
   const all=Object.values(selectedFilms).flat();
-  if(!all.length){alert('Du valgte ingen film. Gå tilbage og vælg mindst én.');return;}
+  if(!all.length){alert('Du valgte ingen film.');return;}
 
   document.getElementById('screen-swipe').style.display='none';
   document.getElementById('loading-plan').style.display='block';
   document.getElementById('error-plan').style.display='none';
   document.getElementById('output').style.display='none';
 
-  const msgs=['Analyserer alle valgte film...','Finder optimal fordeling...','Beregner gangtider...','Færdiggør din plan...'];
+  const msgs=['Analyserer dine valg...','Finder optimal fordeling...','Beregner gangtider...','Næsten klar...'];
   let mi=0;
   const lt=setInterval(()=>{document.getElementById('loading-plan-text').textContent=msgs[++mi%msgs.length];},2500);
 
-  // Group by title with all screenings
   const byTitle={};
   all.forEach(f=>{
-    if(!byTitle[f.title])byTitle[f.title]={title:f.title,description:f.description,trailerUrl:f.trailerUrl,screenings:[]};
-    (f.screenings||[]).forEach(s=>byTitle[f.title].screenings.push({date:f.date,dateLabel:fmtDate(f.date),time:s.time,venue:s.venue,duration:s.duration}));
+    if(!byTitle[f.title])byTitle[f.title]={title:f.title,description:f.description,trailerUrl:f.trailerUrl,ticketUrl:f.ticketUrl,screenings:[]};
+    (f.screenings||[]).forEach(s=>byTitle[f.title].screenings.push({date:f.date,dateLabel:fmtDate(f.date),...s}));
   });
 
-  const filmList=Object.values(byTitle).map(f=>{
-    const sc=f.screenings.map(s=>`  ${s.dateLabel} ${s.time} @ ${s.venue}${s.duration?' ('+s.duration+')':''}`).join('\n');
-    return `${f.title}:\n${sc}`;
-  }).join('\n\n');
+  const filmList=Object.values(byTitle).map(f=>
+    `${f.title}: ${f.screenings.map(s=>`${s.dateLabel} ${s.time} @ ${s.venue} (${s.duration})`).join(', ')}`
+  ).join('\n');
 
   try{
-    const raw=await callAI(`CPH:DOX 2026 festivalplanlægger. Lav OPTIMAL plan på tværs af alle dage.
+    const raw=await callAI(`Lav en optimal CPH:DOX festivalplan. Svar KUN med JSON.
 
 Festivaldage: ${dates.map(d=>fmtDate(d)+' ('+d+')').join(', ')}
 Præferencer: ${prefsText()}
 
-Film med ALLE mulige visninger:
+Valgte film:
 ${filmList}
 
-Regler:
-- Fordel film klogt — vælg bedste dag hvis film vises flere dage
-- Respektér præferencerne om pauser og antal film
-- Undgå overlap — buffer ift. præferencer
-- Balancer dagene
-- Beregn km og min til fods mellem biografer (brug kendte Kbh-afstande)
+Regler: Undgå overlap, mindst 30 min buffer, balancer dagene, beregn gangtider i København.
 
-JSON kun:
-{"days":[{"date":"YYYY-MM-DD","date_label":"Mandag 11. marts","screenings":[{"time":"13:00","title":"...","venue":"...","duration":"90 min","description":"...","trailerUrl":"...eller null","ticketUrl":"https://cphdox.dk/program/?s=TITEL","distance_to_next":1.2,"walk_minutes_to_next":15}]}],"notes":"Forklar fordelingen"}
+JSON:
+{"days":[{"date":"YYYY-MM-DD","date_label":"Mandag 11. marts","screenings":[{"time":"13:00","title":"...","venue":"...","duration":"90 min","description":"...","trailerUrl":null,"ticketUrl":"https://cphdox.dk/film/slug","distance_to_next":1.2,"walk_minutes_to_next":15}]}],"notes":"..."}
 
-Filmdata: ${JSON.stringify(Object.values(byTitle))}`,false);
+Filmdata: ${JSON.stringify(Object.values(byTitle))}`);
 
     const plan=parseJSON(raw);
     clearInterval(lt);
@@ -850,17 +861,15 @@ Filmdata: ${JSON.stringify(Object.values(byTitle))}`,false);
     clearInterval(lt);
     document.getElementById('loading-plan').style.display='none';
     document.getElementById('screen-swipe').style.display='block';
-    const eb=document.getElementById('error-plan');
-    eb.style.display='block';
-    eb.textContent='⚠ Fejl: '+err.message;
+    document.getElementById('error-plan').style.display='block';
+    document.getElementById('error-plan').textContent='⚠ '+err.message;
   }
 }
 
-// ══ RENDER PLAN ══
+// ── RENDER PLAN ──
 function renderPlan(data,container){
   container.innerHTML='';
-  if(!data.days?.length){container.innerHTML='<p style="color:var(--muted);font-size:0.8rem;">Ingen plan.</p>';return;}
-
+  if(!data.days?.length){container.innerHTML='<p style="color:var(--muted);">Ingen plan.</p>';return;}
   data.days.forEach(day=>{
     const card=document.createElement('div');
     card.className='day-card';
@@ -868,53 +877,50 @@ function renderPlan(data,container){
     hdr.className='day-card-header';
     hdr.innerHTML=`<span class="day-card-title">${day.date_label||day.date}</span><span class="day-card-date">${day.date}</span>`;
     card.appendChild(hdr);
-
     (day.screenings||[]).forEach((s,i)=>{
       const sc=document.createElement('div');
       sc.className='screening';
-      const tickUrl=s.ticketUrl||`https://cphdox.dk/program/?s=${encodeURIComponent(s.title)}`;
+      const tickUrl=s.ticketUrl||`https://cphdox.dk/film/${s.title.toLowerCase().replace(/\s+/g,'-')}`;
       const trailer=s.trailerUrl?`<a href="${s.trailerUrl}" target="_blank" class="btn-trailer-sm">▶ Trailer</a>`:'';
-      const venueEsc=s.venue.replace(/'/g,"\\'");
+      const venueEsc=(s.venue||'').replace(/'/g,"\\'");
       sc.innerHTML=`
         <div class="sc-time">${s.time}</div>
         <div class="sc-title">${s.title}</div>
-        <div class="sc-venue">📍 ${s.venue}</div>
+        <div class="sc-venue">📍 ${s.venue||''}</div>
         ${s.duration?`<div class="sc-dur">${s.duration}</div>`:''}
         ${s.description?`<div class="sc-desc">${s.description}</div>`:''}
         <div class="sc-btns">
           <a href="${tickUrl}" target="_blank" class="btn-ticket">🎟 Køb billet</a>
           ${trailer}
-          <button class="btn-cafe" onclick="openCafeModal('${venueEsc}')">☕ Cafeer i nærheden</button>
+          <button class="btn-cafe" onclick="openCafeModal('${venueEsc}')">☕ Cafeer</button>
         </div>`;
       card.appendChild(sc);
-
       const next=day.screenings[i+1];
       if(next){
         const t=document.createElement('div');
         t.className='travel-badge';
-        if(s.venue!==next.venue){
-          const fr=encodeURIComponent(s.venue+', Copenhagen');
-          const to=encodeURIComponent(next.venue+', Copenhagen');
+        if((s.venue||'')!==(next.venue||'')){
+          const fr=encodeURIComponent((s.venue||'')+', Copenhagen');
+          const to=encodeURIComponent((next.venue||'')+', Copenhagen');
           t.innerHTML=`<div class="travel-info">🚶 ${s.distance_to_next||'?'} km · ca. ${s.walk_minutes_to_next||'?'} min → ${next.venue}</div>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=${fr}&destination=${to}&travelmode=walking" target="_blank" class="btn-maps">Åbn Maps →</a>`;
-        } else {
-          t.innerHTML=`<div class="travel-info">📍 Bliv i ${s.venue}</div>`;
+            <a href="https://www.google.com/maps/dir/?api=1&origin=${fr}&destination=${to}&travelmode=walking" target="_blank" class="btn-maps">Maps →</a>`;
+        }else{
+          t.innerHTML=`<div class="travel-info">📍 Bliv i ${s.venue||''}</div>`;
         }
         card.appendChild(t);
       }
     });
     container.appendChild(card);
   });
-
   if(data.notes){
     const nb=document.createElement('div');
-    nb.className='note-box'; nb.style.marginTop='20px';
+    nb.className='note-box';nb.style.marginTop='20px';
     nb.innerHTML=`<strong>Planens logik:</strong> ${data.notes}`;
     container.appendChild(nb);
   }
 }
 
-// ══ CAFE MODAL ══
+// ── CAFE MODAL ──
 function openCafeModal(venue){
   document.getElementById('cafe-modal-sub').textContent='Tæt på '+venue;
   document.getElementById('cafe-body').innerHTML='<div style="text-align:center;padding:32px;font-size:0.75rem;color:var(--muted);">⏳ Finder cafeer...</div>';
@@ -922,131 +928,101 @@ function openCafeModal(venue){
   fetchCafes(venue);
 }
 function closeCafeModal(){document.getElementById('cafe-modal').classList.remove('open');}
-
 async function fetchCafes(venue){
   try{
-    const raw=await callAI(`Find 5 gode cafeer eller restauranter tæt på ${venue} i København til en pause mellem biografbesøg.
-JSON array kun:
-[{"name":"...","type":"Café/Restaurant/Bar","distance":"ca. 3 min gang","description":"1 linje","mapsUrl":"https://maps.google.com/?q=...+Copenhagen"}]`);
+    const raw=await callAI(`Find 5 cafeer eller restauranter tæt på ${venue} i København til en pause. JSON kun:
+[{"name":"...","type":"Café/Restaurant","distance":"3 min gang","description":"1 linje","mapsUrl":"https://maps.google.com/?q=...+Copenhagen"}]`);
     const cafes=parseJSON(raw);
-    const body=document.getElementById('cafe-body');
-    if(!Array.isArray(cafes)||!cafes.length){body.innerHTML='<p style="color:var(--muted);font-size:0.78rem;padding:12px 0;">Ingen cafeer fundet.</p>';return;}
-    body.innerHTML=cafes.map(c=>`
+    document.getElementById('cafe-body').innerHTML=cafes.map(c=>`
       <div class="cafe-card">
         <div class="cafe-name">${c.name}<span class="cafe-type">${c.type||''}</span></div>
-        <div class="cafe-meta">
-          <span class="cafe-dist">📍 ${c.distance||''}</span> — ${c.description||''}
-          ${c.mapsUrl?`<br><a href="${c.mapsUrl}" target="_blank" style="color:var(--accent2);font-size:0.67rem;text-decoration:none;">Åbn i Google Maps →</a>`:''}
+        <div class="cafe-meta"><span class="cafe-dist">📍 ${c.distance||''}</span> — ${c.description||''}
+          ${c.mapsUrl?`<br><a href="${c.mapsUrl}" target="_blank" style="color:var(--accent2);font-size:0.67rem;text-decoration:none;">Google Maps →</a>`:''}
         </div>
       </div>`).join('');
-  }catch(err){
-    document.getElementById('cafe-body').innerHTML=`<p style="color:var(--red);font-size:0.78rem;">Fejl: ${err.message}</p>`;
-  }
+  }catch(err){document.getElementById('cafe-body').innerHTML=`<p style="color:var(--red);font-size:0.78rem;">${err.message}</p>`;}
 }
 
-// ══ ICS EXPORT ══
+// ── ICS EXPORT ──
 function downloadICS(){
   if(!currentPlanData?.days){alert('Ingen plan at eksportere.');return;}
   const pad=n=>String(n).padStart(2,'0');
   const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CPH:DOX Planner//DA','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-
   currentPlanData.days.forEach(day=>{
     (day.screenings||[]).forEach((s,i)=>{
       const ds=day.date.replace(/-/g,'');
-      const sh=parseInt(s.time?.split(':')?.[0]||12);
-      const sm=parseInt(s.time?.split(':')?.[1]||0);
+      const sh=parseInt(s.time?.split(':')?.[0]||12),sm=parseInt(s.time?.split(':')?.[1]||0);
       const dur=parseInt((s.duration||'90 min').match(/\d+/)?.[0]||90);
-      const totalEnd=sh*60+sm+dur;
-      const eh=Math.floor(totalEnd/60), em=totalEnd%60;
-      const dtS=`${ds}T${pad(sh)}${pad(sm)}00`;
-      const dtE=`${ds}T${pad(eh)}${pad(em)}00`;
-      const uid=`cphdox26-${ds}-${i}-${Date.now()}`;
-
-      lines.push('BEGIN:VEVENT',`UID:${uid}`,
-        `DTSTART;TZID=Europe/Copenhagen:${dtS}`,
-        `DTEND;TZID=Europe/Copenhagen:${dtE}`,
-        `SUMMARY:🎬 ${s.title}`,
-        `LOCATION:${s.venue}`,
+      const te=sh*60+sm+dur;
+      const eh=Math.floor(te/60),em=te%60;
+      const dtS=`${ds}T${pad(sh)}${pad(sm)}00`,dtE=`${ds}T${pad(eh)}${pad(em)}00`;
+      lines.push('BEGIN:VEVENT',`UID:cphdox26-${ds}-${i}@planner`,
+        `DTSTART;TZID=Europe/Copenhagen:${dtS}`,`DTEND;TZID=Europe/Copenhagen:${dtE}`,
+        `SUMMARY:🎬 ${s.title}`,`LOCATION:${s.venue||''}`,
         `DESCRIPTION:${(s.description||'').replace(/\n/g,'\\n')}\\n\\nBillet: ${s.ticketUrl||'cphdox.dk'}`,
-        'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY',
-        `DESCRIPTION:Om 30 min: ${s.title} på ${s.venue}`,
-        'END:VALARM','END:VEVENT');
-
-      // Transport event
+        'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY',`DESCRIPTION:Om 30 min: ${s.title}`,'END:VALARM','END:VEVENT');
       const next=day.screenings[i+1];
       if(next&&s.venue!==next.venue&&s.walk_minutes_to_next){
-        const tEnd=totalEnd+parseInt(s.walk_minutes_to_next);
-        const tEh=Math.floor(tEnd/60), tEm=tEnd%60;
-        lines.push('BEGIN:VEVENT',`UID:travel-${ds}-${i}-${Date.now()}`,
+        const tw=te+parseInt(s.walk_minutes_to_next);
+        lines.push('BEGIN:VEVENT',`UID:travel-${ds}-${i}@planner`,
           `DTSTART;TZID=Europe/Copenhagen:${dtE}`,
-          `DTEND;TZID=Europe/Copenhagen:${ds}T${pad(tEh)}${pad(tEm)}00`,
-          `SUMMARY:🚶 Gå til ${next.venue}`,
-          `DESCRIPTION:Ca. ${s.walk_minutes_to_next} min fra ${s.venue} til ${next.venue}`,
-          'END:VEVENT');
+          `DTEND;TZID=Europe/Copenhagen:${ds}T${pad(Math.floor(tw/60))}${pad(tw%60)}00`,
+          `SUMMARY:🚶 Gå til ${next.venue}`,`DESCRIPTION:Ca. ${s.walk_minutes_to_next} min fra ${s.venue} til ${next.venue}`,'END:VEVENT');
       }
     });
   });
-
   lines.push('END:VCALENDAR');
-  const blob=new Blob([lines.join('\r\n')],{type:'text/calendar'});
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='cphdox-2026.ics';
-  a.click();
+  a.href=URL.createObjectURL(new Blob([lines.join('\r\n')],{type:'text/calendar'}));
+  a.download='cphdox-2026.ics';a.click();
 }
 
-// ══ SAVE ══
+// ── SAVE ──
 function openSaveModal(){if(!currentPlanData)return;document.getElementById('plan-name-input').value='';document.getElementById('save-modal').classList.add('open');setTimeout(()=>document.getElementById('plan-name-input').focus(),100);}
 function closeSaveModal(){document.getElementById('save-modal').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('save-modal').classList.contains('open'))confirmSave();});
 async function confirmSave(){
   const name=document.getElementById('plan-name-input').value.trim();
   if(!name){alert('Giv planen et navn.');return;}
-  const id='plan:'+Date.now();
-  await sSet(id,{id,name,savedAt:new Date().toISOString(),data:currentPlanData});
+  await sSet('plan:'+Date.now(),{id:'plan:'+Date.now(),name,savedAt:new Date().toISOString(),data:currentPlanData});
   closeSaveModal();
   const btn=document.getElementById('save-btn');
-  const orig=btn.textContent;
   btn.textContent='✓ Gemt!';
   btn.style.cssText+='background:rgba(72,240,168,0.12);border-color:rgba(72,240,168,0.3);color:#48f0a8;';
-  setTimeout(()=>{btn.textContent=orig;btn.style.cssText='';},2200);
+  setTimeout(()=>{btn.textContent='💾 Gem plan';btn.style.cssText='';},2200);
 }
 
-// ══ ARCHIVE ══
+// ── ARCHIVE ──
 async function renderArchive(){
   document.getElementById('archive-list').style.display='block';
   document.getElementById('archive-view').style.display='none';
   const keys=await sList('plan:');
   const container=document.getElementById('archive-cards');
-  if(!keys.length){container.innerHTML='<div class="archive-empty"><p>Ingen gemte planer endnu.<br>Lav en plan og tryk <em>Gem plan</em>.</p></div>';return;}
-  container.innerHTML='<p style="font-size:0.73rem;color:var(--muted);margin-bottom:16px;">Indlæser...</p>';
+  if(!keys.length){container.innerHTML='<div class="archive-empty"><p>Ingen gemte planer endnu.</p></div>';return;}
   const plans=(await Promise.all(keys.map(k=>sGet(k)))).filter(Boolean);
   plans.sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt));
   container.innerHTML='';
   plans.forEach(plan=>{
-    const card=document.createElement('div');
-    card.className='archive-card';
+    const card=document.createElement('div');card.className='archive-card';
     const days=plan.data.days||[];
     const films=days.flatMap(d=>(d.screenings||[]).map(s=>s.title));
     const saved=new Date(plan.savedAt).toLocaleDateString('da-DK',{day:'numeric',month:'long',year:'numeric'});
     const pills=days.map(d=>`<span class="day-pill">${(d.date_label||d.date).split(' ').slice(0,2).join(' ')}</span>`).join('');
-    card.innerHTML=`
-      <button class="arc-del" onclick="delPlan(event,'${plan.id}')">Slet</button>
+    card.innerHTML=`<button class="arc-del" onclick="delPlan(event,'${plan.id}')">Slet</button>
       <div class="arc-name">${plan.name}</div>
-      <div class="arc-meta">Gemt ${saved} · ${films.length} film over ${days.length} dag${days.length!==1?'e':''}</div>
+      <div class="arc-meta">Gemt ${saved} · ${films.length} film over ${days.length} dage</div>
       <div class="arc-days">${pills}</div>`;
     card.addEventListener('click',e=>{if(e.target.classList.contains('arc-del'))return;openAV(plan);});
     container.appendChild(card);
   });
 }
-
 function openAV(plan){
   document.getElementById('archive-list').style.display='none';
   document.getElementById('archive-view').style.display='block';
   const days=plan.data.days||[];
   const films=days.flatMap(d=>(d.screenings||[]).map(s=>s.title));
-  const saved=new Date(plan.savedAt).toLocaleDateString('da-DK',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('av-title').textContent=plan.name;
-  document.getElementById('av-sub').textContent=`// Gemt ${saved} · ${films.length} film over ${days.length} dage`;
+  document.getElementById('av-sub').textContent=`// ${films.length} film over ${days.length} dage`;
   currentPlanData=plan.data;
   renderPlan(plan.data,document.getElementById('av-cards'));
 }
